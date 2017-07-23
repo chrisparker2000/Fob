@@ -30,12 +30,15 @@ enum _DoneActionType {
 - (id)init {
     if (self = [super init]) {
         //filePath = nil;
+        toPost = NO;
         [self setFile:nil];
+        toPost = YES;
     }
     return self;
 }
 
 - (void)postChange {
+    if (!toPost) return;
     posted = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FobDoneActionChange"
                                                         object:self];
@@ -185,6 +188,7 @@ enum _DoneActionType {
 }
 
 - (void)setDisplayedDoneAction:(DoneAction *)doneAction {
+    toPost = NO;
     if ([doneAction isKindOfClass:[BeepDoneAction class]]) {
         [typeChooseButtons selectCellAtRow:beep column:0];
         [customizeTypeDisplay selectTabViewItemAtIndex:beep];
@@ -199,6 +203,7 @@ enum _DoneActionType {
     } else {
         NSLog(@"Warning, unsupported done action read %@", doneAction);
     }
+    toPost = YES;
 }
 
 @end

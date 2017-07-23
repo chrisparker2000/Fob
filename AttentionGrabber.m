@@ -39,6 +39,7 @@ AttentionGrabber *grabber;
 
 - (void)dealloc {
     [requestCodes release];
+    [super dealloc];
 }
 
 + (void)grabAttention {

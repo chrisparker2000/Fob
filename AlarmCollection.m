@@ -28,6 +28,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (void)dealloc {
     [alarms release];
+    [super dealloc];
 }
 
 - (NSArray *)alarms {

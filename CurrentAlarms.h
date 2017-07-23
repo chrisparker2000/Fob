@@ -27,7 +27,7 @@ You should have received a copy of the GNU General Public License along with Fob
     IBOutlet NSWindow *window;
     IBOutlet TimeView *timeView;
 
-    Alarm *lastSelectedAlarm;
+    Alarm *lastSelectedAlarm, *oldAlarm;
 }
 
 + (CurrentAlarms *)defaultDatabase;

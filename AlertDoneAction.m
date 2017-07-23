@@ -35,7 +35,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (id)initWithCoder:(NSCoder *)coder {
     if (self = [super initWithCoder:coder]) {
-        soundName = [coder decodeObject];
+        soundName = [[coder decodeObject] retain];
         [self loadSound];
     }
     return self;

@@ -80,4 +80,8 @@ You should have received a copy of the GNU General Public License along with Fob
     return filePath;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    return [[FileDoneAction alloc] initWithFilePath:[self filePath]];
+}
+
 @end

@@ -101,6 +101,7 @@ NSRect unitRect;
 - (void)dealloc {
     [transform release];
     [invTransform release];
+    [super dealloc];
 }
 
 /* This will remake the affine transforms. */

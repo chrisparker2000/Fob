@@ -84,6 +84,7 @@ CurrentAlarms * defaultCurrentDatabase = nil;
     if (self = [super init]) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         alarms = [correspondingObjectArray([defaults objectForKey:FobActiveAlarmsKey]) retain];
+        oldAlarm = lastSelectedAlarm = nil;
     }
     return self;
 }
@@ -139,7 +140,7 @@ CurrentAlarms * defaultCurrentDatabase = nil;
         oldAlarm = nil;
     }*/
 
-    static Alarm * oldAlarm;
+    //static Alarm * oldAlarm;
     NSTableView *table = [note object];
     AlarmCollection *collection;
     int selected = [table numberOfSelectedRows];

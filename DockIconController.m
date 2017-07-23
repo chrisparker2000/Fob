@@ -43,9 +43,10 @@ You should have received a copy of the GNU General Public License along with Fob
     Alarm * last = latestRungAlarm;
     while (i<max && ![[[currentAlarms alarms] objectAtIndex:i] millisecondsRemaining]) i++;
     i--;
-    latestRungAlarm = i == -1 ? nil : [[currentAlarms alarms] objectAtIndex:i];
+    latestRungAlarm = i == -1 ? nil : [[[currentAlarms alarms] objectAtIndex:i] retain];
     if (last != latestRungAlarm)
         [[last doneAction] stop]; // We're no longer the best.  Wah!
+    [last release];
     return latestRungAlarm;
 }
 

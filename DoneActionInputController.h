@@ -31,7 +31,7 @@ You should have received a copy of the GNU General Public License along with Fob
     IBOutlet NSWindow *mainWindow;
 
     NSString *filePath;
-    BOOL posted;
+    BOOL posted, toPost;
 }
 + (NSArray *)fileTypesAccepted;
 + (BOOL)isSoundAtPath:(NSString *)path;

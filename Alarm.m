@@ -81,6 +81,7 @@ You should have received a copy of the GNU General Public License along with Fob
     [title release];
     [timer release];
     [doneAction autorelease];
+    [super dealloc];
 }
 
 - (BOOL)isEqual:(Alarm *)other {
@@ -175,8 +176,8 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (NSComparisonResult)timeCompare:(Alarm *)object {
     long long diff;
-    NSAssert([[object class] isSubclassOfClass:[Alarm class]],
-             @"The alarm comparator wasn't passed an alarm instance!");
+    /*NSAssert([[object class] isSubclassOfClass:[Alarm class]],
+             @"The alarm comparator wasn't passed an alarm instance!");*/
 
     if ([object paused] != [self paused])
         NSLog(@"Warning: comparing a paused and unpaused alarm.");

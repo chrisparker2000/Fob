@@ -35,8 +35,8 @@ You should have received a copy of the GNU General Public License along with Fob
 }
 
 - (void)play {
-    // I am a bad person.
     if ([self isPlaying]) return; // Should not play before it is done.
+    // I am a bad person.
     doneBeepTime = milliseconds() + 500;
     [super play];
     NSBeep();
