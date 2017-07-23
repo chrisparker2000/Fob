@@ -2,7 +2,7 @@
 {\fonttbl\f0\fnil\fcharset77 LucidaGrande-Bold;\f1\fnil\fcharset77 LucidaGrande;\f2\fnil\fcharset77 Monaco;
 }
 {\colortbl;\red255\green255\blue255;}
-\margl1440\margr1440\vieww14400\viewh13400\viewkind0
+\margl1440\margr1440\vieww17500\viewh20640\viewkind0
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
 \f0\b\fs42 \cf0 Fob
@@ -10,7 +10,7 @@
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
-\f1\b0\fs28 \cf0 Fob 1.0.3, \'a9 Leaky Puppy Software, Net Monkey, Inc.\
+\f1\b0\fs28 \cf0 Fob 1.0.4, \'a9 Leaky Puppy Software, Net Monkey, Inc.\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
 \f0\b\fs32 \cf0 \
@@ -49,7 +49,7 @@ Etant donn\'8e qu' il existe une centaine de produits qui sont cens\'8e faire ex
 \f0\b\fs32 \cf0 Configuration requise
 \f1\b0\fs28 \
 \
-Fob n\'8ecessite Mac OS X.  j' ai \'8ecrit et compil\'8e Fob sous Mac OS X 10.2.3 et 10.3.3. d' apr\'8fs mes tests, l' application fonctionne \'8egalement sous Mac OS X 10.1 et au-del\'88.  en revanche, elle ne fonctionne pas sous 10.0.x.\
+Fob n\'8ecessite Mac OS X.  j' ai \'8ecrit et compil\'8e Fob sous Mac OS X 10.2.3 et 10.3.5. d' apr\'8fs mes tests, l' application fonctionne \'8egalement sous Mac OS X 10.1 et au-del\'88.  en revanche, elle ne fonctionne pas sous 10.0.x.\
 \
 
 \f0\b\fs32 Fichiers & Installation & D\'8es-installation\
@@ -123,6 +123,8 @@ Quand j' ai rendu la source de Fob disponible, je ne me doutais pas que quiconqu
 il a \'8egalement contribu\'8e \'88 \'8ecrire le code qui a r\'8egl\'8e certaines incompatibilit\'8es d' interface, lors de suppression des alarmes.\
 \'a5 Jean Duffas (jduffas@free.fr) \'88 effectu\'8e la modeste traduction fran\'8daise de l' application.\
 Merci de me contacter en cas de fautes d' orthographe...\
+\'a5\'caG\'8erald PETITEVILLE (gerald.axone@wanadoo.fr) contribua avec des traductions fran\'8daises additionnelles.\
+\'a5 Charles Giraudet a contribu\'8e \'88 la localisation fran\'8daise.\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
 \f0\b \cf0 \
@@ -133,6 +135,15 @@ Merci de me contacter en cas de fautes d' orthographe...\
 
 \f1\b0\fs28 \cf0 \
 This shows what was added or changed over versions.\
+\
+	1.0.4, October 17, 2004\
+\'a5 Fixed problems whereby Fob would mishandle operations on an alarm if there was another alarm that happened to have the exact same time remaining down to the millisecond.\
+\'a5 Now when Rewind is hit with no alarm selected, Fob will rewind the most recent alarm to run out of time.\
+\'a5 The dock menu no longer must display preset and current alarms in submenus.  See preferences.\
+\'a5 Added the ability to clear due alarms upon quit.  See preferences.\
+\'a5 When a running alarm is selected, the time display would change as the alarm displayed.  Unfortunately when one deselected an alarm, the most recently selected alarm would still have its time displayed and updated, which meant you had to select a preset, paused, or due alarm before you could even define a new time.  Now when you deselect an alarm, it no longer updates its time in the view.\
+\'a5\'caFob now has the ability to quickly start one-shot timers through the keyboard.\
+\'a5\'caAlarms may be set to repeat.\
 \
 	1.0.3, July 27, 2004\
 \'a5 Added French localization (see acknowledgments).\

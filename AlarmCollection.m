@@ -48,15 +48,36 @@ You should have received a copy of the GNU General Public License along with Fob
     return -1-bottom;
 }
 
-/* This will find the index at which the alarm is stored. */
+/* This will find the index at which the alarm is stored.  If the alarm is not stored here, return -1 minus the location at which we should insert the alarm into the collection. */
 - (int)findEntryForAlarm:(Alarm *)alarm {
-    int bottom = 0, top = [alarms count]-1;
+    /*int bottom = 0, top = [alarms count]-1;
     while (bottom <= top) {
         int middle = (bottom+top) >> 1;
         NSComparisonResult result = [alarm compare:[alarms objectAtIndex:middle]];
         if (result == NSOrderedAscending) top = middle-1; // The middle is too high!
         else if (result == NSOrderedDescending) bottom = middle+1;
         else return middle; // Sire!  It is found!
+    }
+    return -1-bottom;*/
+    int bottom = 0, top = [alarms count]-1;
+    while (bottom <= top) {
+        int middle = (bottom+top) >> 1;
+        NSComparisonResult result = [alarm timeCompare:[alarms objectAtIndex:middle]];
+        if (result == NSOrderedAscending) top = middle-1; // The middle is too high!
+        else if (result == NSOrderedDescending) bottom = middle+1;
+        else {
+            // Rewind to the beginning of entries with this time.
+            while (middle && [alarm timeCompare:[alarms objectAtIndex:middle-1]]==NSOrderedSame) {
+                middle--;
+            }
+            while (middle < [alarms count]) {
+                Alarm *currentAlarm = [alarms objectAtIndex:middle];
+                if (currentAlarm == alarm) return middle;
+                if ([alarm timeCompare:currentAlarm]!=NSOrderedSame) break;
+                middle++;
+            }
+            break;
+        }
     }
     return -1-bottom;
 }

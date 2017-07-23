@@ -32,6 +32,8 @@ NSString *FobStatusItemVisibleKey = @"Status Item Visible";
 NSString *FobStatusItemTitleVisibleKey = @"Status Item Displays Title";
 NSString *FobScaleDockTimeKey = @"Time Scaled to Fit Dock Icon";
 NSString *FobDisableCommandQKey = @"Command-Q Disabled";
+NSString *FobDockMenuSubmenusKey = @"Dock Menu Alarms in Submenus";
+NSString *FobClearDueOnQuitKey = @"Clear Due Alarms on Quit";
 
 const FeedbackLevel kDefaultFeedbackLevel = beep;
 const BounceLevel kDefaultBounceLevel = dont;
@@ -41,6 +43,8 @@ const BOOL kDefaultStatusItemVisible = NO;
 const BOOL kDefaultStatusItemTitleVisible = YES;
 const BOOL kDefaultScaleDockTime = NO;
 const BOOL kDefaultDisableCommandQ = NO;
+const BOOL kDefaultDockMenuSubmenus = NO;
+const BOOL kDefaultClearDueOnQuitKey = NO;
 
 long long alarmTimes[] = {
     SECONDS(0,20,0), SECONDS(0,45,0), 0
@@ -66,7 +70,7 @@ NSMutableArray * correspondingObjectArray(NSArray * array) {
     return newArray;
 }
 
-void setFactoryDefaults() {
+NSMutableDictionary *factoryDefaults() {
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
     long long *alarmT = alarmTimes;
     NSString **alarmN = alarmNames;
@@ -102,7 +106,13 @@ void setFactoryDefaults() {
                  forKey:FobDisplayedAlarmKey];
     [defaults setObject:[NSNumber numberWithBool:kDefaultStatusItemVisible]
                  forKey:FobStatusItemVisibleKey];
-    
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-    //NSLog(@"Registered defaults!");
+    [defaults setObject:[NSNumber numberWithBool:kDefaultDockMenuSubmenus]
+                 forKey:FobDockMenuSubmenusKey];
+    [defaults setObject:[NSNumber numberWithBool:kDefaultClearDueOnQuitKey]
+                 forKey:FobClearDueOnQuitKey];
+    return defaults;
+}
+
+void setFactoryDefaults() {
+    [[NSUserDefaults standardUserDefaults] registerDefaults:factoryDefaults()];
 }

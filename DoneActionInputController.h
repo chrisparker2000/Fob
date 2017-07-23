@@ -48,5 +48,6 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (DoneAction *)displayedDoneAction;
 - (void)setDisplayedDoneAction:(DoneAction *)newAction;
+- (void)setFile:(NSString *)path;
 
 @end

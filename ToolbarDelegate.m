@@ -34,6 +34,13 @@ You should have received a copy of the GNU General Public License along with Fob
         [item setToolTip:NSLocalizedString(@"ToolbarStartTip", nil)];
         [item setTarget:currentAlarms];
         [item setAction:@selector(addToCurrent:)];
+    } else if ( [itemIdentifier isEqualToString:@"StartText"] ) {
+        [item setLabel:NSLocalizedString(@"ToolbarStartTextLabel", nil)];
+        [item setPaletteLabel:[item label]];
+        [item setImage:[NSImage imageNamed:@"text-input"]];
+        [item setToolTip:NSLocalizedString(@"ToolbarStartTextTip", nil)];
+        [item setTarget:currentAlarms];
+        [item setAction:@selector(beginTextAlarmSheet:)];
     } else if ( [itemIdentifier isEqualToString:@"StoreAsPreset"] ) {
         [item setLabel:NSLocalizedString(@"ToolbarStoreLabel", nil)];
         [item setPaletteLabel:[item label]];
@@ -98,6 +105,7 @@ You should have received a copy of the GNU General Public License along with Fob
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar {
     return [NSArray arrayWithObjects:
         @"Start",
+        @"StartText",
         @"StoreAsPreset",
         @"StartSelectedPresets",
         @"Delete",
@@ -116,6 +124,7 @@ You should have received a copy of the GNU General Public License along with Fob
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar {
     return [NSArray arrayWithObjects:
         @"Start",
+        @"StartText",
         @"StoreAsPreset",
         @"StartSelectedPresets",
         @"Delete",

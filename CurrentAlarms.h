@@ -26,6 +26,9 @@ You should have received a copy of the GNU General Public License along with Fob
     IBOutlet PresetAlarms *presetAlarms;
     IBOutlet NSWindow *window;
     IBOutlet TimeView *timeView;
+    
+    IBOutlet NSWindow *textAlarmWindow;
+    IBOutlet NSTextField *textAlarmTime, *textAlarmTitle;
 
     Alarm *lastSelectedAlarm, *oldAlarm;
     NSColor *activeAlarmColor, *pausedAlarmColor;
@@ -55,6 +58,9 @@ You should have received a copy of the GNU General Public License along with Fob
 - (IBAction)pauseSelected:(id)sender;
 - (IBAction)unpauseSelected:(id)sender;
 - (IBAction)rewindSelected:(id)sender;
+- (IBAction)rewindLastDue:(id)sender;
+- (IBAction)beginTextAlarmSheet:(id)source;
+- (IBAction)endTextAlarmSheet:(id)sender;
     
 // Synchronization calls.
 - (void)reformCurrentDefaults;

@@ -139,7 +139,9 @@ You should have received a copy of the GNU General Public License along with Fob
         [[[self latestRungAlarm] doneAction] play]; // Will play if not playing already.
     [AttentionGrabber grabAttention];
     //[defaults integerForKey:FobBounceLevelKey]
-    [self updateLatestRungAlarm];
+    if (![[note object] repeats]) {
+        [self updateLatestRungAlarm];
+    }
     [self handleAlarmNote:note];
 }
 

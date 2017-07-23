@@ -15,10 +15,13 @@
             ACTIONS = {
                 addSelectedPresets = id; 
                 addToCurrent = id; 
+                beginTextAlarmSheet = id; 
                 clearDue = id; 
                 doubleClickPresets = id; 
+                endTextAlarmSheet = id; 
                 pauseSelected = id; 
                 removeFromCurrent = id; 
+                rewindLastDue = id; 
                 rewindSelected = id; 
                 unpauseSelected = id; 
             }; 
@@ -30,6 +33,9 @@
                 littleCurrentTable = NSTableView; 
                 presetAlarms = PresetAlarms; 
                 presetTable = NSTableView; 
+                textAlarmTime = NSTextField; 
+                textAlarmTitle = NSTextField; 
+                textAlarmWindow = NSWindow; 
                 timeView = TimeView; 
                 window = NSWindow; 
             }; 
@@ -93,8 +99,10 @@
         {
             ACTIONS = {
                 changeBounce = id; 
+                changeClearDueOnQuit = id; 
                 changeCommandQ = id; 
                 changeConfirmDeletions = id; 
+                changeDockMenuSubmenus = id; 
                 changeFeedback = id; 
                 changeKeepOpen = id; 
                 changeScaleDockTime = id; 
@@ -107,8 +115,10 @@
             OUTLETS = {
                 bounceLabel = NSTextField; 
                 bounceSlider = NSSlider; 
+                clearDueOnQuitCheckbox = NSButton; 
                 confirmDeleteCheckbox = NSButton; 
                 disableCommandQCheckbox = NSButton; 
+                dockMenuSubmenusCheckbox = NSButton; 
                 feedbackLabel = NSTextField; 
                 feedbackSlider = NSSlider; 
                 keepWindowOpenCheckbox = NSButton; 
@@ -134,7 +144,7 @@
             SUPERCLASS = AlarmCollection; 
         }, 
         {
-            ACTIONS = {timeChanged = id; timeStepClicked = id; }; 
+            ACTIONS = {repeatClicked = id; timeChanged = id; timeStepClicked = id; }; 
             CLASS = TimeInputController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
@@ -142,6 +152,7 @@
                 doneActionInputController = DoneActionInputController; 
                 hourField = NSTextField; 
                 minuteField = NSTextField; 
+                repeatsCheckbox = NSButton; 
                 secondField = NSTextField; 
                 stepper = NSStepper; 
                 timeView = TimeView; 

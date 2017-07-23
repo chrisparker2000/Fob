@@ -248,6 +248,11 @@ NSRect unitRect;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FobTimeUserChanged" object:self];
 }
 
+- (void) setMillisecondsUser:(long long)mseconds {
+    [self setMilliseconds:mseconds];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FobTimeUserChanged" object:self];
+}
+
 - (void)mouseUp:(NSEvent *)theEvent {
     // Reset the time unit we have the mouse down on to nothing.
     clickedUnit = none;

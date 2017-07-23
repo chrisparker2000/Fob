@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License along with Fob
  *  This program is distributed under the terms of the GNU General Public License. */
 
 #include "time.h"
+#include <sys/time.h>
 
 /** This will return the number of milliseconds since the last epoch. */
 long long milliseconds() {

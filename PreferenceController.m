@@ -24,7 +24,9 @@ You should have received a copy of the GNU General Public License along with Fob
 @implementation PreferenceController
 
 - (id)init {
-    self = [super init];
+    if (self = [super init]) {
+        savedValues = nil;
+    }
     return self;
 }
 
@@ -83,25 +85,21 @@ You should have received a copy of the GNU General Public License along with Fob
 - (void)displayPreferences {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // Store values in case of cancel.
-    storedConfirmDelete = [defaults boolForKey:FobConfirmDeleteKey];
-    storedKeepWindowOpen = [defaults boolForKey:FobKeepWindowOpenKey];
-    storedFeedbackLevel = [defaults integerForKey:FobFeedbackLevelKey];
-    storedBounceLevel = [defaults integerForKey:FobBounceLevelKey];
-    storedStatusVisible = [defaults boolForKey:FobStatusItemVisibleKey];
-    storedStatusTitleVisible = [defaults boolForKey:FobStatusItemTitleVisibleKey];
-    storedScaleDockTime = [defaults boolForKey:FobScaleDockTimeKey];
-    storedDisableQ = [defaults boolForKey:FobDisableCommandQKey];
+    savedValues = [[defaults dictionaryRepresentation] retain];
     
     // Change the view to reflect current preferences.
-    [confirmDeleteCheckbox setState:storedConfirmDelete ? NSOnState : NSOffState];
-    [keepWindowOpenCheckbox setState:storedKeepWindowOpen ? NSOnState : NSOffState];
-    [statusItemVisibleCheckbox setState:storedStatusVisible ? NSOnState : NSOffState];
-    [statusItemTitleVisibleCheckbox setState:storedStatusTitleVisible ? NSOnState : NSOffState];
-    [statusItemTitleVisibleCheckbox setEnabled:storedStatusVisible];
-    [scaleDockTimeCheckbox setState:storedScaleDockTime ? NSOnState : NSOffState];
-    [disableCommandQCheckbox setState:storedDisableQ ? NSOnState : NSOffState];
-    [feedbackSlider setIntValue:storedFeedbackLevel];
-    [bounceSlider setIntValue:storedBounceLevel];
+    [confirmDeleteCheckbox setState:[defaults boolForKey:FobConfirmDeleteKey] ? NSOnState : NSOffState];
+    [keepWindowOpenCheckbox setState:[defaults boolForKey:FobKeepWindowOpenKey] ? NSOnState : NSOffState];
+    [statusItemVisibleCheckbox setState:[defaults boolForKey:FobStatusItemVisibleKey] ? NSOnState : NSOffState];
+    [statusItemTitleVisibleCheckbox setState:
+        [defaults boolForKey:FobStatusItemTitleVisibleKey] ? NSOnState : NSOffState];
+    [statusItemTitleVisibleCheckbox setEnabled:[defaults boolForKey:FobStatusItemVisibleKey]];
+    [scaleDockTimeCheckbox setState:[defaults boolForKey:FobScaleDockTimeKey] ? NSOnState : NSOffState];
+    [disableCommandQCheckbox setState:[defaults boolForKey:FobDisableCommandQKey] ? NSOnState : NSOffState];
+    [dockMenuSubmenusCheckbox setState:[defaults boolForKey:FobDockMenuSubmenusKey] ? NSOnState : NSOffState];
+    [clearDueOnQuitCheckbox setState:[defaults boolForKey:FobClearDueOnQuitKey] ? NSOnState : NSOffState];
+    [feedbackSlider setIntValue:[defaults integerForKey:FobFeedbackLevelKey]];
+    [bounceSlider setIntValue:[defaults integerForKey:FobBounceLevelKey]];
     [self changeFeedbackLabel];
     [self changeBounceLabel];
     
@@ -173,6 +171,20 @@ You should have received a copy of the GNU General Public License along with Fob
     [quitItem setKeyEquivalent:(disableQ ? @"" : @"q")];
 }
 
+- (IBAction)changeDockMenuSubmenus:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL dms = [dockMenuSubmenusCheckbox state] == NSOnState;
+    [defaults setBool:dms
+               forKey:FobDockMenuSubmenusKey];
+}
+
+- (IBAction)changeClearDueOnQuit:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL cdoq = [clearDueOnQuitCheckbox state] == NSOnState;
+    [defaults setBool:cdoq
+               forKey:FobClearDueOnQuitKey];
+}
+
 - (IBAction)endSheet:(id)sender {
     // Hide the sheet.
     [preferenceWindow orderOut:sender];
@@ -186,29 +198,25 @@ You should have received a copy of the GNU General Public License along with Fob
     if (returnCode == 1) {
         // Notice my comparison test.  I am a bad coder.
         // Cancel was selected!
+
         // Setting things back as they were.
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setBool:storedConfirmDelete
-                   forKey:FobConfirmDeleteKey];
-        [defaults setBool:storedKeepWindowOpen
-                   forKey:FobKeepWindowOpenKey];
-        [mainWindow setHidesOnDeactivate:!storedKeepWindowOpen];
-        [defaults setInteger:storedFeedbackLevel
-                      forKey:FobFeedbackLevelKey];
-        [defaults setInteger:storedBounceLevel
-                      forKey:FobBounceLevelKey];
-        [defaults setBool:storedStatusVisible
-                   forKey:FobStatusItemVisibleKey];
-        [defaults setBool:storedStatusTitleVisible
-                   forKey:FobStatusItemTitleVisibleKey];
+        NSMutableDictionary *factoryValues = factoryDefaults();
+        [factoryValues removeObjectForKey:FobPresetAlarmsKey];
+        [factoryValues removeObjectForKey:FobActiveAlarmsKey];
+        NSEnumerator *keyEnum = [factoryValues keyEnumerator];
+        id key;
+        while (key = [keyEnum nextObject]) {
+            [defaults setObject:[savedValues objectForKey:key]
+                         forKey:key];
+        }
+        // Some preferences require some action beyond merely setting the default.
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FobStatusItemVisibilityChanged"
                                                             object:self];
-        [defaults setBool:storedScaleDockTime
-                   forKey:FobScaleDockTimeKey];
-        [defaults setBool:storedDisableQ
-                   forKey:FobDisableCommandQKey];
-        [quitItem setKeyEquivalent:(storedDisableQ ? @"" : @"q")];
+        [mainWindow setHidesOnDeactivate:![defaults boolForKey:FobKeepWindowOpenKey]];
+        [quitItem setKeyEquivalent:([defaults boolForKey:FobDisableCommandQKey] ? @"" : @"q")];
     }
+    [savedValues release];
 }
 
 @end

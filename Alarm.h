@@ -27,7 +27,7 @@ You should have received a copy of the GNU General Public License along with Fob
     NSString *title, *lastTimeString, *lastDescribe;
     long long timeLeft, matures, lastCheckedMSeconds, timeAtStart;
     NSTimer *timer;
-    BOOL paused, cachedValid, cachedDescribeValid;
+    BOOL paused, repeats, cachedValid, cachedDescribeValid;
     DoneAction *doneAction;
 }
 
@@ -37,12 +37,18 @@ You should have received a copy of the GNU General Public License along with Fob
 - (void)pause;
 - (void)start;
 - (void)rewind;
+
 - (NSString *)describe;
 - (NSString *)timeString;
 - (NSString *)title;
-- (void)setTitle:(NSString *)newTitle;
-- (long long) millisecondsRemaining;
 - (BOOL)paused;
+- (BOOL)repeats;
+
+- (void)setTitle:(NSString *)newTitle;
+- (void)setRepeats:(BOOL)willRepeat;
+- (void) setMillisecondsRemaining:(long long)ms;
+- (long long) millisecondsRemaining;
+
 - (NSComparisonResult)timeCompare:(Alarm *)object;
 - (NSComparisonResult)compare:(Alarm *)object;
 

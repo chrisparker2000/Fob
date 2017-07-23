@@ -39,6 +39,8 @@ typedef enum _FobTimeUnit {
 
 // These are methods meant to be used by clients.
 - (void) setMilliseconds:(long long)mseconds;
+// The method if the time is explicitly changed by user action.
+- (void) setMillisecondsUser:(long long)mseconds;
 - (void) step:(BOOL)forward;
 // The following are helper functions.
 - (void) reformTransforms;

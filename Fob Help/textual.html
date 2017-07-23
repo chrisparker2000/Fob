@@ -1,0 +1,47 @@
+<HTML><HEAD>
+<TITLE>Textual Alarm Input</TITLE>
+</HEAD>
+<BODY>
+
+<H2>Textual Alarm Input</H2>
+
+<P>Using the <B>Text Alarm</B> toolbar icon or dock menu item or the <B>Set Alarm From Text</B> menu item one may set an alarm from text.  The syntax for time is very simple and flexible.  Here are some examples.</P>
+
+<TABLE>
+<TR><TH>Input Text</TH><TH>Equivalent Time</TH></TR>
+<TR><TD><TT>3:14:16</TT></TD><TD>3 hours, 14 minutes, and 16 seconds.</TD>
+<TR><TD><TT>3 14 16</TT></TD><TD>3 hours, 14 minutes, and 16 seconds.</TD>
+<TR><TD><TT>5m</TT></TD><TD>5 minutes.</TD>
+<TR><TD><TT>5 m</TT></TD><TD>5 minutes.</TD>
+<TR><TD><TT>5 minutes</TT></TD><TD>5 minutes.</TD>
+<TR><TD><TT>5 martians!!</TT></TD><TD>5 minutes.</TD>
+<TR><TD><TT>0:0:0:0:0:5m</TT></TD><TD>5 minutes.</TD>
+<TR><TD><TT>2h 57s</TT></TD><TD>2 hours and 57 seconds.</TD>
+<TR><TD><TT>2h 57</TT></TD><TD>2 hours and 57 seconds.</TD>
+<TR><TD><TT>120:57</TT></TD><TD>2 hours and 57 seconds.</TD>
+<TR><TD><TT>7257</TT></TD><TD>2 hours and 57 seconds.</TD>
+<TR><TD><TT>59m 1h 117s</TT></TD><TD>2 hours and 57 seconds.</TD>
+<TR><TD><TT>1h 57s 1h</TT></TD><TD>2 hours and 57 seconds.</TD>
+<TR><TD><TT>6h</TT></TD><TD>6 hours.</TD>
+<TR><TD><TT>6 ahoras</TT></TD><TD>6 hours.</TD>
+</TABLE>
+
+<P>That probably suffices to give you an idea of what Fob can handle.  For those that would benefit from knowing Fob's exact formal scheme:</P>
+<ol>
+<li>Define an accumulated number of seconds <var>A=0</var>.</li>
+<li>Define an expression number of seconds <var>E=0</var>.</li>
+<li>Skip the input string until the next digit character (<tt>0</tt>-<tt>9</tt>) or time unit character (<tt>H</tt>,<tt>h</tt>,<tt>M</tt>,<tt>m</tt>,<tt>S</tt>,<tt>s</tt>) -- all other characters (other alphabetic characters, spaces, and : for example) are skipped.  If we run into the end of the string, go to step 6.</li>
+<li>Attempt to read a number from the string.
+	<ol type="a">
+	<li>If a number can be read, define it as <VAR>N</VAR> and set <VAR>E=60*E + N</VAR>.</li>
+	<li>If the reading of a number fails, then the next character must be a time unit character.  If the character is H or h, set <VAR>E=3600*E</VAR>.  If the character is M or m, set <VAR>E=60*E</VAR>.  Set <VAR>A=A+E</VAR>, and then set <VAR>E=0</VAR>.</li>
+	</ol>
+</li>
+<li>Go to step 3.</li>
+<li>Set <VAR>A=A+E</VAR>.</li>
+<li>Start an alarm for <VAR>A</VAR> seconds.</li>
+</ol>
+
+<P>Here's an explanation for some of these examples.  The <TT>5 martians!!</TT> example is 5 minutes because after reading a five the next relevant character read was <TT>m</TT>, and there are no other numbers to further modify the time.  The <TT>6 ahoras</TT> example is 6 hours not because Fob knows Spanish but because after reading six the next relevant character is <TT>h</TT>, so it skips right over the <TT>a</TT>.  The <TT>59m 1h 117s</TT> example is 2:00:57 because it reads 59 minutes plus 1 hour plus 117 seconds which winds up as 2:00:57.  Similarity, <TT>1h 57s 1h</TT> is 1 hour plus 57 seconds plus 1 hour.</P>
+
+</BODY></HTML>

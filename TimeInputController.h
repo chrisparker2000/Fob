@@ -28,12 +28,14 @@ You should have received a copy of the GNU General Public License along with Fob
     IBOutlet TimeView *timeView;
     IBOutlet NSStepper *stepper;
     IBOutlet DoneActionInputController *doneActionInputController;
+    IBOutlet NSButton *repeatsCheckbox;
     
     int lastStepperValue;
 }
 
 - (IBAction)timeChanged:(id)sender;
 - (IBAction)timeStepClicked:(id)sender;
+- (IBAction)repeatClicked:(id)sender;
 - (void)setFieldsAccordingToTimeView;
 - (void)handleTimeChanged:(NSNotification *)note;
 - (void)setDisplayedAlarm:(Alarm *)alarm;

@@ -90,8 +90,7 @@
 			sourceTree = "<group>";
 		};
 		1058C7A1FEA54F0111CA2CBB = {
-			fallbackIsa = PBXFileReference;
-			isa = PBXFrameworkReference;
+			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = Cocoa.framework;
 			path = /System/Library/Frameworks/Cocoa.framework;
@@ -126,8 +125,7 @@
 //174
 		17587328FF379C6511CA2CBB = {
 			explicitFileType = wrapper.application;
-			fallbackIsa = PBXFileReference;
-			isa = PBXApplicationReference;
+			isa = PBXFileReference;
 			path = Fob.app;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -224,7 +222,7 @@
 				E912E546047884E000000102,
 				E912E54A0478870700000102,
 				F5EF5B6803E997300118FB85,
-				F53EE73603DBAE3101000103,
+				E985321C070CF8E200F88517,
 			);
 			isa = PBXGroup;
 			name = Resources;
@@ -263,8 +261,7 @@
 			sourceTree = "<group>";
 		};
 		29B97324FDCFA39411CA2CEA = {
-			fallbackIsa = PBXFileReference;
-			isa = PBXFrameworkReference;
+			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = AppKit.framework;
 			path = /System/Library/Frameworks/AppKit.framework;
@@ -272,8 +269,7 @@
 			sourceTree = "<absolute>";
 		};
 		29B97325FDCFA39411CA2CEA = {
-			fallbackIsa = PBXFileReference;
-			isa = PBXFrameworkReference;
+			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = Foundation.framework;
 			path = /System/Library/Frameworks/Foundation.framework;
@@ -316,7 +312,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Fob</string>
 	<key>CFBundleGetInfoString</key>
-	<string>1.0.3</string>
+	<string>1.0.4</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Fob Help</string>
 	<key>CFBundleHelpBookName</key>
@@ -332,11 +328,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.3</string>
+	<string>1.0.4</string>
 	<key>CFBundleSignature</key>
 	<string>tfob</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.3</string>
+	<string>1.0.4</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>NO</string>
 	<key>NSMainNibFile</key>
@@ -392,7 +388,6 @@
 				F5D1012903DA7E6B01000103,
 				F5F0699503DB678D01000103,
 				F5F0699A03DB73FC01000103,
-				F53EE73703DBAE3901000103,
 				F5EF5B6903E997300118FB85,
 				E912E54B0478870700000102,
 				E9423FAD047C830A00000102,
@@ -401,6 +396,8 @@
 				E9C4DC55068010E400BD91D6,
 				E9C4DC6F0680117400BD91D6,
 				E9CFC10506B6DE6200341211,
+				E98530B6070CC50600F88517,
+				E9853233070CF8E200F88517,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,8 +462,6 @@
 //4A3
 //4A4
 		4A9504CCFFE6A4B311CA0CBA = {
-			buildRules = (
-			);
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -480,8 +475,6 @@
 			name = Development;
 		};
 		4A9504CDFFE6A4B311CA0CBA = {
-			buildRules = (
-			);
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -554,6 +547,32 @@
 			settings = {
 			};
 		};
+		E98530B5070CC50600F88517 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
+			path = "text-input.tiff";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E98530B6070CC50600F88517 = {
+			fileRef = E98530B5070CC50600F88517;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E985321C070CF8E200F88517 = {
+			isa = PBXFileReference;
+			lastKnownFileType = folder;
+			path = "Fob Help";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E9853233070CF8E200F88517 = {
+			fileRef = E985321C070CF8E200F88517;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E990B1010660EBB2001EC845 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.nib;
@@ -583,7 +602,7 @@
 		E9C4DC54068010E400BD91D6 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			path = Fob.scriptSuite;
 			refType = 4;
 			sourceTree = "<group>";
@@ -597,7 +616,7 @@
 		E9C4DC6E0680117400BD91D6 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			path = Fob.scriptTerminology;
 			refType = 4;
 			sourceTree = "<group>";
@@ -806,21 +825,6 @@
 		};
 		F53A13C903D2958701000105 = {
 			fileRef = F53A13C703D2958701000105;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F53EE73603DBAE3101000103 = {
-			fallbackIsa = PBXFileReference;
-			includeInIndex = 1;
-			isa = PBXFolderReference;
-			lastKnownFileType = folder;
-			path = "Fob Help";
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		F53EE73703DBAE3901000103 = {
-			fileRef = F53EE73603DBAE3101000103;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1198,6 +1202,7 @@
 				F5D1003103DA1C5701000103,
 				F5D1003203DA1C5701000103,
 				F5D1003303DA1C5701000103,
+				E98530B5070CC50600F88517,
 				F5D1003403DA1C5701000103,
 				E9C82E090480101C00734361,
 			);

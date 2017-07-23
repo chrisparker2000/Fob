@@ -25,6 +25,10 @@
 "PresetExistsTitle" = "Preset Exists";
 "PresetExistsMessage" = "A preset with that name and time exists.";
 
+// The alert for attempting to add a text alarm with a time not longer than 0 sec and shorter than 12 hours.
+"TimeOutOfRangeTitle" = "Time Out Of Range";
+"TimeOutOfRangeMessage" = "The input time must be greater than zero seconds and less than twelve hours.";
+
 // The built in alarms for zero time, and for the maximum time, and the default alarm.
 "MaxTimeLabel" = "Max Time";
 "MinTimeLabel" = "Minimum Time";
@@ -35,6 +39,7 @@
 
 // The labels for the toolbar.
 "ToolbarStartLabel" = "Start";
+"ToolbarStartTextLabel" = "Text Alarm";
 "ToolbarStoreLabel" = "Store";
 "ToolbarStartSelectedPresetsLabel" = "Start Selected";
 "ToolbarDeleteLabel" = "Delete";
@@ -46,11 +51,20 @@
 
 // The labels for the toolbar tooltips.
 "ToolbarStartTip" = "Starts the alarm displayed in the clock.";
+"ToolbarStartTextTip" = "Starts an alarm based on input text.";
 "ToolbarStoreTip" = "Stores the alarm displayed in the clock into the list of presets.";
 "ToolbarStartSelectedPresetsTip" = "Starts alarms based on the selected presets.";
 "ToolbarDeleteTip" = "Deletes currently selected alarms/presets.";
-"ToolbarRewindTip" = "Sets the currently selected alarms to their original times.";
+"ToolbarRewindTip" = "Sets the currently selected alarms or the last alarm to run out of time to their original times.";
 "ToolbarPreferencesTip" = "Display Fob preferences.";
 "ToolbarClearDueTip" = "Deletes done alarms.";
 "ToolbarPauseTip" = "Pause the selected active alarms.";
 "ToolbarUnpauseTip" = "Reactivate the selected paused alarms.";
+
+// The labels for the dock menu.
+"DockMenuRewindLastDue" = "Rewind Last Due";
+"DockMenuPresetShortHeader" = "Presets:";
+"DockMenuCurrentActiveShortHeader" = "Active:";
+"DockMenuCurrentPausedShortHeader" = "Paused:";
+"DockMenuPresetSubmenuTitle" = "Preset Alarms";
+"DockMenuCurrentSubmenuTitle" = "Current Alarms";

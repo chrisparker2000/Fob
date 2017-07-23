@@ -24,7 +24,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 + (void)initialize {
     if (self = [Alarm class]) {
-        [self setVersion:3];
+        [self setVersion:4];
     }
 }
 
@@ -40,7 +40,7 @@ You should have received a copy of the GNU General Public License along with Fob
     if (self = [super init]) {
         [self setDoneAction:[[[BeepDoneAction alloc] init] autorelease]];
         title = [newTitle retain];
-        paused = true;
+        paused = YES;
         timeLeft = seconds * 1000;
         timeAtStart = timeLeft;
         lastCheckedMSeconds = -1;
@@ -48,6 +48,7 @@ You should have received a copy of the GNU General Public License along with Fob
         cachedValid = NO;
         cachedDescribeValid = NO;
         timer = nil;
+        repeats = NO;
     }
     return self;
 }
@@ -69,14 +70,25 @@ You should have received a copy of the GNU General Public License along with Fob
         } else { // We have to make a done action.
             [self setDoneAction:[[BeepDoneAction new] autorelease]];
         }
-        if (!paused) {
-            [self checkTime]; // Start the timer!
-        }
         if (version >= 3) {
             [coder decodeValueOfObjCType:@encode(long long) at:&timeAtStart];
         } else {
             // Well -- then I don't know when it started, really.
             timeAtStart = timeLeft;
+        }
+        if (version >= 4) {
+            [coder decodeValueOfObjCType:@encode(BOOL) at:&repeats];
+        } else {
+            // Repeating didn't exist until the fourth version of the object.
+            repeats = NO;
+        }
+        if (!paused) {
+            long long ms = milliseconds();
+            if ([self repeats] && ms > matures) {
+                // If not paused, and repeating, adjust for how many repetitions would have happened in the interval.  Tricky.
+                matures = ms + (timeAtStart-((ms-matures)%timeAtStart));
+            }
+            [self checkTime]; // Start the timer!
         }
     }
     return self;
@@ -139,6 +151,15 @@ You should have received a copy of the GNU General Public License along with Fob
     return time;
 }
 
+- (void) setMillisecondsRemaining:(long long)ms {
+    if (paused) {
+        timeLeft = ms;
+    } else {
+        matures = ms + milliseconds();
+    }
+    [self checkTime];
+}
+
 /* Returns a string representation of the time left. */
 - (NSString *)timeString {
     if (cachedValid) return lastTimeString;
@@ -178,6 +199,7 @@ You should have received a copy of the GNU General Public License along with Fob
 - (id)copyWithZone:(NSZone *)zone {
     Alarm * na = [[Alarm alloc] initWithTitle:title forSecondDuration:[self millisecondsRemaining]/1000];
     [na setDoneAction:[[[self doneAction] copy] autorelease]];
+    [na setRepeats:repeats];
     if (paused) [na pause];
     else [na start];
     return na;
@@ -211,6 +233,7 @@ You should have received a copy of the GNU General Public License along with Fob
     [coder encodeValueOfObjCType:@encode(long long) at:&matures];
     [coder encodeObject:doneAction];
     [coder encodeValueOfObjCType:@encode(long long) at:&timeAtStart];
+    [coder encodeValueOfObjCType:@encode(BOOL) at:&repeats];
 }
 
 /* This will check the time, and start a new timer, if appropriate. */
@@ -247,6 +270,14 @@ You should have received a copy of the GNU General Public License along with Fob
     [doneAction stop];
     [doneAction release];
     doneAction = [newAction retain];
+}
+
+- (void)setRepeats:(BOOL)willRepeat {
+    repeats = willRepeat;
+}
+
+- (BOOL)repeats {
+    return repeats;
 }
 
 @end

@@ -89,6 +89,7 @@ PresetAlarms * defaultDatabase = nil;
 - (int)add:(Alarm *)alarm {
     [self rawAdd:alarm];
     [self reformPresetDefaults];
+    return 0;
 }
 
 - (Alarm *)getClosestBefore:(long long)milliseconds {

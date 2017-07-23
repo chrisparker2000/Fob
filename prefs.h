@@ -29,6 +29,8 @@ extern NSString *FobStatusItemVisibleKey;
 extern NSString *FobStatusItemTitleVisibleKey;
 extern NSString *FobScaleDockTimeKey;
 extern NSString *FobDisableCommandQKey;
+extern NSString *FobDockMenuSubmenusKey;
+extern NSString *FobClearDueOnQuitKey;
 
 typedef enum _FeedbackLevel {
     flash = 0, beep, alwaysBeep
@@ -40,4 +42,5 @@ typedef enum _BounceLevel {
 
 NSMutableArray * correspondingDataArray(NSArray * array);
 NSMutableArray * correspondingObjectArray(NSArray * array);
+NSMutableDictionary *factoryDefaults();
 void setFactoryDefaults();

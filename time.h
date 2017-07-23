@@ -18,8 +18,6 @@ You should have received a copy of the GNU General Public License along with Fob
 #ifndef _TIME_H
 #define _TIME_H
 
-#include <sys/time.h>
-
 long long milliseconds();
 
 #endif /* _TIME_H */

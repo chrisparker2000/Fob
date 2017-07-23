@@ -50,13 +50,17 @@ You should have received a copy of the GNU General Public License along with Fob
     long long minute = [minuteField intValue];
     long long second = [secondField intValue];
     long long msecs = ((hour*60+minute)*60+second)*1000;
-    [timeView setMilliseconds:msecs];
+    [timeView setMillisecondsUser:msecs];
 }
 
 - (IBAction)timeStepClicked:(id)sender {
     int dv = [stepper intValue] - lastStepperValue;
     [timeView step:(dv == 1 || dv < -1)];
     lastStepperValue = [stepper intValue];
+}
+
+- (IBAction)repeatClicked:(id)sender {
+    
 }
 
 /** The text fields will be modified according to the time display. */
@@ -76,6 +80,7 @@ You should have received a copy of the GNU General Public License along with Fob
     [self setFieldsAccordingToTimeView];
     [doneActionInputController setDisplayedDoneAction:[alarm doneAction]];
     [descriptionField setStringValue:[alarm title]];
+    [repeatsCheckbox setState:[alarm repeats] ? NSOnState : NSOffState];
 }
 
 - (Alarm *)displayedAlarm {
@@ -89,6 +94,7 @@ You should have received a copy of the GNU General Public License along with Fob
     Alarm * alarm = [[Alarm alloc] initWithTitle:[descriptionField stringValue]
                                forSecondDuration:[timeView milliseconds]/1000];
     [alarm setDoneAction:[doneActionInputController displayedDoneAction]];
+    [alarm setRepeats:[repeatsCheckbox state]==NSOnState];
     return [alarm autorelease];
 }
 
