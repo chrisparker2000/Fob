@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License along with Fob
 //  This program is distributed under the terms of the GNU General Public License.
 
 #import "FobController.h"
+#import "SplitDelegate.h"
+#import "ToolbarDelegate.h"
 #import "prefs.h"
 #import "PreferenceController.h"
 
@@ -35,9 +37,12 @@ FobController *controller;
 
 - (id)init {
     if (self = [super init]) {
+        statusItem = nil;
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         controller = self;
         [self setWindowFrameAutosaveName:@"MainFobWindow"];
+        // Set the status item image.
+        statusItemImage = [[NSImage imageNamed:@"statusIcon.tiff"] retain];
 
         [nc addObserver:self
                selector:@selector(handleQuitting:)
@@ -45,6 +50,10 @@ FobController *controller;
                  object:nil];
     }
     return self;
+}
+
+- (void)dealloc {
+    [statusItemImage release];
 }
 
 - (void)handleQuitting:(NSNotification *)note {

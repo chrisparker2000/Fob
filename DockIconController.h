@@ -25,7 +25,7 @@ typedef enum _DockIconState {
 
 @interface DockIconController : NSObject {
     NSImage *originalImage; // The original application image.
-    NSMutableDictionary *attributes; // Attributes of text when displaying an alarm.
+    NSMutableDictionary *attributes, *statusAttributes; // Attributes of text when displaying an alarm in dock and status item.
     NSColor *backgroundText, *foregroundText; // Colors for the text when displaying an alarm.
     DockIconState iconState; // Is our dock icon the original, displaying an alarm, or doing the flash?
     NSTimer *doneTimer; // The timer for flashing the dock icon on/off.

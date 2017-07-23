@@ -27,11 +27,13 @@ NSString *FobKeepWindowOpenKey = @"Keep Window Open";
 NSString *FobFeedbackLevelKey = @"Feedback Level";
 NSString *FobBounceLevelKey = @"Bounce Level";
 NSString *FobDisplayedAlarmKey = @"Displayed Alarm";
+NSString *FobStatusItemVisibleKey = @"Status Item Visible";
 
 const FeedbackLevel kDefaultFeedbackLevel = beep;
 const BounceLevel kDefaultBounceLevel = dont;
 const BOOL kDefaultConfirmDelete = YES;
 const BOOL kDefaultKeepWindowOpen = NO;
+const BOOL kDefaultStatusItemVisible = NO;
 
 long long alarmTimes[] = {
     SECONDS(0,20,0), SECONDS(0,45,0), 0
@@ -83,6 +85,8 @@ void setFactoryDefaults() {
         [Alarm alarmWithTitle:NSLocalizedString(@"DefaultAlarmLabel", nil)
             forSecondDuration:SECONDS(0,5,0)]]
                  forKey:FobDisplayedAlarmKey];
+    [defaults setObject:[NSNumber numberWithBool:kDefaultStatusItemVisible]
+                 forKey:FobStatusItemVisibleKey];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     //NSLog(@"Registered defaults!");

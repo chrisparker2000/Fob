@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License along with Fob
 
 #import "PreferenceController.h"
 #import "FobController.h"
+#import "StatusItemKeeper.h"
+#import "ZoomSwitcher.h"
 #import "prefs.h"
 
 @implementation PreferenceController
@@ -29,6 +31,8 @@ You should have received a copy of the GNU General Public License along with Fob
 - (void)awakeFromNib {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [mainWindow setHidesOnDeactivate:![defaults boolForKey:FobKeepWindowOpenKey]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FobStatusItemVisibilityChanged"
+                                                        object:self];
 }
 
 - (void)changeFeedbackLabel {
@@ -74,10 +78,12 @@ You should have received a copy of the GNU General Public License along with Fob
     storedKeepWindowOpen = [defaults boolForKey:FobKeepWindowOpenKey];
     storedFeedbackLevel = [defaults integerForKey:FobFeedbackLevelKey];
     storedBounceLevel = [defaults integerForKey:FobBounceLevelKey];
+    storedStatusVisible = [defaults boolForKey:FobStatusItemVisibleKey];
     
     // Change the view to reflect current preferences.
     [confirmDeleteCheckbox setState:storedConfirmDelete ? NSOnState : NSOffState];
     [keepWindowOpenCheckbox setState:storedKeepWindowOpen ? NSOnState : NSOffState];
+    [statusItemVisibleCheckbox setState:storedStatusVisible ? NSOnState : NSOffState];
     [feedbackSlider setIntValue:storedFeedbackLevel];
     [bounceSlider setIntValue:storedBounceLevel];
     [self changeFeedbackLabel];
@@ -119,6 +125,16 @@ You should have received a copy of the GNU General Public License along with Fob
     [self changeBounceLabel];
 }
 
+- (IBAction)changeStatusVisible:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL statusVisible = [statusItemVisibleCheckbox state] == NSOnState;
+    [defaults setBool:statusVisible
+               forKey:FobStatusItemVisibleKey];
+    //[mainWindow setHidesOnDeactivate:!keepWindowOpen];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FobStatusItemVisibilityChanged"
+                                                        object:self];
+}
+
 - (IBAction)endSheet:(id)sender {
     // Hide the sheet.
     [preferenceWindow orderOut:sender];
@@ -143,6 +159,10 @@ You should have received a copy of the GNU General Public License along with Fob
                       forKey:FobFeedbackLevelKey];
         [defaults setInteger:storedBounceLevel
                       forKey:FobBounceLevelKey];
+        [defaults setBool:storedStatusVisible
+                   forKey:FobStatusItemVisibleKey];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FobStatusItemVisibilityChanged"
+                                                            object:self];
     }
 }
 

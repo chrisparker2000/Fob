@@ -37,6 +37,9 @@ You should have received a copy of the GNU General Public License along with Fob
 
     IBOutlet NSSplitView *mainSplit, *alarmSplit;
 
+    NSStatusItem *statusItem;
+    
+    NSImage *statusItemImage;
     ZoomWindow *currentWindow;
 }
 

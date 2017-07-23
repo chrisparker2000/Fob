@@ -1,4 +1,4 @@
-/* Copyright © 2003, Leaky Puppy Software, Net Monkey Inc.
+/* Copyright Â© 2003, Leaky Puppy Software, Net Monkey Inc.
 
 This file is part of Fob.
 
@@ -8,32 +8,18 @@ Fob is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 
 You should have received a copy of the GNU General Public License along with Fob; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
 
-//  prefs.h
+//  StatusItemKeeper.h
 //  Fob
 //
-//  Created by Thomas Finley on Fri Jan 10 2003.
+//  Created by Thomas Finley on Sun May 18 2003.
 //  Copyright (c) 2003 Leaky Puppy Software, for Net Monkey Inc. All rights reserved.
 //  This program is distributed under the terms of the GNU General Public License.
 
-#include <Cocoa/Cocoa.h>
+#import <Cocoa/Cocoa.h>
+#import "FobController.h"
 
-extern NSString *FobPresetAlarmsKey;
-extern NSString *FobActiveAlarmsKey;
-extern NSString *FobConfirmDeleteKey;
-extern NSString *FobKeepWindowOpenKey;
-extern NSString *FobFeedbackLevelKey;
-extern NSString *FobBounceLevelKey;
-extern NSString *FobDisplayedAlarmKey;
-extern NSString *FobStatusItemVisibleKey;
+@interface FobController (StatusItemKeeper);
 
-typedef enum _FeedbackLevel {
-    flash = 0, beep, alwaysBeep
-} FeedbackLevel;
+- (void)setStatusItemTitleTo:(NSAttributedString *)text;
 
-typedef enum _BounceLevel {
-    dont = 0, once, always
-} BounceLevel;
-
-NSMutableArray * correspondingDataArray(NSArray * array);
-NSMutableArray * correspondingObjectArray(NSArray * array);
-void setFactoryDefaults();
+@end

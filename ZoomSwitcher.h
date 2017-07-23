@@ -17,8 +17,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 #import <Foundation/Foundation.h>
 #import "FobController.h"
-
-@class ZoomWindow;
+#import "ZoomWindow.h"
 
 @interface FobController (ZoomSwitcher)
 

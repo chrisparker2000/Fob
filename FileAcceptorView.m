@@ -18,14 +18,20 @@ You should have received a copy of the GNU General Public License along with Fob
 #import "FileAcceptorView.h"
 #import "DoneActionInputController.h"
 
+#define ITUNES @"CorePasteboardFlavorType 0x6974756E"
+
 @implementation FileAcceptorView
 
 - (id)initWithFrame:(NSRect)frame {
     if (self = [super initWithFrame:frame]) {
         // Initialization code here.
         [self setHighlighted:NO];
+        /*[self registerForDraggedTypes:
+            [NSArray arrayWithObjects:NSFilenamesPboardType, NSURLPboardType, NSStringPboardType, nil]];*/
+        /*[self registerForDraggedTypes:
+            [NSAttributedString textPasteboardTypes]];*/
         [self registerForDraggedTypes:
-            [NSArray arrayWithObject:NSFilenamesPboardType]];
+            [NSArray arrayWithObjects:NSFilenamesPboardType, NSFilesPromisePboardType, nil]];
     }
     return self;
 }
@@ -67,7 +73,16 @@ You should have received a copy of the GNU General Public License along with Fob
             [self setHighlighted:YES];
             return NSDragOperationGeneric;
         }
-    }
+    }/* else if ([[pboard types] containsObject:NSFilesPromisePboardType]) {
+        NSArray *types = [pboard types];
+        //NSLog(@"%@", types);
+        NSEnumerator *enumerator = [types objectEnumerator];
+        NSString *type;
+        NSLog(@"PING! %@", NSFilesPromisePboardType);
+        while (type = [enumerator nextObject]) {
+            NSLog(@"  TYPE \"%@\" has CONTENTS %@", type, [pboard propertyListForType:type]);
+        }
+    }*/
     return NSDragOperationNone;
 }
 

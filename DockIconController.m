@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License along with Fob
 #import "prefs.h"
 #import "AttentionGrabber.h"
 #import "DoneAction.h"
+#import "StatusItemKeeper.h"
 
 #define PADDING 5.0f
 
@@ -35,6 +36,10 @@ You should have received a copy of the GNU General Public License along with Fob
                    forKey:NSFontAttributeName];
     [attributes setObject:foregroundText
                    forKey:NSForegroundColorAttributeName];
+
+    statusAttributes = [[NSMutableDictionary alloc] init];
+    [statusAttributes setObject:[NSFont fontWithName:@"Lucida Grande" size:12]
+                         forKey:NSFontAttributeName];
 }
 
 /* This will set and return the alarm that last rang, or nil if there are no alarms that have come due.  For the sake of safety, this should probably run every time the status of the alarm list, or alarm doneness is changed. */
@@ -50,6 +55,11 @@ You should have received a copy of the GNU General Public License along with Fob
     }
     [last release];
     return latestRungAlarm;
+}
+
+- (void)dealloc {
+    [statusAttributes release];
+    [attributes release];
 }
 
 - (Alarm *)latestRungAlarm {
@@ -80,7 +90,11 @@ You should have received a copy of the GNU General Public License along with Fob
            selector:@selector(handleAlarmCollectionNote:)
                name:@"FobAlarmRemoved"
              object:currentAlarms];
-
+    [nc addObserver:self
+           selector:@selector(handleStatusVisibilityChange:)
+               name:@"FobStatusItemVisibilityChanged"
+             object:nil];
+    
     quitting = NO;
     [nc addObserver:self
            selector:@selector(handleQuitting:)
@@ -89,6 +103,20 @@ You should have received a copy of the GNU General Public License along with Fob
 
     [self updateLatestRungAlarm];
     [self updateIcon];
+}
+
+- (void)updateStatusItem {
+    Alarm * first = [self firstAlarm];
+    NSAttributedString *as;
+    if (!first) {
+        [[FobController defaultController] setStatusItemTitleTo:nil];
+        return;
+    }
+    as = [[NSAttributedString alloc] initWithString:[first describe]
+                                         attributes:statusAttributes];
+
+    [[FobController defaultController] setStatusItemTitleTo:as];
+    [as release];	
 }
 
 - (Alarm *)firstAlarm {
@@ -121,6 +149,10 @@ You should have received a copy of the GNU General Public License along with Fob
     [NSApp setApplicationIconImage:originalImage]; // Set it to the original before quit.
 }
 
+- (void)handleStatusVisibilityChange:(NSNotification *)note {
+    [self updateStatusItem];
+}
+
 - (void)doDoneFlash:(NSTimer*)timer {
     if (quitting) return;
     if (toFlash) {
@@ -146,6 +178,7 @@ You should have received a copy of the GNU General Public License along with Fob
         // The not bright flash is just the original image.
         [NSApp setApplicationIconImage:originalImage];
     }
+    [self updateStatusItem];
     toFlash = !toFlash; // Next time, do the opposite...
 }
 
@@ -170,10 +203,11 @@ You should have received a copy of the GNU General Public License along with Fob
             [NSApp setApplicationIconImage:originalImage];
             break;
         case alarmDisplay: {
-            // We want to draw the first icon.
             NSString *timeString = [first timeString];
+            // We want to draw the first icon.
             NSSize dockIconSize = [originalImage size],
                 timeSize = [timeString sizeWithAttributes:attributes];
+
             NSImage *newImage = [NSApp applicationIconImage];
             NSRect dockRect = NSMakeRect(0.0f,0.0f,dockIconSize.width,dockIconSize.height);
             NSBezierPath *path = [NSBezierPath bezierPath];
@@ -204,6 +238,7 @@ You should have received a copy of the GNU General Public License along with Fob
             break;
         }
     }
+    [self updateStatusItem];
     iconState = newState; // Register the new state.
 }
 

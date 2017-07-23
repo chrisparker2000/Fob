@@ -199,7 +199,8 @@
 				F5F0699803DB73FC01000103,
 				F50C878403C772BC01000105,
 				F5D1003003DA1C3E01000103,
-				F54F676403C7C68801000105,
+				E912E546047884E000000102,
+				E912E54A0478870700000102,
 				F5EF5B6803E997300118FB85,
 				F53EE73603DBAE3101000103,
 			);
@@ -264,6 +265,7 @@
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 				WRAPPER_EXTENSION = app;
 			};
+			comments = "A countdown timer application.";
 			dependencies = (
 			);
 			isa = PBXApplicationTarget;
@@ -280,7 +282,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Fob</string>
 	<key>CFBundleGetInfoString</key>
-	<string>1.0b5</string>
+	<string>1.0</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Fob Help</string>
 	<key>CFBundleHelpBookName</key>
@@ -296,11 +298,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0b5</string>
+	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>tfob</string>
 	<key>CFBundleVersion</key>
-	<string>1.0b5</string>
+	<string>1.0</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -336,6 +338,7 @@
 				F5F88DEB03E4ED2F0118FB85,
 				F54456F703E75CB10118FB85,
 				F5FAFAFB03E8955F0118FB85,
+				E912E5420478790F00000102,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,7 +349,6 @@
 				080E96DCFE201CFB7F000001,
 				089C165EFE840E0CC02AAC07,
 				F50C878503C772BC01000105,
-				F54F676503C7C68801000105,
 				F5D1003503DA1C5701000103,
 				F5D1003603DA1C5701000103,
 				F5D1003703DA1C5701000103,
@@ -356,6 +358,8 @@
 				F5F0699A03DB73FC01000103,
 				F53EE73703DBAE3901000103,
 				F5EF5B6903E997300118FB85,
+				E912E54B0478870700000102,
+				E9423FAD047C830A00000102,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,6 +392,7 @@
 				F5F88DEC03E4ED2F0118FB85,
 				F54456F803E75CB10118FB85,
 				F5FAFAFC03E8955F0118FB85,
+				E912E5430478790F00000102,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,6 +447,62 @@
 //4A2
 //4A3
 //4A4
+//E90
+//E91
+//E92
+//E93
+//E94
+		E912E5400478790F00000102 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = StatusItemKeeper.h;
+			refType = 4;
+		};
+		E912E5410478790F00000102 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = StatusItemKeeper.m;
+			refType = 4;
+		};
+		E912E5420478790F00000102 = {
+			fileRef = E912E5400478790F00000102;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E912E5430478790F00000102 = {
+			fileRef = E912E5410478790F00000102;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E912E546047884E000000102 = {
+			isa = PBXFileReference;
+			path = Clock.pdf;
+			refType = 4;
+		};
+		E912E54A0478870700000102 = {
+			isa = PBXFileReference;
+			path = statusIcon.tiff;
+			refType = 4;
+		};
+		E912E54B0478870700000102 = {
+			fileRef = E912E54A0478870700000102;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E9423FAD047C830A00000102 = {
+			fileRef = E912E546047884E000000102;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//E90
+//E91
+//E92
+//E93
+//E94
 //F50
 //F51
 //F52
@@ -634,17 +695,6 @@
 		};
 		F54F676303C77CC801000105 = {
 			fileRef = F54F676103C77CC801000105;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		F54F676403C7C68801000105 = {
-			isa = PBXFileReference;
-			path = Clock.pdf;
-			refType = 4;
-		};
-		F54F676503C7C68801000105 = {
-			fileRef = F54F676403C7C68801000105;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1059,6 +1109,8 @@
 				F54F67D103C81CF201000105,
 				F531E2A303E2833001000103,
 				F531E2A403E2833001000103,
+				E912E5400478790F00000102,
+				E912E5410478790F00000102,
 				F53A13C603D2958701000105,
 				F53A13C703D2958701000105,
 				F5E1D6F503E0A12201000103,

@@ -80,7 +80,7 @@ NSRect unitRect;
     self = [super initWithFrame:frame];
     if (!clockImage) { // This is the first time this class has been loaded...
         // We load the clock image once per run of the application.
-        clockImage = [NSImage imageNamed:@"Clock.pdf"];
+        clockImage = [[NSImage imageNamed:@"Clock.pdf"] retain];
         clockImageRect.origin = NSMakePoint(0.0f, 0.0f);
         clockImageRect.size = [clockImage size];
         // We use one of these per application run too.

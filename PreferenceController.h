@@ -18,9 +18,13 @@ You should have received a copy of the GNU General Public License along with Fob
 #import <Cocoa/Cocoa.h>
 #import "prefs.h"
 
+// Notifications:
+// "FobStatusItemVisibilityChanged" a status item preference change
+
 @interface PreferenceController : NSObject {
     IBOutlet NSButton *confirmDeleteCheckbox;
     IBOutlet NSButton *keepWindowOpenCheckbox;
+    IBOutlet NSButton *statusItemVisibleCheckbox;
     IBOutlet NSTextField *feedbackLabel;
     IBOutlet NSTextField *bounceLabel;
     IBOutlet NSSlider *feedbackSlider;
@@ -34,11 +38,13 @@ You should have received a copy of the GNU General Public License along with Fob
     BOOL storedKeepWindowOpen;
     FeedbackLevel storedFeedbackLevel;
     BounceLevel storedBounceLevel;
+    BOOL storedStatusVisible;
 }
 - (void)displayPreferences;
 - (IBAction)changeConfirmDeletions:(id)sender;
 - (IBAction)changeKeepOpen:(id)sender;
 - (IBAction)changeFeedback:(id)sender;
 - (IBAction)changeBounce:(id)sender;
+- (IBAction)changeStatusVisible:(id)sender;
 - (IBAction)endSheet:(id)sender;
 @end
