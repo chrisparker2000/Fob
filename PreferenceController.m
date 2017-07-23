@@ -120,7 +120,7 @@ You should have received a copy of the GNU General Public License along with Fob
 }
 
 - (IBAction)endSheet:(id)sender {
-    // Hide the sheed.
+    // Hide the sheet.
     [preferenceWindow orderOut:sender];
     // Return to normal event handling.
     [NSApp endSheet:preferenceWindow returnCode:[sender tag]];

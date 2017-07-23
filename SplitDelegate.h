@@ -18,7 +18,9 @@ You should have received a copy of the GNU General Public License along with Fob
 #import <Foundation/Foundation.h>
 #import "FobController.h"
 
-
 @interface FobController (SplitDelegate);
+
+- (void)saveSplitView:(NSSplitView *)split withName:(NSString *)preferencesName;
+- (void)loadSplitView:(NSSplitView *)split withName:(NSString *)preferencesName;
 
 @end

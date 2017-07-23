@@ -35,15 +35,30 @@ FobController *controller;
 
 - (id)init {
     if (self = [super init]) {
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         controller = self;
         [self setWindowFrameAutosaveName:@"MainFobWindow"];
+
+        [nc addObserver:self
+               selector:@selector(handleQuitting:)
+                   name:@"NSApplicationWillTerminateNotification"
+                 object:nil];
     }
     return self;
+}
+
+- (void)handleQuitting:(NSNotification *)note {
+    // Save the states of the two split views.
+    [self saveSplitView:mainSplit withName:@"MainSplitViewSizes"];
+    [self saveSplitView:alarmSplit withName:@"AlarmSplitViewSizes"];
 }
 
 - (void)awakeFromNib {
     currentWindow = bigWindow;
     [self setupToolbar];
+
+    [self loadSplitView:mainSplit withName:@"MainSplitViewSizes"];
+    [self loadSplitView:alarmSplit withName:@"AlarmSplitViewSizes"];
 }
 
 - (IBAction)showPreferences:(id)sender {

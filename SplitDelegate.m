@@ -32,4 +32,36 @@ constrainMinCoordinate:(float)proposedMin
     return sender == mainSplit ? proposedMin+214.0f : proposedMin+60.0f;
 }
 
+- (void)saveSplitView:(NSSplitView *)split withName:(NSString *)preferencesName {
+    NSArray *views = [split subviews];
+    NSMutableArray *sizes = [NSMutableArray arrayWithCapacity:[views count]];
+    BOOL vertical = [split isVertical];
+    int i;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    for (i=0; i<[views count]; i++) {
+        int size = vertical ? [[views objectAtIndex:i] frame].size.width :
+        [[views objectAtIndex:i] frame].size.height;
+        [sizes addObject:[NSNumber numberWithInt:size]];
+    }
+    [defaults setObject:sizes forKey:preferencesName];
+    //NSLog(@"Saved sizes of %@ as %@", preferencesName, sizes);
+}
+
+- (void)loadSplitView:(NSSplitView *)split withName:(NSString *)preferencesName {
+    NSArray *sizes = [[NSUserDefaults standardUserDefaults] arrayForKey:preferencesName],
+    *views = [split subviews];
+    BOOL vertical = [split isVertical];
+    int i;
+    //float dividerWidth = [split dividerThickness];
+    if (!sizes) return; // No sizes for the split view sizes saved yet!
+    //NSLog(@"Loading sizes of %@ as %@", preferencesName, sizes);
+    for (i=0; i<[views count]; i++) {
+        int size = [[sizes objectAtIndex:i] intValue];
+        NSRect frame = [[views objectAtIndex:i] frame];
+        if (vertical) frame.size.width = size;
+        else frame.size.height = size;
+        [[views objectAtIndex:i] setFrame:frame];
+    }
+}
+
 @end

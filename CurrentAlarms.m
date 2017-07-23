@@ -125,22 +125,6 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 }
 
 - (void)handleTableSelection:(NSNotification *)note {
-    /*static Alarm * oldAlarm; // The old code from presets.
-    int selected = [presetTable numberOfSelectedRows];
-    if (selected > 1) return;
-    if (selected == 1) {
-        int row = [presetTable selectedRow];
-        if (!oldAlarm)
-            oldAlarm = [[inputController displayedAlarm] retain];
-        [inputController setDisplayedAlarm:[[presetAlarms alarms] objectAtIndex:row]];
-    } else {
-        if (!oldAlarm) return;
-        [inputController setDisplayedAlarm:oldAlarm];
-        [oldAlarm release];
-        oldAlarm = nil;
-    }*/
-
-    //static Alarm * oldAlarm;
     NSTableView *table = [note object];
     AlarmCollection *collection;
     int selected = [table numberOfSelectedRows];
