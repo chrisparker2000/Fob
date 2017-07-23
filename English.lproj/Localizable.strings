@@ -1,0 +1,37 @@
+// The description of each level of feedback, from mild to incredibly annoying.
+"FeedbackLevelFlashOnly" = "Flash the dock icon constantly.";
+"FeedbackLevelBeepOnce" = "Flash constantly, and beep once.";
+"FeedbackLevelBeepAlways" = "Constantly flash and beep!";
+
+// The alert for attempting to start an alarm with zero seconds.
+"CurrentNonzeroTimeTitle" = "Needs Nonzero Time";
+"CurrentNonzeroTimeMessage" = "Starting an alarm requires a nonzero time.";
+
+// The alert for attempting to delete an item from one of the tables.
+"ConfirmDeleteTitle" = "Really Delete?";
+"ConfirmDeleteMessage" = "Really delete the selected item?";
+"ConfirmDeletePluralMessage" = "Really delete the selected items?";
+
+// The alert for attempting to add an existing alarm to presets.
+"PresetExistsTitle" = "Preset Exists";
+"PresetExistsMessage" = "A preset with that name and time exists.";
+
+// The built in alarms for zero time, and for the maximum time.
+"MaxTimeLabel" = "Max Time";
+"MinTimeLabel" = "Minimum Time";
+
+// The labels for the toolbar.
+"ToolbarStartLabel" = "Start";
+"ToolbarStoreLabel" = "Store";
+"ToolbarStartSelectedPresetsLabel" = "Start Selected";
+"ToolbarDeleteLabel" = "Delete";
+"ToolbarPreferencesLabel" = "Preferences";
+"ToolbarClearDueLabel" = "Clear Due";
+
+// The labels for the toolbar tooltips.
+"ToolbarStartTip" = "Starts the alarm displayed in the clock.";
+"ToolbarStoreTip" = "Stores the alarm displayed in the clock into the list of presets.";
+"ToolbarStartSelectedPresetsTip" = "Starts alarms based on the selected presets.";
+"ToolbarDeleteTip" = "Deletes currently selected alarms/presets.";
+"ToolbarPreferencesTip" = "Change Fob preferences.";
+"ToolbarClearDueTip" = "Any alarms that are finished are cleared out.";

@@ -1,0 +1,106 @@
+{
+    IBClasses = (
+        {CLASS = AlarmCollection; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = ApplicationDelegate; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {currentAlarms = CurrentAlarms; presetAlarms = PresetAlarms; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                addSelectedPresets = id; 
+                addToCurrent = id; 
+                clearDue = id; 
+                doubleClickPresets = id; 
+                removeFromCurrent = id; 
+            }; 
+            CLASS = CurrentAlarms; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                currentTable = NSTableView; 
+                inputController = TimeInputController; 
+                presetAlarms = PresetAlarms; 
+                presetTable = NSTableView; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = AlarmCollection; 
+        }, 
+        {
+            ACTIONS = {delete = id; }; 
+            CLASS = DeleteTableView; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSTableView; 
+        }, 
+        {
+            CLASS = DockIconController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {currentAlarms = CurrentAlarms; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {customizeToolbar = id; showPreferences = id; }; 
+            CLASS = FobController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                currentAlarms = CurrentAlarms; 
+                customizeToolbarItem = NSMenuItem; 
+                descriptionField = NSTextField; 
+                hourField = NSTextField; 
+                inputController = TimeInputController; 
+                minuteField = NSTextField; 
+                preferenceController = PreferenceController; 
+                presetAlarms = PresetAlarms; 
+                secondField = NSTextField; 
+                timeView = TimeView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            ACTIONS = {changeConfirmDeletions = id; changeFeedback = id; endSheet = id; }; 
+            CLASS = PreferenceController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                confirmDeleteCheckbox = NSButton; 
+                feedbackLabel = NSTextField; 
+                feedbackSlider = NSSlider; 
+                mainWindow = NSWindow; 
+                preferenceWindow = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {addToPresets = id; removeFromPresets = id; }; 
+            CLASS = PresetAlarms; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                inputController = TimeInputController; 
+                presetTable = NSTableView; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = AlarmCollection; 
+        }, 
+        {
+            ACTIONS = {timeChanged = id; timeStepClicked = id; }; 
+            CLASS = TimeInputController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                descriptionField = NSTextField; 
+                hourField = NSTextField; 
+                minuteField = NSTextField; 
+                secondField = NSTextField; 
+                stepper = NSStepper; 
+                timeView = TimeView; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = TimeView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {inputController = TimeInputController; }; 
+            SUPERCLASS = NSView; 
+        }
+    ); 
+    IBVersion = 1; 
+}
