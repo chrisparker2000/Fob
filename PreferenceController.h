@@ -25,6 +25,8 @@ You should have received a copy of the GNU General Public License along with Fob
     IBOutlet NSButton *confirmDeleteCheckbox;
     IBOutlet NSButton *keepWindowOpenCheckbox;
     IBOutlet NSButton *statusItemVisibleCheckbox;
+    IBOutlet NSButton *statusItemTitleVisibleCheckbox;
+    IBOutlet NSButton *scaleDockTimeCheckbox;
     IBOutlet NSTextField *feedbackLabel;
     IBOutlet NSTextField *bounceLabel;
     IBOutlet NSSlider *feedbackSlider;
@@ -39,6 +41,8 @@ You should have received a copy of the GNU General Public License along with Fob
     FeedbackLevel storedFeedbackLevel;
     BounceLevel storedBounceLevel;
     BOOL storedStatusVisible;
+    BOOL storedStatusTitleVisible;
+    BOOL storedScaleDockTime;
 }
 - (void)displayPreferences;
 - (IBAction)changeConfirmDeletions:(id)sender;
@@ -46,5 +50,7 @@ You should have received a copy of the GNU General Public License along with Fob
 - (IBAction)changeFeedback:(id)sender;
 - (IBAction)changeBounce:(id)sender;
 - (IBAction)changeStatusVisible:(id)sender;
+- (IBAction)changeStatusTitleVisible:(id)sender;
+- (IBAction)changeScaleDockTime:(id)sender;
 - (IBAction)endSheet:(id)sender;
 @end

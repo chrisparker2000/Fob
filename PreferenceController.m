@@ -31,6 +31,12 @@ You should have received a copy of the GNU General Public License along with Fob
 - (void)awakeFromNib {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [mainWindow setHidesOnDeactivate:![defaults boolForKey:FobKeepWindowOpenKey]];
+    // Status item nonsense.
+    if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_1) {
+        // Status items can't be used in "OS X".
+        [statusItemVisibleCheckbox setEnabled:NO];
+        [bounceSlider setEnabled:NO];
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FobStatusItemVisibilityChanged"
                                                         object:self];
 }
@@ -79,11 +85,16 @@ You should have received a copy of the GNU General Public License along with Fob
     storedFeedbackLevel = [defaults integerForKey:FobFeedbackLevelKey];
     storedBounceLevel = [defaults integerForKey:FobBounceLevelKey];
     storedStatusVisible = [defaults boolForKey:FobStatusItemVisibleKey];
+    storedStatusTitleVisible = [defaults boolForKey:FobStatusItemTitleVisibleKey];
+    storedScaleDockTime = [defaults boolForKey:FobScaleDockTimeKey];
     
     // Change the view to reflect current preferences.
     [confirmDeleteCheckbox setState:storedConfirmDelete ? NSOnState : NSOffState];
     [keepWindowOpenCheckbox setState:storedKeepWindowOpen ? NSOnState : NSOffState];
     [statusItemVisibleCheckbox setState:storedStatusVisible ? NSOnState : NSOffState];
+    [statusItemTitleVisibleCheckbox setState:storedStatusTitleVisible ? NSOnState : NSOffState];
+    [statusItemTitleVisibleCheckbox setEnabled:storedStatusVisible];
+    [scaleDockTimeCheckbox setState:storedScaleDockTime ? NSOnState : NSOffState];
     [feedbackSlider setIntValue:storedFeedbackLevel];
     [bounceSlider setIntValue:storedBounceLevel];
     [self changeFeedbackLabel];
@@ -130,9 +141,23 @@ You should have received a copy of the GNU General Public License along with Fob
     BOOL statusVisible = [statusItemVisibleCheckbox state] == NSOnState;
     [defaults setBool:statusVisible
                forKey:FobStatusItemVisibleKey];
-    //[mainWindow setHidesOnDeactivate:!keepWindowOpen];
+    [statusItemTitleVisibleCheckbox setEnabled:statusVisible];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FobStatusItemVisibilityChanged"
                                                         object:self];
+}
+
+- (IBAction)changeStatusTitleVisible:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL statusTitleVisible = [statusItemTitleVisibleCheckbox state] == NSOnState;
+    [defaults setBool:statusTitleVisible
+               forKey:FobStatusItemTitleVisibleKey];
+}
+
+- (IBAction)changeScaleDockTime:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL scaleDockTime = [scaleDockTimeCheckbox state] == NSOnState;
+    [defaults setBool:scaleDockTime
+               forKey:FobScaleDockTimeKey];
 }
 
 - (IBAction)endSheet:(id)sender {
@@ -161,6 +186,10 @@ You should have received a copy of the GNU General Public License along with Fob
                       forKey:FobBounceLevelKey];
         [defaults setBool:storedStatusVisible
                    forKey:FobStatusItemVisibleKey];
+        [defaults setBool:storedStatusTitleVisible
+                   forKey:FobStatusItemTitleVisibleKey];
+        [defaults setBool:storedScaleDockTime
+                   forKey:FobScaleDockTimeKey];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FobStatusItemVisibilityChanged"
                                                             object:self];
     }

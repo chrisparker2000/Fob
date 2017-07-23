@@ -19,12 +19,52 @@ You should have received a copy of the GNU General Public License along with Fob
 #import "CurrentAlarms.h"
 #import "PresetAlarms.h"
 
+#define kFixedDockMenuAppKitVersion 632
+
 @implementation ApplicationDelegate
 
 // This is used by all those items (each for a preset alarm) in the application's dock menu.
 - (IBAction)presetItem:(id)sender {
-    int itemNumber = [sender tag];
-    [currentAlarms add:[[[presetAlarms alarms] objectAtIndex:itemNumber] copy]];
+    [currentAlarms add:[[sender representedObject] copy]];
+}
+
+- (IBAction)currentItem:(id)sender {
+    // Pause it!
+    [currentAlarms pause:[sender representedObject]];
+}
+
+- (IBAction)pausedItem:(id)sender {
+    // Unpause it!
+    [currentAlarms unpause:[sender representedObject]];
+}
+
+- (NSMenuItem *) constructMenuItem:(NSString *)title
+                            action:(SEL)aSelector
+                 representedObject:(id)represented {
+    NSMenuItem *item;
+
+    if (NSAppKitVersionNumber>=kFixedDockMenuAppKitVersion) {
+        item =
+        [[NSMenuItem alloc] initWithTitle:title
+                                   action:aSelector
+                            keyEquivalent:@""];
+        [item setTarget:self];
+        [item autorelease];
+    } else {
+        NSInvocation *myInv= [NSInvocation invocationWithMethodSignature:
+            [self methodSignatureForSelector:aSelector]];
+        item =
+            [[NSMenuItem alloc] initWithTitle:title
+                                       action:@selector(invoke)
+                                keyEquivalent:@""];
+        [myInv setTarget:self];
+        [myInv setSelector:aSelector];
+        [myInv setArgument:&item atIndex:2];
+        [item setTarget:[myInv retain]];
+    }
+    [item setEnabled:YES];
+    [item setRepresentedObject:represented];
+    return item;
 }
 
 - (NSMenu *)applicationDockMenu:(NSApplication *)sender {
@@ -34,7 +74,6 @@ You should have received a copy of the GNU General Public License along with Fob
     NSMenuItem *item;
     NSEnumerator *enumerator;
     Alarm *alarm;
-    int i = 0;
 
     // The items for control.
     item = [[[NSMenuItem alloc] initWithTitle:@"Clear Due"
@@ -44,35 +83,52 @@ You should have received a copy of the GNU General Public License along with Fob
     [dockMenu addItem:item];
     
     // Set up the preset alarm submenu.
-    enumerator = [[presetAlarms alarms] objectEnumerator];
-    while (alarm = [enumerator nextObject]) {
-        NSMenuItem *subitem =
-        [[[NSMenuItem alloc] initWithTitle:[alarm describe]
-                                    action:@selector(presetItem:)
-                             keyEquivalent:@""] autorelease];
-        [subitem setTarget:self];
-        [subitem setTag:i++];
-        [presetMenu addItem:subitem];
+    if ([[presetAlarms alarms] count]) {
+        enumerator = [[presetAlarms alarms] objectEnumerator];
+        while (alarm = [enumerator nextObject]) {
+            [presetMenu addItem:[self constructMenuItem:[alarm describe]
+                                                 action:@selector(presetItem:)
+                                      representedObject:alarm]];
+        }
+        item = [[[NSMenuItem alloc] initWithTitle:@"Preset Alarms"
+                                           action:nil
+                                    keyEquivalent:@""] autorelease];
+        [item setSubmenu:presetMenu];
+        [item setEnabled:YES];
+        [dockMenu addItem:item];
     }
-    item = [[[NSMenuItem alloc] initWithTitle:@"Preset Alarms"
-                                       action:nil
-                                keyEquivalent:@""] autorelease];
-    [item setSubmenu:presetMenu];
-    [dockMenu addItem:item];
+
     // Set up the current alarm submenu.
-    enumerator = [[currentAlarms alarms] objectEnumerator];
-    while (alarm = [enumerator nextObject]) {
-        NSMenuItem *subitem =
-        [[[NSMenuItem alloc] initWithTitle:[alarm describe]
-                                    action:nil
-                             keyEquivalent:@""] autorelease];
-        [currentMenu addItem:subitem];
+    int cac=[[currentAlarms alarms] count], pac=[[currentAlarms pausedAlarms] count];
+    if (cac || pac) {
+        if (cac) {
+            [currentMenu addItemWithTitle:@"Active:" action:nil keyEquivalent:@""];
+            enumerator = [[currentAlarms alarms] objectEnumerator];
+            while (alarm = [enumerator nextObject]) {
+                [currentMenu addItem:[self constructMenuItem:[alarm describe]
+                                                      action:@selector(currentItem:)
+                                           representedObject:alarm]];
+            }
+        }
+        if (cac && pac) {
+            [currentMenu addItem:[NSMenuItem separatorItem]];
+        }
+        if (pac) {
+            [currentMenu addItemWithTitle:@"Paused:" action:nil keyEquivalent:@""];
+            enumerator = [[currentAlarms pausedAlarms] objectEnumerator];
+            while (alarm = [enumerator nextObject]) {
+                [currentMenu addItem:[self constructMenuItem:[alarm describe]
+                                                      action:@selector(pausedItem:)
+                                           representedObject:alarm]];
+            }
+        }        
+
+        item = [[[NSMenuItem alloc] initWithTitle:@"Current Alarms"
+                                           action:nil
+                                    keyEquivalent:@""] autorelease];
+        [item setSubmenu:currentMenu];
+        [dockMenu addItem:item];
     }
-    item = [[[NSMenuItem alloc] initWithTitle:@"Current Alarms"
-                                       action:nil
-                                keyEquivalent:@""] autorelease];
-    [item setSubmenu:currentMenu];
-    [dockMenu addItem:item];
     
     return dockMenu;
 }

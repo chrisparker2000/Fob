@@ -79,6 +79,13 @@ You should have received a copy of the GNU General Public License along with Fob
 }
 
 - (Alarm *)displayedAlarm {
+    // Make sure that if the user is still editing the text fields for time and title that these are changed.
+    /*[hourField validateEditing];
+    [minuteField validateEditing];
+    [secondField validateEditing];
+    [descriptionField validateEditing];*/
+    [self timeChanged:nil];
+    
     Alarm * alarm = [[Alarm alloc] initWithTitle:[descriptionField stringValue]
                                forSecondDuration:[timeView milliseconds]/1000];
     [alarm setDoneAction:[doneActionInputController displayedDoneAction]];

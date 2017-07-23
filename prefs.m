@@ -22,18 +22,23 @@ You should have received a copy of the GNU General Public License along with Fob
 
 NSString *FobPresetAlarmsKey = @"Preset Alarms";
 NSString *FobActiveAlarmsKey = @"Active Alarms";
+NSString *FobPausedAlarmsKey = @"Paused Alarms";
 NSString *FobConfirmDeleteKey = @"Confirm Delete";
 NSString *FobKeepWindowOpenKey = @"Keep Window Open";
 NSString *FobFeedbackLevelKey = @"Feedback Level";
 NSString *FobBounceLevelKey = @"Bounce Level";
 NSString *FobDisplayedAlarmKey = @"Displayed Alarm";
 NSString *FobStatusItemVisibleKey = @"Status Item Visible";
+NSString *FobStatusItemTitleVisibleKey = @"Status Item Displays Title";
+NSString *FobScaleDockTimeKey = @"Time Scaled to Fit Dock Icon";
 
 const FeedbackLevel kDefaultFeedbackLevel = beep;
 const BounceLevel kDefaultBounceLevel = dont;
 const BOOL kDefaultConfirmDelete = YES;
 const BOOL kDefaultKeepWindowOpen = NO;
 const BOOL kDefaultStatusItemVisible = NO;
+const BOOL kDefaultStatusItemTitleVisible = YES;
+const BOOL kDefaultScaleDockTime = NO;
 
 long long alarmTimes[] = {
     SECONDS(0,20,0), SECONDS(0,45,0), 0
@@ -81,6 +86,12 @@ void setFactoryDefaults() {
                  forKey:FobConfirmDeleteKey];
     [defaults setObject:[NSNumber numberWithBool:kDefaultKeepWindowOpen]
                  forKey:FobKeepWindowOpenKey];
+    [defaults setObject:[NSNumber numberWithBool:kDefaultStatusItemVisible]
+                 forKey:FobStatusItemVisibleKey];
+    [defaults setObject:[NSNumber numberWithBool:kDefaultStatusItemTitleVisible]
+                 forKey:FobStatusItemTitleVisibleKey];
+    [defaults setObject:[NSNumber numberWithBool:kDefaultScaleDockTime]
+                 forKey:FobScaleDockTimeKey];
     [defaults setObject:[NSArchiver archivedDataWithRootObject:
         [Alarm alarmWithTitle:NSLocalizedString(@"DefaultAlarmLabel", nil)
             forSecondDuration:SECONDS(0,5,0)]]

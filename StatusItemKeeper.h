@@ -20,6 +20,6 @@ You should have received a copy of the GNU General Public License along with Fob
 
 @interface FobController (StatusItemKeeper);
 
-- (void)setStatusItemTitleTo:(NSAttributedString *)text;
+- (void)setStatusItemTitleTo:(NSAttributedString *)text withAlarmNamed:(NSString *)title;
 
 @end

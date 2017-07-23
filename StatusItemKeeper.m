@@ -25,25 +25,48 @@ You should have received a copy of the GNU General Public License along with Fob
         if (statusItem) return; // Already have it?
         NSStatusBar *bar = [NSStatusBar systemStatusBar];
         statusItem = [[bar statusItemWithLength:NSVariableStatusItemLength] retain];
+        [statusItem setTarget:self];
+        [statusItem setAction:@selector(statusItemClicked:)];
+        [statusItem sendActionOn:NSLeftMouseDownMask];
         [statusItem setImage:statusItemImage];
         //[statusItem setHighlightMode:YES];
     } else {
+        [statusItem setTarget:nil];
         [statusItem release];
         statusItem = nil;
     }
 }
 
-- (void)setStatusItemTitleTo:(NSAttributedString *)text {
+- (void)setStatusItemTitleTo:(NSAttributedString *)text withAlarmNamed:(NSString *)title {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL shouldBeVisible = [defaults boolForKey:FobStatusItemVisibleKey];
+    // Check for the correct version of OS X.
+    if (floor(NSAppKitVersionNumber) <= 620) {
+        // Can't do it!
+        if (shouldBeVisible)
+            NSLog(@"Warning: can't use status items in pre-Jaguar OS X");
+        return;
+    }
+    
     if (!text) {
         [self setStatusItemVisible:NO];
         return;
     } else {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        BOOL shouldBeVisible = [defaults boolForKey:FobStatusItemVisibleKey];
         if (statusItem == nil && shouldBeVisible) [self setStatusItemVisible:YES];
         if (!shouldBeVisible) [self setStatusItemVisible:NO];
         [statusItem setAttributedTitle:text];
+        if (title) {
+            [statusItem setToolTip:title];
+        }
     }
+}
+
+- (void)statusItemClicked:(id)clicker {
+    //NSLog(@"The item was clicked!\n");
+    NSApplication *app = [NSApplication sharedApplication];
+    NSMenu *menu = [[app delegate] applicationDockMenu:app];
+    //NSLog(@"Menu with title %@\n", [menu title]);
+    [statusItem popUpStatusItemMenu:menu];
 }
 
 @end

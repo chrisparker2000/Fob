@@ -109,13 +109,17 @@ You should have received a copy of the GNU General Public License along with Fob
     Alarm * first = [self firstAlarm];
     NSAttributedString *as;
     if (!first) {
-        [[FobController defaultController] setStatusItemTitleTo:nil];
+        [[FobController defaultController] setStatusItemTitleTo:nil withAlarmNamed:nil];
         return;
     }
-    as = [[NSAttributedString alloc] initWithString:[first describe]
-                                         attributes:statusAttributes];
-
-    [[FobController defaultController] setStatusItemTitleTo:as];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults boolForKey:FobStatusItemTitleVisibleKey])
+        as = [[NSAttributedString alloc] initWithString:[first describe]
+                                             attributes:statusAttributes];
+    else
+        as = [[NSAttributedString alloc] initWithString:[first timeString]
+                                             attributes:statusAttributes];
+    [[FobController defaultController] setStatusItemTitleTo:as withAlarmNamed:[first title]];
     [as release];	
 }
 
@@ -204,6 +208,25 @@ You should have received a copy of the GNU General Public License along with Fob
             break;
         case alarmDisplay: {
             NSString *timeString = [first timeString];
+            float pointSize = 30.0f;
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            if ([defaults boolForKey:FobScaleDockTimeKey]) {
+                // Adjust the size so that the time fits in the dock icon.  We
+                // could do this dynamically by getting the size, but this produces
+                // results that subtlely change size when the time changes.
+                switch ([timeString length]) {
+                    case 4:
+                        pointSize = 54.0f;
+                        break;
+                    case 5:
+                        pointSize = 42.0f;
+                        break;
+                }
+            }
+            [attributes setObject:[NSFont fontWithName:@"Helvetica"
+                                                  size:pointSize]
+                           forKey:NSFontAttributeName];
+            
             // We want to draw the first icon.
             NSSize dockIconSize = [originalImage size],
                 timeSize = [timeString sizeWithAttributes:attributes];

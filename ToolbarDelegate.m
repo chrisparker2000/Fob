@@ -69,6 +69,20 @@ You should have received a copy of the GNU General Public License along with Fob
         [item setToolTip:NSLocalizedString(@"ToolbarClearDueTip", nil)];
         [item setTarget:currentAlarms];
         [item setAction:@selector(clearDue:)];
+    } else if ( [itemIdentifier isEqualToString:@"Pause"] ) {
+        [item setLabel:NSLocalizedString(@"ToolbarPauseLabel", nil)];
+        [item setPaletteLabel:[item label]];
+        [item setImage:[NSImage imageNamed:@"pause"]];
+        [item setToolTip:NSLocalizedString(@"ToolbarPauseTip", nil)];
+        [item setTarget:currentAlarms];
+        [item setAction:@selector(pauseSelected:)];
+    } else if ( [itemIdentifier isEqualToString:@"Unpause"] ) {
+        [item setLabel:NSLocalizedString(@"ToolbarUnpauseLabel", nil)];
+        [item setPaletteLabel:[item label]];
+        [item setImage:[NSImage imageNamed:@"unpause"]];
+        [item setToolTip:NSLocalizedString(@"ToolbarUnpauseTip", nil)];
+        [item setTarget:currentAlarms];
+        [item setAction:@selector(unpauseSelected:)];
     }
     
     return [item autorelease];
@@ -82,6 +96,8 @@ You should have received a copy of the GNU General Public License along with Fob
         @"Delete",
         @"Preferences",
         @"ClearDue",
+        @"Pause",
+        @"Unpause",
         NSToolbarSeparatorItemIdentifier,
         NSToolbarSpaceItemIdentifier,
         NSToolbarFlexibleSpaceItemIdentifier,
@@ -96,6 +112,8 @@ You should have received a copy of the GNU General Public License along with Fob
         @"StartSelectedPresets",
         @"Delete",
         @"ClearDue",
+        @"Pause",
+        @"Unpause",
         NSToolbarFlexibleSpaceItemIdentifier,
         @"Preferences",
         NSToolbarCustomizeToolbarItemIdentifier, nil];

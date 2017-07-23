@@ -28,9 +28,16 @@ You should have received a copy of the GNU General Public License along with Fob
     IBOutlet TimeView *timeView;
 
     Alarm *lastSelectedAlarm, *oldAlarm;
+    NSColor *activeAlarmColor, *pausedAlarmColor;
+
+    AlarmCollection *paused;
 }
 
 + (CurrentAlarms *)defaultDatabase;
+
+- (void)pause:(Alarm *)alarm;
+- (void)unpause:(Alarm *)alarm;
+- (NSArray *)pausedAlarms;
 
 // The current alarms table.
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView;
@@ -44,7 +51,9 @@ You should have received a copy of the GNU General Public License along with Fob
 - (IBAction)removeFromCurrent:(id)source;
 - (IBAction)clearDue:(id)sender;
 - (IBAction)doubleClickPresets:(id)sender;
-
+- (IBAction)pauseSelected:(id)sender;
+- (IBAction)unpauseSelected:(id)sender;
+    
 // Synchronization calls.
 - (void)reformCurrentDefaults;
 

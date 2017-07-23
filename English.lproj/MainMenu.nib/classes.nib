@@ -13,7 +13,9 @@
                 addToCurrent = id; 
                 clearDue = id; 
                 doubleClickPresets = id; 
+                pauseSelected = id; 
                 removeFromCurrent = id; 
+                unpauseSelected = id; 
             }; 
             CLASS = CurrentAlarms; 
             LANGUAGE = ObjC; 
@@ -89,6 +91,8 @@
                 changeConfirmDeletions = id; 
                 changeFeedback = id; 
                 changeKeepOpen = id; 
+                changeScaleDockTime = id; 
+                changeStatusTitleVisible = id; 
                 changeStatusVisible = id; 
                 endSheet = id; 
             }; 
@@ -104,6 +108,8 @@
                 mainWindow = NSWindow; 
                 miniWindow = NSWindow; 
                 preferenceWindow = NSWindow; 
+                scaleDockTimeCheckbox = NSButton; 
+                statusItemTitleVisibleCheckbox = NSButton; 
                 statusItemVisibleCheckbox = NSButton; 
             }; 
             SUPERCLASS = NSObject; 

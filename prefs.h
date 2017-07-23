@@ -19,12 +19,15 @@ You should have received a copy of the GNU General Public License along with Fob
 
 extern NSString *FobPresetAlarmsKey;
 extern NSString *FobActiveAlarmsKey;
+extern NSString *FobPausedAlarmsKey;
 extern NSString *FobConfirmDeleteKey;
 extern NSString *FobKeepWindowOpenKey;
 extern NSString *FobFeedbackLevelKey;
 extern NSString *FobBounceLevelKey;
 extern NSString *FobDisplayedAlarmKey;
 extern NSString *FobStatusItemVisibleKey;
+extern NSString *FobStatusItemTitleVisibleKey;
+extern NSString *FobScaleDockTimeKey;
 
 typedef enum _FeedbackLevel {
     flash = 0, beep, alwaysBeep

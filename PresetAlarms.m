@@ -121,13 +121,13 @@ PresetAlarms * defaultDatabase = nil;
     int toRemove = [presetTable numberOfSelectedRows], i;
     for (i=[presetTable numberOfRows]-1; toRemove; i--) {
         if ([presetTable isRowSelected:i]) {
+            [presetTable deselectRow:i]; // Jon Zap.
             [self removeAlarmAtIndex:i];
             toRemove--;
         }
     }
     [self reformPresetDefaults];
 }
-
 
 // Preset table methods.
 

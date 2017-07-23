@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 38;
+	objectVersion = 39;
 	objects = {
 		080E96DCFE201CFB7F000001 = {
 			fileRef = 29B97318FDCFA39411CA2CEA;
@@ -43,6 +43,7 @@
 			isa = PBXGroup;
 			name = Classes;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		089C165CFE840E0CC02AAC07 = {
 			children = (
@@ -51,13 +52,16 @@
 			isa = PBXVariantGroup;
 			name = InfoPlist.strings;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		089C165DFE840E0CC02AAC07 = {
 			fileEncoding = 10;
 			isa = PBXFileReference;
+			lastKnownFileType = text.plist.strings;
 			name = English;
 			path = English.lproj/InfoPlist.strings;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		089C165EFE840E0CC02AAC07 = {
 			fileRef = 089C165CFE840E0CC02AAC07;
@@ -82,12 +86,16 @@
 			isa = PBXGroup;
 			name = "Linked Frameworks";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		1058C7A1FEA54F0111CA2CBB = {
+			fallbackIsa = PBXFileReference;
 			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
 			name = Cocoa.framework;
 			path = /System/Library/Frameworks/Cocoa.framework;
 			refType = 0;
+			sourceTree = "<absolute>";
 		};
 		1058C7A2FEA54F0111CA2CBB = {
 			children = (
@@ -97,6 +105,7 @@
 			isa = PBXGroup;
 			name = "Other Frameworks";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		1058C7A3FEA54F0111CA2CBB = {
 			fileRef = 1058C7A1FEA54F0111CA2CBB;
@@ -115,9 +124,12 @@
 //173
 //174
 		17587328FF379C6511CA2CBB = {
+			explicitFileType = wrapper.application;
+			fallbackIsa = PBXFileReference;
 			isa = PBXApplicationReference;
 			path = Fob.app;
 			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 //170
 //171
@@ -136,6 +148,7 @@
 			isa = PBXGroup;
 			name = Products;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 //190
 //191
@@ -148,6 +161,8 @@
 //293
 //294
 		29B97313FDCFA39411CA2CEA = {
+			buildSettings = {
+			};
 			buildStyles = (
 				4A9504CCFFE6A4B311CA0CBA,
 				4A9504CDFFE6A4B311CA0CBA,
@@ -172,6 +187,7 @@
 			name = Fob;
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97315FDCFA39411CA2CEA = {
 			children = (
@@ -185,12 +201,15 @@
 			name = "Other Sources";
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97316FDCFA39411CA2CEA = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = main.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA = {
 			children = (
@@ -208,6 +227,7 @@
 			name = Resources;
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97318FDCFA39411CA2CEA = {
 			children = (
@@ -217,12 +237,15 @@
 			name = MainMenu.nib;
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97319FDCFA39411CA2CEA = {
 			isa = PBXFileReference;
+			lastKnownFileType = wrapper.nib;
 			name = English;
 			path = English.lproj/MainMenu.nib;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97323FDCFA39411CA2CEA = {
 			children = (
@@ -233,18 +256,25 @@
 			name = Frameworks;
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		29B97324FDCFA39411CA2CEA = {
+			fallbackIsa = PBXFileReference;
 			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
 			name = AppKit.framework;
 			path = /System/Library/Frameworks/AppKit.framework;
 			refType = 0;
+			sourceTree = "<absolute>";
 		};
 		29B97325FDCFA39411CA2CEA = {
+			fallbackIsa = PBXFileReference;
 			isa = PBXFrameworkReference;
+			lastKnownFileType = wrapper.framework;
 			name = Foundation.framework;
 			path = /System/Library/Frameworks/Foundation.framework;
 			refType = 0;
+			sourceTree = "<absolute>";
 		};
 		29B97326FDCFA39411CA2CEA = {
 			buildPhases = (
@@ -254,11 +284,11 @@
 				29B9732DFDCFA39411CA2CEA,
 			);
 			buildSettings = {
+				DEBUGGING_SYMBOLS = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = "";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "";
-				OTHER_CFLAGS = "-libMallocDebug";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = Fob;
 				SECTORDER_FLAGS = "";
@@ -282,7 +312,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Fob</string>
 	<key>CFBundleGetInfoString</key>
-	<string>1.0</string>
+	<string>1.0.2</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Fob Help</string>
 	<key>CFBundleHelpBookName</key>
@@ -298,11 +328,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.2</string>
 	<key>CFBundleSignature</key>
 	<string>tfob</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1.0.2</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -360,6 +390,8 @@
 				F5EF5B6903E997300118FB85,
 				E912E54B0478870700000102,
 				E9423FAD047C830A00000102,
+				E9C82E0A0480101C00734361,
+				E9C82E0B0480101C00734361,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,7 +460,12 @@
 			);
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				OPTIMIZATION_CFLAGS = "-O0";
+				ZERO_LINK = YES;
 			};
 			isa = PBXBuildStyle;
 			name = Development;
@@ -438,6 +475,8 @@
 			);
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				ZERO_LINK = NO;
 			};
 			isa = PBXBuildStyle;
 			name = Deployment;
@@ -455,14 +494,18 @@
 		E912E5400478790F00000102 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = StatusItemKeeper.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		E912E5410478790F00000102 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = StatusItemKeeper.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		E912E5420478790F00000102 = {
 			fileRef = E912E5400478790F00000102;
@@ -478,13 +521,17 @@
 		};
 		E912E546047884E000000102 = {
 			isa = PBXFileReference;
+			lastKnownFileType = image.pdf;
 			path = Clock.pdf;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		E912E54A0478870700000102 = {
 			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
 			path = statusIcon.tiff;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		E912E54B0478870700000102 = {
 			fileRef = E912E54A0478870700000102;
@@ -494,6 +541,32 @@
 		};
 		E9423FAD047C830A00000102 = {
 			fileRef = E912E546047884E000000102;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E9C82E080480101C00734361 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
+			path = pause.tiff;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E9C82E090480101C00734361 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
+			path = unpause.tiff;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E9C82E0A0480101C00734361 = {
+			fileRef = E9C82E080480101C00734361;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E9C82E0B0480101C00734361 = {
+			fileRef = E9C82E090480101C00734361;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -510,8 +583,10 @@
 //F54
 		F50C878403C772BC01000105 = {
 			isa = PBXFileReference;
+			lastKnownFileType = image.icns;
 			path = Fob.icns;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F50C878503C772BC01000105 = {
 			fileRef = F50C878403C772BC01000105;
@@ -522,14 +597,18 @@
 		F531E29F03E25B9601000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = DoneActionInputController.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F531E2A003E25B9601000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = DoneActionInputController.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F531E2A103E25B9601000103 = {
 			fileRef = F531E29F03E25B9601000103;
@@ -546,14 +625,18 @@
 		F531E2A303E2833001000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = SplitDelegate.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F531E2A403E2833001000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = SplitDelegate.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F531E2A503E2833001000103 = {
 			fileRef = F531E2A303E2833001000103;
@@ -570,14 +653,18 @@
 		F53281C003CBAA5301000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = PresetAlarms.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F53281C103CBAA5301000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = PresetAlarms.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F53281C203CBAA5301000105 = {
 			fileRef = F53281C003CBAA5301000105;
@@ -594,14 +681,18 @@
 		F533D42D03D106C901000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = DockIconController.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F533D42E03D106C901000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = DockIconController.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F533D42F03D106C901000105 = {
 			fileRef = F533D42D03D106C901000105;
@@ -618,14 +709,18 @@
 		F53A13C603D2958701000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = ToolbarDelegate.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F53A13C703D2958701000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = ToolbarDelegate.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F53A13C803D2958701000105 = {
 			fileRef = F53A13C603D2958701000105;
@@ -640,10 +735,13 @@
 			};
 		};
 		F53EE73603DBAE3101000103 = {
+			fallbackIsa = PBXFileReference;
 			includeInIndex = 1;
 			isa = PBXFolderReference;
+			lastKnownFileType = folder;
 			path = "Fob Help";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F53EE73703DBAE3901000103 = {
 			fileRef = F53EE73603DBAE3101000103;
@@ -654,14 +752,18 @@
 		F54456F503E75CB10118FB85 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = AlertDoneAction.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F54456F603E75CB10118FB85 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = AlertDoneAction.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F54456F703E75CB10118FB85 = {
 			fileRef = F54456F503E75CB10118FB85;
@@ -678,14 +780,18 @@
 		F54F676003C77CC801000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = TimeView.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F54F676103C77CC801000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = TimeView.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F54F676203C77CC801000105 = {
 			fileRef = F54F676003C77CC801000105;
@@ -702,14 +808,18 @@
 		F54F676C03C7FA3E01000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = TimeInputController.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F54F676D03C7FA3E01000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = TimeInputController.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F54F676E03C7FA3E01000105 = {
 			fileRef = F54F676C03C7FA3E01000105;
@@ -726,14 +836,18 @@
 		F54F67CC03C81CEB01000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = ApplicationDelegate.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F54F67CD03C81CEB01000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = ApplicationDelegate.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F54F67CE03C81CEB01000105 = {
 			fileRef = F54F67CC03C81CEB01000105;
@@ -750,14 +864,18 @@
 		F54F67D003C81CF201000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = FobController.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F54F67D103C81CF201000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = FobController.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F54F67D203C81CF201000105 = {
 			fileRef = F54F67D003C81CF201000105;
@@ -774,14 +892,18 @@
 		F584840803CFB8C401000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = prefs.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F584840903CFB8C401000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = prefs.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F584840A03CFB8C401000105 = {
 			fileRef = F584840803CFB8C401000105;
@@ -798,14 +920,18 @@
 		F5A19C8A03E46E3101CE7BCA = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = FileAcceptorView.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5A19C8B03E46E3101CE7BCA = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = FileAcceptorView.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5A19C8C03E46E3101CE7BCA = {
 			fileRef = F5A19C8A03E46E3101CE7BCA;
@@ -822,14 +948,18 @@
 		F5AF4AF503DFD14601FE98CE = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = AttentionGrabber.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5AF4AF603DFD14601FE98CE = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = AttentionGrabber.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5AF4AF703DFD14601FE98CE = {
 			fileRef = F5AF4AF503DFD14601FE98CE;
@@ -846,14 +976,18 @@
 		F5B9033803CF55A101000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = AlarmCollection.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5B9033903CF55A101000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = AlarmCollection.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5B9033A03CF55A101000105 = {
 			fileRef = F5B9033803CF55A101000105;
@@ -882,14 +1016,18 @@
 		F5C97BD403CA0D8C01000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = Alarm.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5C97BD503CA0D8C01000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = Alarm.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5C97BD603CA0D8C01000105 = {
 			fileRef = F5C97BD403CA0D8C01000105;
@@ -906,14 +1044,18 @@
 		F5C97BD803CA1F4401000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = time.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5C97BD903CA1F4401000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.c;
 			path = time.c;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5C97BDA03CA1F4401000105 = {
 			fileRef = F5C97BD803CA1F4401000105;
@@ -930,14 +1072,18 @@
 		F5CD0B7103D05F7A01000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = DeleteTableView.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5CD0B7203D05F7A01000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = DeleteTableView.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5CD0B7303D05F7A01000105 = {
 			fileRef = F5CD0B7103D05F7A01000105;
@@ -954,47 +1100,62 @@
 		F5CD0EE703D078C201000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = CurrentAlarms.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5CD0EE803D078C201000105 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = CurrentAlarms.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5D1003003DA1C3E01000103 = {
 			children = (
 				F5F0699403DB678D01000103,
+				E9C82E080480101C00734361,
 				F5D1012803DA7E6B01000103,
 				F5D1003103DA1C5701000103,
 				F5D1003203DA1C5701000103,
 				F5D1003303DA1C5701000103,
 				F5D1003403DA1C5701000103,
+				E9C82E090480101C00734361,
 			);
 			isa = PBXGroup;
 			name = "Toolbar Icons";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5D1003103DA1C5701000103 = {
 			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
 			path = rolodex.tiff;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5D1003203DA1C5701000103 = {
 			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
 			path = selected.tiff;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5D1003303DA1C5701000103 = {
 			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
 			path = start.tiff;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5D1003403DA1C5701000103 = {
 			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
 			path = trash.tiff;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5D1003503DA1C5701000103 = {
 			fileRef = F5D1003103DA1C5701000103;
@@ -1023,14 +1184,18 @@
 		F5D1011C03DA5C5201000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = PreferenceController.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5D1011D03DA5C5201000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = PreferenceController.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5D1011E03DA5C5201000103 = {
 			fileRef = F5D1011C03DA5C5201000103;
@@ -1046,8 +1211,10 @@
 		};
 		F5D1012803DA7E6B01000103 = {
 			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
 			path = preferences.tiff;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5D1012903DA7E6B01000103 = {
 			fileRef = F5D1012803DA7E6B01000103;
@@ -1058,14 +1225,18 @@
 		F5E1D6F103E09FE001000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = ZoomWindow.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5E1D6F203E09FE001000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = ZoomWindow.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5E1D6F303E09FE001000103 = {
 			fileRef = F5E1D6F103E09FE001000103;
@@ -1082,14 +1253,18 @@
 		F5E1D6F503E0A12201000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = ZoomSwitcher.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5E1D6F603E0A12201000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = ZoomSwitcher.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5E1D6F703E0A12201000103 = {
 			fileRef = F5E1D6F503E0A12201000103;
@@ -1119,6 +1294,7 @@
 			isa = PBXGroup;
 			name = "Fob Controller";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5E1D6FA03E0BA6D01000103 = {
 			children = (
@@ -1139,18 +1315,23 @@
 			name = "Done Action";
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5E1D6FB03E0BAA601000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = DoneAction.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5E1D6FC03E0BAA601000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = DoneAction.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5E1D6FD03E0BAA601000103 = {
 			fileRef = F5E1D6FB03E0BAA601000103;
@@ -1166,8 +1347,10 @@
 		};
 		F5EF5B6803E997300118FB85 = {
 			isa = PBXFileReference;
+			lastKnownFileType = image.png;
 			path = notfound.png;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5EF5B6903E997300118FB85 = {
 			fileRef = F5EF5B6803E997300118FB85;
@@ -1177,8 +1360,10 @@
 		};
 		F5F0699403DB678D01000103 = {
 			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
 			path = clean.tiff;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5F0699503DB678D01000103 = {
 			fileRef = F5F0699403DB678D01000103;
@@ -1194,13 +1379,16 @@
 			name = Localizable.strings;
 			path = "";
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5F0699903DB73FC01000103 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = text.plist.strings;
 			name = English;
 			path = English.lproj/Localizable.strings;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5F0699A03DB73FC01000103 = {
 			fileRef = F5F0699803DB73FC01000103;
@@ -1211,14 +1399,18 @@
 		F5F88DE903E4ED2F0118FB85 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = BeepDoneAction.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5F88DEA03E4ED2F0118FB85 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = BeepDoneAction.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5F88DEB03E4ED2F0118FB85 = {
 			fileRef = F5F88DE903E4ED2F0118FB85;
@@ -1235,14 +1427,18 @@
 		F5FAFAF903E8955F0118FB85 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
 			path = FileDoneAction.h;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5FAFAFA03E8955F0118FB85 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
 			path = FileDoneAction.m;
 			refType = 4;
+			sourceTree = "<group>";
 		};
 		F5FAFAFB03E8955F0118FB85 = {
 			fileRef = F5FAFAF903E8955F0118FB85;

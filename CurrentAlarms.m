@@ -35,7 +35,12 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 
     [presetTable setDoubleAction:@selector(doubleClickPresets:)];
     [presetTable setTarget:self];
-    
+
+    [currentTable setDoubleAction:@selector(doubleClickCurrent:)];
+    [currentTable setTarget:self];
+    [littleCurrentTable setDoubleAction:@selector(doubleClickCurrent:)];
+    [littleCurrentTable setTarget:self];
+
     [nc addObserver:self
            selector:@selector(handleAlarmsChanged:)
                name:@"FobAlarmAdded"
@@ -44,6 +49,14 @@ CurrentAlarms * defaultCurrentDatabase = nil;
            selector:@selector(handleAlarmsChanged:)
                name:@"FobAlarmRemoved"
              object:self];
+    [nc addObserver:self
+           selector:@selector(handleAlarmsChanged:)
+               name:@"FobAlarmAdded"
+             object:paused];
+    [nc addObserver:self
+           selector:@selector(handleAlarmsChanged:)
+               name:@"FobAlarmRemoved"
+             object:paused];
     // Table listening.
     [nc addObserver:self
            selector:@selector(handleTableDelete:)
@@ -83,10 +96,59 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 - (id)init {
     if (self = [super init]) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSArray *pausedArray = correspondingObjectArray([defaults objectForKey:FobPausedAlarmsKey]);
+        NSEnumerator *enumerator = [pausedArray objectEnumerator];
+        Alarm *pausedAlarm;
         alarms = [correspondingObjectArray([defaults objectForKey:FobActiveAlarmsKey]) retain];
+        paused = [[AlarmCollection alloc] init];
+        while (pausedAlarm = [enumerator nextObject])
+            [paused add:pausedAlarm];
         oldAlarm = lastSelectedAlarm = nil;
+        activeAlarmColor = [[NSColor blackColor] retain];
+        pausedAlarmColor = [[NSColor grayColor] retain];
     }
     return self;
+}
+
+- (void)dealloc {
+    [self reformCurrentDefaults];
+
+    [paused release];
+    [activeAlarmColor release];
+    [pausedAlarmColor release];
+    [super dealloc];
+}
+
+/* Fob has the option to display a miniaturized version of itself.  This is accomplished by creating a second, smaller window, with an alternate display.  This returns the "current" alarm table for the present view, whether that present current table is in the big window or in the miniaturized window. */
+- (NSTableView *)displayedTableView {
+    return [[currentTable window] isVisible] ? currentTable : littleCurrentTable;
+}
+
+/* This returns an alarm at a given row within the table of current alarms. */
+- (Alarm *)alarmAtRow:(unsigned)row {
+    int c = [alarms count];
+    return row < c ? [alarms objectAtIndex:row] :
+        [[paused alarms] objectAtIndex:row-c];
+}
+
+/* Given an alarm, this returns the row that alarm is at.  If the alarm is not present, the results are undefined. */
+- (int)rowForAlarm:(Alarm *)alarm {
+    int row = [self findEntryForAlarm:alarm];
+    return row>=0 ? row : [paused findEntryForAlarm:alarm]+[alarms count];
+}
+
+/* This returns an array of those alarms that are selected within the table of current alarms. */
+- (NSArray *)selectedAlarms {
+    NSTableView *table = [self displayedTableView];
+    int toGet = [table numberOfSelectedRows], i;
+    NSMutableArray * array = [NSMutableArray arrayWithCapacity:toGet];
+    for (i=0; toGet; i++) {
+        if ([table isRowSelected:i]) {
+            [array addObject:[self alarmAtRow:i]];
+            toGet--;
+        }
+    }
+    return array;
 }
 
 + (CurrentAlarms *)defaultDatabase {
@@ -111,42 +173,95 @@ CurrentAlarms * defaultCurrentDatabase = nil;
     [self reformCurrentDefaults];
 }
 
+- (void)pause:(Alarm *)alarm {
+    //NSLog(@"Pausing %@", alarm);
+    if (![alarm millisecondsRemaining]) {
+        NSBeginAlertSheet(NSLocalizedString(@"PauseZeroTimeTitle", nil),
+                          nil, nil, nil, window,
+                          nil, nil, nil, nil,
+                          NSLocalizedString(@"PauseZeroTimeMessage", nil));
+        return;
+    }
+    [alarm pause];
+    if ([paused findEntryForAlarm:alarm] >= 0) return;
+    [paused add:alarm];
+    NSAssert([self remove:alarm], @"Attempted to pause a paused alarm!");
+    //int rowPaused = [paused findEntryForAlarm:alarm];
+    //[currentTable deselectRow:rowCurrent];
+    //[currentTable selectRow:rowPaused+[alarms count] byExtendingSelection:YES];
+}
+
+- (void)unpause:(Alarm *)alarm {
+    //NSLog(@"Unpausing %@", alarm);
+    if ([self findEntryForAlarm:alarm] >= 0) return;
+    [self rawAdd:alarm];
+    NSAssert([paused remove:alarm], @"Attempted to unpause an active alarm!");
+}
+
+- (NSArray *)pausedAlarms {
+    return [paused alarms];
+}
+
 // Table methods.
 
 - (int)numberOfRowsInTableView:(NSTableView *)aTableView {
-    return [alarms count];
+    return [alarms count] + [[paused alarms] count];
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn
             row:(int)rowIndex {
     NSString *identifier = [aTableColumn identifier];
-    Alarm *alarm = [alarms objectAtIndex:rowIndex];
+    Alarm *alarm = [self alarmAtRow:rowIndex];
     return [alarm valueForKey:identifier];
+}
+
+- (void)tableView:(NSTableView *)aTableView
+  willDisplayCell:(id)aCell
+   forTableColumn:(NSTableColumn *)aTableColumn
+              row:(int)rowIndex {
+    NSFont *font = [aCell font];
+    NSFontManager *manager = [NSFontManager sharedFontManager];
+    if (rowIndex < [alarms count]) {
+        font = [manager convertFont:font toNotHaveTrait:NSBoldFontMask];
+        [aCell setTextColor:activeAlarmColor];
+    } else {
+        font = [manager convertFont:font toHaveTrait:NSBoldFontMask];
+        [aCell setTextColor:pausedAlarmColor];
+    }
+    [aCell setFont:font];
 }
 
 - (void)handleTableSelection:(NSNotification *)note {
     NSTableView *table = [note object];
     AlarmCollection *collection;
     int selected = [table numberOfSelectedRows];
-    if (selected == 0) { // Switch to the other one.
+    if (selected == 0) { // Switch to the other table.  Perhaps it has selections?
         table = table == presetTable ? currentTable : presetTable;
         selected = [table numberOfSelectedRows]; // Try again.
     }
-    collection = table == presetTable ? presetAlarms : self;
+    collection = (table == presetTable) ? (AlarmCollection*) presetAlarms : (AlarmCollection*) self;
     if (selected > 1) return;
     if (selected == 1) {
+        // If this is the only item selected, we want the alarm displayed in the clock display.
         int row = [table selectedRow];
-        if (!oldAlarm) oldAlarm = [[inputController displayedAlarm] retain];
-        lastSelectedAlarm = [[collection alarms] objectAtIndex:row];
+        //if (!oldAlarm) oldAlarm = [[inputController displayedAlarm] retain];
+        [lastSelectedAlarm autorelease];
+        if (collection == self)
+            lastSelectedAlarm = [[self alarmAtRow:row] retain];
+        else
+            lastSelectedAlarm = [[[presetAlarms alarms] objectAtIndex:row] retain];
         [inputController setDisplayedAlarm:lastSelectedAlarm];
         if (table == currentTable)
             [timeView setMilliseconds:[lastSelectedAlarm millisecondsRemaining]+999];
     } else {
-        if (!oldAlarm) return;
+        /* In an older version of Fob, when you deselected an alarm, the alarm that was displayed before _anything_ was selected was again displayed.  This is perhaps desirable behavior, but in the light of other changes it is incompatible with some other desirable behavior I wish to have, ie the ability to change deleted alarms.  The oldAlarm variable is not really needed anymore.  This is new as of Fob 1.0.2. */
+        
+        /* if (!oldAlarm) return;
         [inputController setDisplayedAlarm:oldAlarm];
         [oldAlarm release];
         oldAlarm = nil;
-        lastSelectedAlarm = nil;
+        [lastSelectedAlarm release];
+        lastSelectedAlarm = nil; */
     }
 }
 
@@ -163,6 +278,8 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 - (void)reformCurrentDefaults {
     [[NSUserDefaults standardUserDefaults] setObject:correspondingDataArray(alarms)
                                               forKey:FobActiveAlarmsKey];
+    [[NSUserDefaults standardUserDefaults] setObject:correspondingDataArray([paused alarms])
+                                              forKey:FobPausedAlarmsKey];
 }
 
 - (IBAction)addSelectedPresets:(id)source {
@@ -179,11 +296,13 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 }
 
 - (IBAction)removeFromCurrent:(id)source {
-    NSTableView *table = [[currentTable window] isVisible] ? currentTable : littleCurrentTable;
+    NSTableView *table = [self displayedTableView];
     int toRemove = [table numberOfSelectedRows], i;
+    
     for (i=[table numberOfRows]-1; toRemove; i--) {
         if ([table isRowSelected:i]) {
-            [[[alarms objectAtIndex:i] doneAction] stop]; // Easiest way.
+            [[[self alarmAtRow:i] doneAction] stop]; // Easiest way.
+            [table deselectRow:i]; // Jon Zap.
             [self removeAlarmAtIndex:i];
             toRemove--;
         }
@@ -192,9 +311,10 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 }
 
 - (void)removeAlarmAtIndex:(int)index {
-    Alarm *alarm = [alarms objectAtIndex:index];
-    [alarm pause];
-    [super removeAlarmAtIndex:index];
+    int c = [alarms count];
+    [[self alarmAtRow:index] pause];
+    if (index < c) [super removeAlarmAtIndex:index];
+    else [paused removeAlarmAtIndex:index-c];
 }
 
 - (void)handleAlarmsChanged:(NSNotification *)note {
@@ -219,7 +339,7 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 }
 
 - (IBAction)clearDue:(id)sender {
-    while ([alarms count] && [[alarms objectAtIndex:0] paused])
+    while ([alarms count] && [((Alarm*)[alarms objectAtIndex:0]) paused])
         [self removeAlarmAtIndex:0];
     [AttentionGrabber giveUpAttention];
     [self reformCurrentDefaults];
@@ -232,14 +352,73 @@ CurrentAlarms * defaultCurrentDatabase = nil;
     [self add:[[[presetAlarms alarms] objectAtIndex:row] copy]];
 }
 
+- (IBAction)pauseSelected:(id)sender {
+    NSArray *selected = [self selectedAlarms];
+    NSEnumerator *enumerator = [selected objectEnumerator];
+    Alarm *alarm;
+    while (alarm = [enumerator nextObject])
+        [self pause:alarm];
+    [currentTable deselectAll:nil];
+    enumerator = [selected objectEnumerator];
+    while (alarm = [enumerator nextObject])
+        [currentTable selectRow:[self rowForAlarm:alarm] byExtendingSelection:YES];
+    [self reformCurrentDefaults];
+}
+
+- (IBAction)unpauseSelected:(id)sender {
+    NSArray *selected = [self selectedAlarms];
+    NSEnumerator *enumerator = [selected objectEnumerator];
+    Alarm *alarm;
+    while (alarm = [enumerator nextObject])
+        [self unpause:alarm];
+    [currentTable deselectAll:nil];
+    enumerator = [selected objectEnumerator];
+    while (alarm = [enumerator nextObject])
+        [currentTable selectRow:[self rowForAlarm:alarm] byExtendingSelection:YES];
+    [self reformCurrentDefaults];
+}
+
+- (IBAction)doubleClickCurrent:(id)sender {
+    int row = [sender clickedRow];
+    if (row < [alarms count]) {
+        // This must be an active alarm.  Pause it!
+        [self pauseSelected:sender];
+    } else {
+        // This must be a paused alarm.  Reactivate it!
+        [self unpauseSelected:sender];
+    }
+}
+
 - (BOOL)validateItem:(id)item {
-    if ([item action] == @selector(addToCurrent:)) {
+    SEL action = [item action];
+    if (action == @selector(addToCurrent:)) {
         return [inputController milliseconds] != 0;
-    } else if ([item action] == @selector(addSelectedPresets:)) {
+    } else if (action == @selector(addSelectedPresets:)) {
         return [presetTable numberOfSelectedRows];
-    }/* else if ([item action] == @selector(clearDue:)) {
-        return [alarms count] && [[alarms objectAtIndex:0] paused];
-    }*/
+    } else if (action == @selector(pauseSelected:)) {
+        switch ([currentTable numberOfSelectedRows]) {
+            case 0:
+                // Can't pause nothing!
+                return NO;
+            case 1:
+                // Can only pause non-paused ones.
+                return [currentTable selectedRow] < [alarms count];
+            default:
+                return [[[currentTable selectedRowEnumerator] nextObject] intValue] < [alarms count];
+        }
+    } else if (action == @selector(unpauseSelected:)) {
+        switch ([currentTable numberOfSelectedRows]) {
+            case 0:
+                // Can't unpause nothing!
+                return NO;
+            case 1:
+                // Can only unpause paused ones.
+                return [currentTable selectedRow] >= [alarms count];
+            default:
+                return [[[[currentTable selectedRowEnumerator] allObjects] lastObject] intValue]
+                >= [alarms count];
+        }
+    }
     return YES;
 }
 

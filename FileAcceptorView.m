@@ -31,7 +31,8 @@ You should have received a copy of the GNU General Public License along with Fob
         /*[self registerForDraggedTypes:
             [NSAttributedString textPasteboardTypes]];*/
         [self registerForDraggedTypes:
-            [NSArray arrayWithObjects:NSFilenamesPboardType, NSFilesPromisePboardType, nil]];
+            [NSArray arrayWithObjects:NSFilenamesPboardType, nil]];
+        // NSFilesPromisePboardType is not in the original system!
     }
     return self;
 }

@@ -179,8 +179,8 @@ You should have received a copy of the GNU General Public License along with Fob
     /*NSAssert([[object class] isSubclassOfClass:[Alarm class]],
              @"The alarm comparator wasn't passed an alarm instance!");*/
 
-    if ([object paused] != [self paused])
-        NSLog(@"Warning: comparing a paused and unpaused alarm.");
+    /*if ([object paused] != [self paused])
+        NSLog(@"Warning: comparing a paused and unpaused alarm.");*/
     
     if (![object paused] && ![self paused])
         diff = [object matures] - [self matures];

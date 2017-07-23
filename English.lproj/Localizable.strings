@@ -12,6 +12,10 @@
 "CurrentNonzeroTimeTitle" = "Needs Nonzero Time";
 "CurrentNonzeroTimeMessage" = "Starting an alarm requires a nonzero time.";
 
+// The alert for attempting to pause an active alarm with no time left.
+"PauseZeroTimeTitle" = "Can't Pause Finished Alarm";
+"PauseZeroTimeMessage" = "You can't pause an alarm that has finished.";
+
 // The alert for attempting to delete an item from one of the tables.
 "ConfirmDeleteTitle" = "Really Delete?";
 "ConfirmDeleteMessage" = "Really delete the selected item?";
@@ -36,11 +40,15 @@
 "ToolbarDeleteLabel" = "Delete";
 "ToolbarPreferencesLabel" = "Preferences";
 "ToolbarClearDueLabel" = "Clear Due";
+"ToolbarPauseLabel" = "Pause";
+"ToolbarUnpauseLabel" = "Unpause";
 
 // The labels for the toolbar tooltips.
 "ToolbarStartTip" = "Starts the alarm displayed in the clock.";
 "ToolbarStoreTip" = "Stores the alarm displayed in the clock into the list of presets.";
 "ToolbarStartSelectedPresetsTip" = "Starts alarms based on the selected presets.";
 "ToolbarDeleteTip" = "Deletes currently selected alarms/presets.";
-"ToolbarPreferencesTip" = "Change Fob preferences.";
-"ToolbarClearDueTip" = "Any alarms that are finished are cleared out.";
+"ToolbarPreferencesTip" = "Display Fob preferences.";
+"ToolbarClearDueTip" = "Deletes done alarms.";
+"ToolbarPauseTip" = "Pause the selected active alarms.";
+"ToolbarUnpauseTip" = "Reactivate the selected paused alarms.";
