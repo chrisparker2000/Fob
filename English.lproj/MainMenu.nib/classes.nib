@@ -58,13 +58,22 @@
             SUPERCLASS = NSWindowController; 
         }, 
         {
-            ACTIONS = {changeConfirmDeletions = id; changeFeedback = id; endSheet = id; }; 
+            ACTIONS = {
+                changeBounce = id; 
+                changeConfirmDeletions = id; 
+                changeFeedback = id; 
+                changeKeepOpen = id; 
+                endSheet = id; 
+            }; 
             CLASS = PreferenceController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                bounceLabel = NSTextField; 
+                bounceSlider = NSSlider; 
                 confirmDeleteCheckbox = NSButton; 
                 feedbackLabel = NSTextField; 
                 feedbackSlider = NSSlider; 
+                keepWindowOpenCheckbox = NSButton; 
                 mainWindow = NSWindow; 
                 preferenceWindow = NSWindow; 
             }; 

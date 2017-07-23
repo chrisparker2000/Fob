@@ -25,6 +25,11 @@ You should have received a copy of the GNU General Public License along with Fob
     return self;
 }
 
+- (void)awakeFromNib {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [mainWindow setHidesOnDeactivate:![defaults boolForKey:FobKeepWindowOpenKey]];
+}
+
 - (void)changeFeedbackLabel {
     switch ([feedbackSlider intValue]) {
         case flash:
@@ -42,16 +47,41 @@ You should have received a copy of the GNU General Public License along with Fob
     }
 }
 
+- (void)changeBounceLabel {
+    switch ([bounceSlider intValue]) {
+        case flash:
+            [bounceLabel setStringValue:NSLocalizedString(@"BounceLevelNone", nil)];
+            break;
+        case beep:
+            [bounceLabel setStringValue:NSLocalizedString(@"BounceLevelOnce", nil)];
+            break;
+        case alwaysBeep:
+            [bounceLabel setStringValue:NSLocalizedString(@"BounceLevelAlways", nil)];
+            break;
+        default:
+            NSLog(@"Warning, bad bounce level!");
+            break;
+    }
+}
+
+
 // This will display the preferences sheet.
 - (void)displayPreferences {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // Store values in case of cancel.
     storedConfirmDelete = [defaults boolForKey:FobConfirmDeleteKey];
-    storedFeedbackLevel = [defaults boolForKey:FobFeedbackLevelKey];
+    storedKeepWindowOpen = [defaults boolForKey:FobKeepWindowOpenKey];
+    storedFeedbackLevel = [defaults integerForKey:FobFeedbackLevelKey];
+    storedBounceLevel = [defaults integerForKey:FobBounceLevelKey];
+    
     // Change the view to reflect current preferences.
     [confirmDeleteCheckbox setState:storedConfirmDelete ? NSOnState : NSOffState];
+    [keepWindowOpenCheckbox setState:storedKeepWindowOpen ? NSOnState : NSOffState];
     [feedbackSlider setIntValue:storedFeedbackLevel];
+    [bounceSlider setIntValue:storedBounceLevel];
     [self changeFeedbackLabel];
+    [self changeBounceLabel];
+    
     // Show the sheet.
     [NSApp beginSheet:preferenceWindow
        modalForWindow:mainWindow
@@ -62,8 +92,16 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (IBAction)changeConfirmDeletions:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:[sender state] == NSOnState
+    [defaults setBool:[confirmDeleteCheckbox state] == NSOnState
                forKey:FobConfirmDeleteKey];
+}
+
+- (IBAction)changeKeepOpen:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL keepWindowOpen = [keepWindowOpenCheckbox state] == NSOnState;
+    [defaults setBool:keepWindowOpen
+               forKey:FobKeepWindowOpenKey];
+    [mainWindow setHidesOnDeactivate:!keepWindowOpen];
 }
 
 - (IBAction)changeFeedback:(id)sender {
@@ -71,6 +109,13 @@ You should have received a copy of the GNU General Public License along with Fob
     [defaults setInteger:[feedbackSlider intValue]
                   forKey:FobFeedbackLevelKey];
     [self changeFeedbackLabel];
+}
+
+- (IBAction)changeBounce:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:[bounceSlider intValue]
+                  forKey:FobBounceLevelKey];
+    [self changeBounceLabel];
 }
 
 - (IBAction)endSheet:(id)sender {
@@ -84,13 +129,19 @@ You should have received a copy of the GNU General Public License along with Fob
              returnCode:(int)returnCode
             contextInfo:(id)contextInfo {
     if (returnCode == 1) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        // Notice my comparison test.  I am a bad coder.
         // Cancel was selected!
         // Setting things back as they were.
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setBool:storedConfirmDelete
                    forKey:FobConfirmDeleteKey];
+        [defaults setBool:storedKeepWindowOpen
+                   forKey:FobKeepWindowOpenKey];
+        [mainWindow setHidesOnDeactivate:!storedKeepWindowOpen];
         [defaults setInteger:storedFeedbackLevel
                       forKey:FobFeedbackLevelKey];
+        [defaults setInteger:storedBounceLevel
+                      forKey:FobBounceLevelKey];
     }
 }
 

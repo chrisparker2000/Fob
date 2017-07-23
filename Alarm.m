@@ -24,6 +24,10 @@ You should have received a copy of the GNU General Public License along with Fob
     return [[[Alarm alloc] initWithTitle:newTitle forSecondDuration:seconds] autorelease];
 }
 
+- (unsigned)hash {
+    return [title hash]; // All other quantities are fluid...
+}
+
 - (id)initWithTitle:(NSString *)newTitle forSecondDuration:(long long)seconds {
     if (self = [super init]) {
         title = [newTitle retain];
@@ -40,15 +44,15 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (id)initWithCoder:(NSCoder *)coder {
     if (self = [super init]) {
-        [self setTitle:[coder decodeObject]];
-        [coder decodeValueOfObjCType:@encode(BOOL) at:&paused];
-        [coder decodeValueOfObjCType:@encode(long long) at:&timeLeft];
-        [coder decodeValueOfObjCType:@encode(long long) at:&matures];
-        lastCheckedMSeconds = -1;
-        lastTimeString = lastDescribe = nil;
-        cachedValid = NO;
-        cachedDescribeValid = NO;
-        timer = nil;
+            [self setTitle:[coder decodeObject]];
+            [coder decodeValueOfObjCType:@encode(BOOL) at:&paused];
+            [coder decodeValueOfObjCType:@encode(long long) at:&timeLeft];
+            [coder decodeValueOfObjCType:@encode(long long) at:&matures];
+            lastCheckedMSeconds = -1;
+            lastTimeString = lastDescribe = nil;
+            cachedValid = NO;
+            cachedDescribeValid = NO;
+            timer = nil;
 
         if (!paused) {
             [self checkTime]; // Start the timer!

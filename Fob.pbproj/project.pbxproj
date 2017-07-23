@@ -19,6 +19,8 @@
 				F5B9033903CF55A101000105,
 				F54F67CD03C81CEB01000105,
 				F54F67CC03C81CEB01000105,
+				F5AF4AF503DFD14601FE98CE,
+				F5AF4AF603DFD14601FE98CE,
 				F5CD0EE703D078C201000105,
 				F5CD0EE803D078C201000105,
 				F5CD0B7103D05F7A01000105,
@@ -292,7 +294,7 @@
 	<key>CFBundleSignature</key>
 	<string>tfob</string>
 	<key>CFBundleVersion</key>
-	<string>1.0b1</string>
+	<string>1.0b2</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -319,6 +321,7 @@
 				F533D42F03D106C901000105,
 				F53A13C803D2958701000105,
 				F5D1011E03DA5C5201000103,
+				F5AF4AF703DFD14601FE98CE,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,6 +363,7 @@
 				F533D43003D106C901000105,
 				F53A13C903D2958701000105,
 				F5D1011F03DA5C5201000103,
+				F5AF4AF803DFD14601FE98CE,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -625,6 +629,28 @@
 		};
 		F584840B03CFB8C401000105 = {
 			fileRef = F584840903CFB8C401000105;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5AF4AF503DFD14601FE98CE = {
+			isa = PBXFileReference;
+			path = AttentionGrabber.h;
+			refType = 4;
+		};
+		F5AF4AF603DFD14601FE98CE = {
+			isa = PBXFileReference;
+			path = AttentionGrabber.m;
+			refType = 4;
+		};
+		F5AF4AF703DFD14601FE98CE = {
+			fileRef = F5AF4AF503DFD14601FE98CE;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		F5AF4AF803DFD14601FE98CE = {
+			fileRef = F5AF4AF603DFD14601FE98CE;
 			isa = PBXBuildFile;
 			settings = {
 			};

@@ -3,6 +3,11 @@
 "FeedbackLevelBeepOnce" = "Flash constantly, and beep once.";
 "FeedbackLevelBeepAlways" = "Constantly flash and beep!";
 
+// The description of each level of dock bounciness.
+"BounceLevelNone" = "Do not bounce the icon.";
+"BounceLevelOnce" = "Bounce the icon once.";
+"BounceLevelAlways" = "Constantly bounce!";
+
 // The alert for attempting to start an alarm with zero seconds.
 "CurrentNonzeroTimeTitle" = "Needs Nonzero Time";
 "CurrentNonzeroTimeMessage" = "Starting an alarm requires a nonzero time.";

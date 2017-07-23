@@ -20,6 +20,7 @@ You should have received a copy of the GNU General Public License along with Fob
 #import "TimeInputController.h"
 #import "prefs.h"
 #import "PresetAlarms.h"
+#import "AttentionGrabber.h"
 
 CurrentAlarms * defaultCurrentDatabase = nil;
 
@@ -153,6 +154,7 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 - (IBAction)clearDue:(id)sender {
     while ([alarms count] && [[alarms objectAtIndex:0] paused])
         [self removeAlarmAtIndex:0];
+    [AttentionGrabber giveUpAttention];
     [self reformCurrentDefaults];
 }
 

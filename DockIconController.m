@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License along with Fob
 #import "DockIconController.h"
 #import "CurrentAlarms.h"
 #import "prefs.h"
+#import "AttentionGrabber.h"
 
 #define PADDING 5.0f
 
@@ -59,6 +60,13 @@ You should have received a copy of the GNU General Public License along with Fob
            selector:@selector(handleAlarmCollectionNote:)
                name:@"FobAlarmRemoved"
              object:currentAlarms];
+
+    quitting = NO;
+    [nc addObserver:self
+           selector:@selector(handleQuitting:)
+               name:@"NSApplicationWillTerminateNotification"
+             object:nil];
+    
     [self updateIcon];
 }
 
@@ -73,8 +81,10 @@ You should have received a copy of the GNU General Public License along with Fob
 }
 
 - (void)handleAlarmDone:(NSNotification *)note {
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:FobFeedbackLevelKey]
-        == beep) NSBeep();
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults integerForKey:FobFeedbackLevelKey] == beep) NSBeep();
+    [AttentionGrabber grabAttention];
+    //[defaults integerForKey:FobBounceLevelKey]
     [self handleAlarmNote:note];
 }
 
@@ -82,7 +92,13 @@ You should have received a copy of the GNU General Public License along with Fob
     [self updateIcon];
 }
 
+- (void)handleQuitting:(NSNotification *)note {
+    quitting = true;
+    [NSApp setApplicationIconImage:originalImage]; // Set it to the original before quit.
+}
+
 - (void)doDoneFlash:(NSTimer*)timer {
+    if (quitting) return;
     if (toFlash) {
         NSSize dockIconSize = [originalImage size];
         NSRect dockRect = NSMakeRect(0.0f,0.0f,dockIconSize.width,dockIconSize.height);
@@ -111,6 +127,8 @@ You should have received a copy of the GNU General Public License along with Fob
 - (void)updateIcon {
     Alarm * first = [self firstAlarm];
     DockIconState newState;
+
+    if (quitting) return;
     if (first == nil) newState = original;
     else newState = [first millisecondsRemaining] ? alarmDisplay : doneFlash;
     if (newState != alarmDisplay && newState == iconState) return;

@@ -23,9 +23,14 @@ You should have received a copy of the GNU General Public License along with Fob
 NSString *FobPresetAlarmsKey = @"Preset Alarms";
 NSString *FobActiveAlarmsKey = @"Active Alarms";
 NSString *FobConfirmDeleteKey = @"Confirm Delete";
+NSString *FobKeepWindowOpenKey = @"Keep Window Open";
 NSString *FobFeedbackLevelKey = @"Feedback Level";
+NSString *FobBounceLevelKey = @"Bounce Level";
 
-const FeedbackLevel kDefaultLevel = beep;
+const FeedbackLevel kDefaultFeedbackLevel = beep;
+const BounceLevel kDefaultBounceLevel = dont;
+const BOOL kDefaultConfirmDelete = YES;
+const BOOL kDefaultKeepWindowOpen = NO;
 
 long long alarmTimes[] = {
     SECONDS(0,20,0), SECONDS(0,45,0), 0
@@ -66,8 +71,14 @@ void setFactoryDefaults() {
     }
     [defaults setObject:presetArray forKey:FobPresetAlarmsKey];
     [defaults setObject:[NSArray array] forKey:FobActiveAlarmsKey];
-    [defaults setObject:[NSNumber numberWithInt:kDefaultLevel] forKey:FobFeedbackLevelKey];
-    [defaults setObject:[NSNumber numberWithBool:YES] forKey:FobConfirmDeleteKey];
+    [defaults setObject:[NSNumber numberWithInt:kDefaultFeedbackLevel]
+                 forKey:FobFeedbackLevelKey];
+    [defaults setObject:[NSNumber numberWithInt:kDefaultBounceLevel]
+                 forKey:FobBounceLevelKey];
+    [defaults setObject:[NSNumber numberWithBool:kDefaultConfirmDelete]
+                 forKey:FobConfirmDeleteKey];
+    [defaults setObject:[NSNumber numberWithBool:kDefaultKeepWindowOpen]
+                 forKey:FobKeepWindowOpenKey];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     //NSLog(@"Registered defaults!");

@@ -30,6 +30,7 @@ typedef enum _DockIconState {
     DockIconState iconState; // Is our dock icon the original, displaying an alarm, or doing the flash?
     NSTimer *doneTimer; // The timer for flashing the dock icon on/off.
     BOOL toFlash; // Should the next done flash be an on flash?
+    BOOL quitting; // Are we quitting?
     
     IBOutlet CurrentAlarms *currentAlarms;
 }
