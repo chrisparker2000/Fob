@@ -21,10 +21,13 @@ You should have received a copy of the GNU General Public License along with Fob
 @interface FileDoneAction : DoneAction {
     NSString *filePath;
     NSSound *fileSound;
+    NSAppleScript *fileScript;
+    BOOL opened;
 }
 
 -(id)initWithFilePath:(NSString *)path;
 - (NSString *)filePath;
-- (void)loadFile;
+- (void)loadSoundFile;
+- (void)loadScriptFile;
 
 @end

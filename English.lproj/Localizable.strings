@@ -42,12 +42,14 @@
 "ToolbarClearDueLabel" = "Clear Due";
 "ToolbarPauseLabel" = "Pause";
 "ToolbarUnpauseLabel" = "Unpause";
+"ToolbarRewindLabel" = "Rewind";
 
 // The labels for the toolbar tooltips.
 "ToolbarStartTip" = "Starts the alarm displayed in the clock.";
 "ToolbarStoreTip" = "Stores the alarm displayed in the clock into the list of presets.";
 "ToolbarStartSelectedPresetsTip" = "Starts alarms based on the selected presets.";
 "ToolbarDeleteTip" = "Deletes currently selected alarms/presets.";
+"ToolbarRewindTip" = "Sets the currently selected alarms to their original times.";
 "ToolbarPreferencesTip" = "Display Fob preferences.";
 "ToolbarClearDueTip" = "Deletes done alarms.";
 "ToolbarPauseTip" = "Pause the selected active alarms.";

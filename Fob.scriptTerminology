@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>Classes</key>
+        <dict>
+                <key>MyDocument</key>
+                <dict>
+                        <key>Description</key>
+                        <string>A ScriptableDocApp document.</string>
+                        <key>Name</key>
+                        <string>document</string>
+                        <key>PluralName</key>
+                        <string>documents</string>
+                </dict>
+                <key>NSApplication</key>
+                <dict>
+                        <key>Description</key>
+                        <string>ScriptableDocApp's top level scripting object.</string>
+                        <key>Name</key>
+                        <string>application</string>
+                        <key>PluralName</key>
+                        <string>applications</string>
+                </dict>
+        </dict>
+        <key>Description</key>
+        <string>ScriptableDocApp specific classes.</string>
+        <key>Name</key>
+        <string>ScriptableDocApp suite</string>
+</dict>
+</plist>

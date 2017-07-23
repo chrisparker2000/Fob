@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License along with Fob
 //  This program is distributed under the terms of the GNU General Public License.
 
 #import "FileAcceptorView.h"
-#import "DoneActionInputController.h"
+//#import "DoneActionInputController.h"
 
 #define ITUNES @"CorePasteboardFlavorType 0x6974756E"
 
@@ -68,8 +68,8 @@ You should have received a copy of the GNU General Public License along with Fob
         if (sourceDragMask & NSDragOperationGeneric) {
             NSArray *filenames = [pboard propertyListForType:NSFilenamesPboardType];
             if ([filenames count] != 1) return NSDragOperationNone;
-            if (![DoneActionInputController isSoundAtPath:[filenames objectAtIndex:0]])
-                return NSDragOperationNone;
+            /*if (![DoneActionInputController isSoundAtPath:[filenames objectAtIndex:0]])
+                return NSDragOperationNone;*/
             //NSLog(@"DRAGGED: %@", filenames);
             [self setHighlighted:YES];
             return NSDragOperationGeneric;

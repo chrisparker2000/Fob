@@ -48,6 +48,7 @@
 		089C165CFE840E0CC02AAC07 = {
 			children = (
 				089C165DFE840E0CC02AAC07,
+				E990B1180660EC21001EC845,
 			);
 			isa = PBXVariantGroup;
 			name = InfoPlist.strings;
@@ -213,6 +214,8 @@
 		};
 		29B97317FDCFA39411CA2CEA = {
 			children = (
+				E9C4DC54068010E400BD91D6,
+				E9C4DC6E0680117400BD91D6,
 				29B97318FDCFA39411CA2CEA,
 				089C165CFE840E0CC02AAC07,
 				F5F0699803DB73FC01000103,
@@ -232,6 +235,7 @@
 		29B97318FDCFA39411CA2CEA = {
 			children = (
 				29B97319FDCFA39411CA2CEA,
+				E990B1010660EBB2001EC845,
 			);
 			isa = PBXVariantGroup;
 			name = MainMenu.nib;
@@ -312,7 +316,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Fob</string>
 	<key>CFBundleGetInfoString</key>
-	<string>1.0.2</string>
+	<string>1.0.3</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Fob Help</string>
 	<key>CFBundleHelpBookName</key>
@@ -328,11 +332,13 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.2</string>
+	<string>1.0.3</string>
 	<key>CFBundleSignature</key>
 	<string>tfob</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.2</string>
+	<string>1.0.3</string>
+	<key>NSAppleScriptEnabled</key>
+	<string>NO</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
@@ -392,6 +398,9 @@
 				E9423FAD047C830A00000102,
 				E9C82E0A0480101C00734361,
 				E9C82E0B0480101C00734361,
+				E9C4DC55068010E400BD91D6,
+				E9C4DC6F0680117400BD91D6,
+				E9CFC10506B6DE6200341211,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -545,6 +554,60 @@
 			settings = {
 			};
 		};
+		E990B1010660EBB2001EC845 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.nib;
+			name = French;
+			path = French.lproj/MainMenu.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E990B1180660EC21001EC845 = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.strings;
+			name = French;
+			path = French.lproj/InfoPlist.strings;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E990B1360660EC42001EC845 = {
+			fileEncoding = 10;
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.strings;
+			lineEnding = 0;
+			name = French;
+			path = French.lproj/Localizable.strings;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E9C4DC54068010E400BD91D6 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			path = Fob.scriptSuite;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E9C4DC55068010E400BD91D6 = {
+			fileRef = E9C4DC54068010E400BD91D6;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E9C4DC6E0680117400BD91D6 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			path = Fob.scriptTerminology;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E9C4DC6F0680117400BD91D6 = {
+			fileRef = E9C4DC6E0680117400BD91D6;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E9C82E080480101C00734361 = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.tiff;
@@ -567,6 +630,19 @@
 		};
 		E9C82E0B0480101C00734361 = {
 			fileRef = E9C82E090480101C00734361;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E9CFC10406B6DE6200341211 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.tiff;
+			path = rewind.tiff;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E9CFC10506B6DE6200341211 = {
+			fileRef = E9CFC10406B6DE6200341211;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1118,6 +1194,7 @@
 				F5F0699403DB678D01000103,
 				E9C82E080480101C00734361,
 				F5D1012803DA7E6B01000103,
+				E9CFC10406B6DE6200341211,
 				F5D1003103DA1C5701000103,
 				F5D1003203DA1C5701000103,
 				F5D1003303DA1C5701000103,
@@ -1374,6 +1451,7 @@
 		F5F0699803DB73FC01000103 = {
 			children = (
 				F5F0699903DB73FC01000103,
+				E990B1360660EC42001EC845,
 			);
 			isa = PBXVariantGroup;
 			name = Localizable.strings;

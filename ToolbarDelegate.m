@@ -69,6 +69,13 @@ You should have received a copy of the GNU General Public License along with Fob
         [item setToolTip:NSLocalizedString(@"ToolbarClearDueTip", nil)];
         [item setTarget:currentAlarms];
         [item setAction:@selector(clearDue:)];
+    } else if ( [itemIdentifier isEqualToString:@"Rewind"] ) {
+        [item setLabel:NSLocalizedString(@"ToolbarRewindLabel", nil)];
+        [item setPaletteLabel:[item label]];
+        [item setImage:[NSImage imageNamed:@"rewind"]];
+        [item setToolTip:NSLocalizedString(@"ToolbarRewindTip", nil)];
+        [item setTarget:currentAlarms];
+        [item setAction:@selector(rewindSelected:)];
     } else if ( [itemIdentifier isEqualToString:@"Pause"] ) {
         [item setLabel:NSLocalizedString(@"ToolbarPauseLabel", nil)];
         [item setPaletteLabel:[item label]];
@@ -96,6 +103,7 @@ You should have received a copy of the GNU General Public License along with Fob
         @"Delete",
         @"Preferences",
         @"ClearDue",
+        @"Rewind",
         @"Pause",
         @"Unpause",
         NSToolbarSeparatorItemIdentifier,
@@ -112,6 +120,7 @@ You should have received a copy of the GNU General Public License along with Fob
         @"StartSelectedPresets",
         @"Delete",
         @"ClearDue",
+        @"Rewind",
         @"Pause",
         @"Unpause",
         NSToolbarFlexibleSpaceItemIdentifier,

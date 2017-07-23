@@ -48,14 +48,30 @@ enum _DoneActionType {
     [self setupAlertPopUp];
 }
 
-/* Returns an array of those types of files that are accepted by the done action input. */
+/* Returns an array of those types of files that are accepted by the done action input, or nil if all file types are accepted. */
 + (NSArray *)fileTypesAccepted {
+    return nil;
+}
+
+/* Returns an array of those types of sound files that are accepted by the done action input, or nil if all file types are accepted. */
++ (NSArray *)soundFileTypesAccepted {
     return [NSSound soundUnfilteredFileTypes];
 }
 
 /* Returns if the file at path is a proper sound file. */
 + (BOOL)isSoundAtPath:(NSString *)path {
-    NSArray *types = [DoneActionInputController fileTypesAccepted];
+    NSArray *types = [DoneActionInputController soundFileTypesAccepted];
+    NSEnumerator *enumerator = [types objectEnumerator];
+    NSString *type;
+    while (type = [enumerator nextObject]) {
+        if ([path hasSuffix:type]) return YES;
+    }
+    return NO;
+}
+
+/* Returns if the file at path is a proper sound file. */
++ (BOOL)isScriptAtPath:(NSString *)path {
+    NSArray *types = [NSArray arrayWithObject:@"scpt"];
     NSEnumerator *enumerator = [types objectEnumerator];
     NSString *type;
     while (type = [enumerator nextObject]) {

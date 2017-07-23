@@ -193,7 +193,7 @@ You should have received a copy of the GNU General Public License along with Fob
     if (quitting) return;
     if (first == nil) newState = original;
     else newState = [first millisecondsRemaining] ? alarmDisplay : doneFlash;
-    if (newState != alarmDisplay && newState == iconState) return;
+    //if (newState != alarmDisplay && newState == iconState) return;
 
     if (iconState == doneFlash) {
         // We only get here if we've stopping flashing.  Get rid of the done icon timer.

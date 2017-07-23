@@ -37,8 +37,11 @@ You should have received a copy of the GNU General Public License along with Fob
         [statusItemVisibleCheckbox setEnabled:NO];
         [bounceSlider setEnabled:NO];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"FobStatusItemVisibilityChanged"
-                                                        object:self];
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:@"FobStatusItemVisibilityChanged"
+                      object:self];
+    [quitItem setKeyEquivalent:
+        ([defaults boolForKey:FobDisableCommandQKey] ? @"" : @"q")];
 }
 
 - (void)changeFeedbackLabel {
@@ -87,6 +90,7 @@ You should have received a copy of the GNU General Public License along with Fob
     storedStatusVisible = [defaults boolForKey:FobStatusItemVisibleKey];
     storedStatusTitleVisible = [defaults boolForKey:FobStatusItemTitleVisibleKey];
     storedScaleDockTime = [defaults boolForKey:FobScaleDockTimeKey];
+    storedDisableQ = [defaults boolForKey:FobDisableCommandQKey];
     
     // Change the view to reflect current preferences.
     [confirmDeleteCheckbox setState:storedConfirmDelete ? NSOnState : NSOffState];
@@ -95,6 +99,7 @@ You should have received a copy of the GNU General Public License along with Fob
     [statusItemTitleVisibleCheckbox setState:storedStatusTitleVisible ? NSOnState : NSOffState];
     [statusItemTitleVisibleCheckbox setEnabled:storedStatusVisible];
     [scaleDockTimeCheckbox setState:storedScaleDockTime ? NSOnState : NSOffState];
+    [disableCommandQCheckbox setState:storedDisableQ ? NSOnState : NSOffState];
     [feedbackSlider setIntValue:storedFeedbackLevel];
     [bounceSlider setIntValue:storedBounceLevel];
     [self changeFeedbackLabel];
@@ -160,6 +165,14 @@ You should have received a copy of the GNU General Public License along with Fob
                forKey:FobScaleDockTimeKey];
 }
 
+- (IBAction)changeCommandQ:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL disableQ = [disableCommandQCheckbox state] == NSOnState;
+    [defaults setBool:disableQ
+               forKey:FobDisableCommandQKey];
+    [quitItem setKeyEquivalent:(disableQ ? @"" : @"q")];
+}
+
 - (IBAction)endSheet:(id)sender {
     // Hide the sheet.
     [preferenceWindow orderOut:sender];
@@ -188,10 +201,13 @@ You should have received a copy of the GNU General Public License along with Fob
                    forKey:FobStatusItemVisibleKey];
         [defaults setBool:storedStatusTitleVisible
                    forKey:FobStatusItemTitleVisibleKey];
-        [defaults setBool:storedScaleDockTime
-                   forKey:FobScaleDockTimeKey];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FobStatusItemVisibilityChanged"
                                                             object:self];
+        [defaults setBool:storedScaleDockTime
+                   forKey:FobScaleDockTimeKey];
+        [defaults setBool:storedDisableQ
+                   forKey:FobDisableCommandQKey];
+        [quitItem setKeyEquivalent:(storedDisableQ ? @"" : @"q")];
     }
 }
 

@@ -86,7 +86,7 @@ PresetAlarms * defaultDatabase = nil;
 }
 
 /* This will add an alarm.  The alarm added must be paused. */
-- (void)add:(Alarm *)alarm {
+- (int)add:(Alarm *)alarm {
     [self rawAdd:alarm];
     [self reformPresetDefaults];
 }

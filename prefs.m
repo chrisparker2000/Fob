@@ -31,6 +31,7 @@ NSString *FobDisplayedAlarmKey = @"Displayed Alarm";
 NSString *FobStatusItemVisibleKey = @"Status Item Visible";
 NSString *FobStatusItemTitleVisibleKey = @"Status Item Displays Title";
 NSString *FobScaleDockTimeKey = @"Time Scaled to Fit Dock Icon";
+NSString *FobDisableCommandQKey = @"Command-Q Disabled";
 
 const FeedbackLevel kDefaultFeedbackLevel = beep;
 const BounceLevel kDefaultBounceLevel = dont;
@@ -39,6 +40,7 @@ const BOOL kDefaultKeepWindowOpen = NO;
 const BOOL kDefaultStatusItemVisible = NO;
 const BOOL kDefaultStatusItemTitleVisible = YES;
 const BOOL kDefaultScaleDockTime = NO;
+const BOOL kDefaultDisableCommandQ = NO;
 
 long long alarmTimes[] = {
     SECONDS(0,20,0), SECONDS(0,45,0), 0
@@ -92,6 +94,8 @@ void setFactoryDefaults() {
                  forKey:FobStatusItemTitleVisibleKey];
     [defaults setObject:[NSNumber numberWithBool:kDefaultScaleDockTime]
                  forKey:FobScaleDockTimeKey];
+    [defaults setObject:[NSNumber numberWithBool:kDefaultDisableCommandQ]
+                 forKey:FobDisableCommandQKey];
     [defaults setObject:[NSArchiver archivedDataWithRootObject:
         [Alarm alarmWithTitle:NSLocalizedString(@"DefaultAlarmLabel", nil)
             forSecondDuration:SECONDS(0,5,0)]]

@@ -28,7 +28,7 @@ You should have received a copy of the GNU General Public License along with Fob
 }
 
 - (NSArray *)alarms;
-- (void)add:(Alarm *)alarm;
+- (int)add:(Alarm *)alarm;
 - (BOOL)remove:(Alarm *)alarm;
 - (void)removeAlarmAtIndex:(int)index;
 - (int)findEntryWithTime:(long long)milliseconds;

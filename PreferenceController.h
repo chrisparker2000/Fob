@@ -27,13 +27,16 @@ You should have received a copy of the GNU General Public License along with Fob
     IBOutlet NSButton *statusItemVisibleCheckbox;
     IBOutlet NSButton *statusItemTitleVisibleCheckbox;
     IBOutlet NSButton *scaleDockTimeCheckbox;
+    IBOutlet NSButton *disableCommandQCheckbox;
     IBOutlet NSTextField *feedbackLabel;
     IBOutlet NSTextField *bounceLabel;
     IBOutlet NSSlider *feedbackSlider;
     IBOutlet NSSlider *bounceSlider;
+    
     IBOutlet NSWindow *preferenceWindow;
     IBOutlet NSWindow *mainWindow;
     IBOutlet NSWindow *miniWindow;
+    IBOutlet NSMenuItem *quitItem;
 
     // Stored keys, in the event of a cancel on the sheet.
     BOOL storedConfirmDelete;
@@ -43,6 +46,7 @@ You should have received a copy of the GNU General Public License along with Fob
     BOOL storedStatusVisible;
     BOOL storedStatusTitleVisible;
     BOOL storedScaleDockTime;
+    BOOL storedDisableQ;
 }
 - (void)displayPreferences;
 - (IBAction)changeConfirmDeletions:(id)sender;
@@ -52,5 +56,6 @@ You should have received a copy of the GNU General Public License along with Fob
 - (IBAction)changeStatusVisible:(id)sender;
 - (IBAction)changeStatusTitleVisible:(id)sender;
 - (IBAction)changeScaleDockTime:(id)sender;
+- (IBAction)changeCommandQ:(id)sender;
 - (IBAction)endSheet:(id)sender;
 @end

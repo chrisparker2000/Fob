@@ -28,6 +28,7 @@ extern NSString *FobDisplayedAlarmKey;
 extern NSString *FobStatusItemVisibleKey;
 extern NSString *FobStatusItemTitleVisibleKey;
 extern NSString *FobScaleDockTimeKey;
+extern NSString *FobDisableCommandQKey;
 
 typedef enum _FeedbackLevel {
     flash = 0, beep, alwaysBeep

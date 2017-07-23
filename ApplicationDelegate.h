@@ -17,11 +17,12 @@ You should have received a copy of the GNU General Public License along with Fob
 
 #import <Cocoa/Cocoa.h>
 
-@class CurrentAlarms, PresetAlarms;
+@class CurrentAlarms, PresetAlarms, DockIconController;
 
 @interface ApplicationDelegate : NSObject {
     IBOutlet CurrentAlarms *currentAlarms;
     IBOutlet PresetAlarms *presetAlarms;
+    IBOutlet DockIconController *dockIconController;
 }
 
 - (NSMenu *)applicationDockMenu:(NSApplication *)sender;

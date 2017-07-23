@@ -16,10 +16,11 @@ You should have received a copy of the GNU General Public License along with Fob
 //  This program is distributed under the terms of the GNU General Public License.
 
 #import "FileDoneAction.h"
+#import "DoneActionInputController.h"
 
 @implementation FileDoneAction
 
-- (void)loadFile {
+- (void)loadSoundFile {
     // A few checks to make sure that all is well.
     BOOL directory;
     [fileSound release];
@@ -30,14 +31,37 @@ You should have received a copy of the GNU General Public License along with Fob
     fileSound = [[NSSound alloc] initWithContentsOfFile:filePath byReference:YES];
 }
 
+- (void)loadScriptFile {
+    // A few checks to make sure that all is well.
+    BOOL directory;
+    NSDictionary *errors = nil;
+    [fileScript release];
+    fileScript = nil;
+    if (!filePath) return;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&directory]) return;
+    if (directory) return;
+    NSURL *url = [NSURL fileURLWithPath:filePath];
+    fileScript = [[NSAppleScript alloc] initWithContentsOfURL:url error:&errors];
+    if (errors) {
+        NSLog(@"Warning: AppleScript load failed with errors %@", errors);
+    }
+}
+
 - (void)setFilePath:(NSString*)path {
     [filePath autorelease];
     filePath = [path retain];
-    [self loadFile];
+    if ([DoneActionInputController isSoundAtPath:filePath])
+        [self loadSoundFile];
+    if ([DoneActionInputController isScriptAtPath:filePath])
+        [self loadScriptFile];
 }
 
 -(id)initWithFilePath:(NSString *)path {
     if (self = [super init]) {
+        fileSound = nil;
+        filePath = nil;
+        fileScript = nil;
+        opened = NO;
         [self setFilePath:path];
     }
     return self;
@@ -45,6 +69,10 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (id)initWithCoder:(NSCoder *)coder {
     if (self = [super initWithCoder:coder]) {
+        fileSound = nil;
+        filePath = nil;
+        fileScript = nil;
+        opened = NO;
         [self setFilePath:[coder decodeObject]];
     }
     return self;
@@ -64,7 +92,18 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (void)play {
     [super play];
-    [fileSound play];
+    if (fileSound) {
+        [fileSound play];
+    } else if (!opened && fileScript) {
+        NSDictionary *error = nil;
+        [fileScript executeAndReturnError:&error];
+        opened = YES;
+    } else if (!opened && filePath) {
+        if ([[NSWorkspace sharedWorkspace] openFile:filePath] == NO) {
+            NSLog(@"Could not open file %@.", filePath);
+        }
+        opened = YES;
+    }
 }
 
 - (void)stop {

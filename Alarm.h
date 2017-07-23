@@ -25,7 +25,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 @interface Alarm : NSObject <NSCopying, NSCoding> {
     NSString *title, *lastTimeString, *lastDescribe;
-    long long timeLeft, matures, lastCheckedMSeconds;
+    long long timeLeft, matures, lastCheckedMSeconds, timeAtStart;
     NSTimer *timer;
     BOOL paused, cachedValid, cachedDescribeValid;
     DoneAction *doneAction;
@@ -36,6 +36,7 @@ You should have received a copy of the GNU General Public License along with Fob
 - (id)initWithTitle:(NSString *)title forSecondDuration:(long long)seconds;
 - (void)pause;
 - (void)start;
+- (void)rewind;
 - (NSString *)describe;
 - (NSString *)timeString;
 - (NSString *)title;

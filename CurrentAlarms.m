@@ -168,7 +168,7 @@ CurrentAlarms * defaultCurrentDatabase = nil;
     [super add:alarm];
 }
 
-- (void)add:(Alarm *)alarm {
+- (int)add:(Alarm *)alarm {
     [self rawAdd:alarm];
     [self reformCurrentDefaults];
 }
@@ -196,6 +196,21 @@ CurrentAlarms * defaultCurrentDatabase = nil;
     if ([self findEntryForAlarm:alarm] >= 0) return;
     [self rawAdd:alarm];
     NSAssert([paused remove:alarm], @"Attempted to unpause an active alarm!");
+}
+
+- (void)rewind:(Alarm *)alarm {
+    //NSLog(@"Rewinding %@", alarm);
+    if ([self findEntryForAlarm:alarm] >= 0) {
+        // It's an active alarm.
+        NSAssert([self remove:alarm], @"Can't remove the alarm during rewind!");
+        [alarm rewind];
+        [self rawAdd:alarm];
+    } else if ([paused findEntryForAlarm:alarm] >= 0) {
+        // It's a paused alarm.
+        NSAssert([paused remove:alarm], @"Can't remove the paused alarm during rewind!");
+        [alarm rewind];
+        [paused add:alarm];
+    }
 }
 
 - (NSArray *)pausedAlarms {
@@ -355,26 +370,42 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 - (IBAction)pauseSelected:(id)sender {
     NSArray *selected = [self selectedAlarms];
     NSEnumerator *enumerator = [selected objectEnumerator];
+    NSTableView *tv = [self displayedTableView];
     Alarm *alarm;
     while (alarm = [enumerator nextObject])
         [self pause:alarm];
-    [currentTable deselectAll:nil];
+    [tv deselectAll:nil];
     enumerator = [selected objectEnumerator];
     while (alarm = [enumerator nextObject])
-        [currentTable selectRow:[self rowForAlarm:alarm] byExtendingSelection:YES];
+        [tv selectRow:[self rowForAlarm:alarm] byExtendingSelection:YES];
     [self reformCurrentDefaults];
 }
 
 - (IBAction)unpauseSelected:(id)sender {
     NSArray *selected = [self selectedAlarms];
     NSEnumerator *enumerator = [selected objectEnumerator];
+    NSTableView *tv = [self displayedTableView];
     Alarm *alarm;
     while (alarm = [enumerator nextObject])
         [self unpause:alarm];
-    [currentTable deselectAll:nil];
+    [tv deselectAll:nil];
     enumerator = [selected objectEnumerator];
     while (alarm = [enumerator nextObject])
-        [currentTable selectRow:[self rowForAlarm:alarm] byExtendingSelection:YES];
+        [tv selectRow:[self rowForAlarm:alarm] byExtendingSelection:YES];
+    [self reformCurrentDefaults];
+}
+
+- (IBAction)rewindSelected:(id)sender {
+    NSArray *selected = [self selectedAlarms];
+    NSEnumerator *enumerator = [selected objectEnumerator];
+    NSTableView *tv = [self displayedTableView];
+    Alarm *alarm;
+    while (alarm = [enumerator nextObject])
+        [self rewind:alarm];
+    [tv deselectAll:nil];
+    enumerator = [selected objectEnumerator];
+    while (alarm = [enumerator nextObject])
+        [tv selectRow:[self rowForAlarm:alarm] byExtendingSelection:YES];
     [self reformCurrentDefaults];
 }
 
@@ -391,34 +422,38 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 
 - (BOOL)validateItem:(id)item {
     SEL action = [item action];
+    NSTableView *tv = [self displayedTableView];
     if (action == @selector(addToCurrent:)) {
         return [inputController milliseconds] != 0;
     } else if (action == @selector(addSelectedPresets:)) {
         return [presetTable numberOfSelectedRows];
     } else if (action == @selector(pauseSelected:)) {
-        switch ([currentTable numberOfSelectedRows]) {
+        switch ([tv numberOfSelectedRows]) {
             case 0:
                 // Can't pause nothing!
                 return NO;
             case 1:
                 // Can only pause non-paused ones.
-                return [currentTable selectedRow] < [alarms count];
+                return [tv selectedRow] < [alarms count];
             default:
-                return [[[currentTable selectedRowEnumerator] nextObject] intValue] < [alarms count];
+                return [[[tv selectedRowEnumerator] nextObject] intValue] < [alarms count];
         }
     } else if (action == @selector(unpauseSelected:)) {
-        switch ([currentTable numberOfSelectedRows]) {
+        switch ([tv numberOfSelectedRows]) {
             case 0:
                 // Can't unpause nothing!
                 return NO;
             case 1:
                 // Can only unpause paused ones.
-                return [currentTable selectedRow] >= [alarms count];
+                return [tv selectedRow] >= [alarms count];
             default:
-                return [[[[currentTable selectedRowEnumerator] allObjects] lastObject] intValue]
+                return [[[[tv selectedRowEnumerator] allObjects] lastObject] intValue]
                 >= [alarms count];
         }
+    } else if (action == @selector(rewindSelected:)) {
+        return [tv numberOfSelectedRows];
     }
+    // By default, validate everything as enabled.
     return YES;
 }
 

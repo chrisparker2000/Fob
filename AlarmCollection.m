@@ -48,6 +48,7 @@ You should have received a copy of the GNU General Public License along with Fob
     return -1-bottom;
 }
 
+/* This will find the index at which the alarm is stored. */
 - (int)findEntryForAlarm:(Alarm *)alarm {
     int bottom = 0, top = [alarms count]-1;
     while (bottom <= top) {
@@ -61,12 +62,13 @@ You should have received a copy of the GNU General Public License along with Fob
 }
 
 /* This will add an alarm.  The alarm added must be paused. */
-- (void)add:(Alarm *)alarm {
+- (int)add:(Alarm *)alarm {
     int toInsert;
     toInsert = [self findEntryForAlarm:alarm];
     if (toInsert < 0) toInsert = -1-toInsert;
     [alarms insertObject:alarm atIndex:toInsert];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FobAlarmAdded" object:self];
+    return toInsert;
 }
 
 - (BOOL)remove:(Alarm *)alarm {

@@ -37,6 +37,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (void)pause:(Alarm *)alarm;
 - (void)unpause:(Alarm *)alarm;
+- (void)rewind:(Alarm *)alarm;
 - (NSArray *)pausedAlarms;
 
 // The current alarms table.
@@ -53,6 +54,7 @@ You should have received a copy of the GNU General Public License along with Fob
 - (IBAction)doubleClickPresets:(id)sender;
 - (IBAction)pauseSelected:(id)sender;
 - (IBAction)unpauseSelected:(id)sender;
+- (IBAction)rewindSelected:(id)sender;
     
 // Synchronization calls.
 - (void)reformCurrentDefaults;

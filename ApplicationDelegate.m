@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License along with Fob
 #import "ApplicationDelegate.h"
 #import "CurrentAlarms.h"
 #import "PresetAlarms.h"
+#import "DockIconController.h"
 
 #define kFixedDockMenuAppKitVersion 632
 
@@ -38,6 +39,7 @@ You should have received a copy of the GNU General Public License along with Fob
     [currentAlarms unpause:[sender representedObject]];
 }
 
+/* This is a convenience method for constructing a menu item.  This accounts for a problem in 10.1 that did not allow dock icon menus to work properly. */
 - (NSMenuItem *) constructMenuItem:(NSString *)title
                             action:(SEL)aSelector
                  representedObject:(id)represented {
@@ -67,6 +69,20 @@ You should have received a copy of the GNU General Public License along with Fob
     return item;
 }
 
+/* This method is used when you clear from the dock.  When you clear due alarms by right clicking on the dock icon, the dock icon will perform the action in "clear due" which will revert the dock icon, AND THEN revert the dock icon to what it was at the point of the right click.  It is annoying because it does this reset AFTER the Fob code changes the icon -- so the icon may well be wrong, and if nothing else changes the dock icon it will stay wrong.  Unfortunately I don't see a clean way around this... */
+- (void)clearDueDockDelay:(id)sender {
+    // Activates after a delay.
+    [dockIconController updateIcon];
+}
+- (void)clearDueDock:(id)sender {
+    // Perform the normal action.
+    [currentAlarms clearDue:sender];
+    // Clear the icon after a small delay.
+    [NSTimer scheduledTimerWithTimeInterval:0.2f target:self
+                                   selector:@selector(clearDueDockDelay:)
+                                   userInfo:nil repeats:NO];
+}
+
 - (NSMenu *)applicationDockMenu:(NSApplication *)sender {
     NSMenu * dockMenu = [[[NSMenu alloc] initWithTitle:@"DockMenu"] autorelease];
     NSMenu * currentMenu = [[[NSMenu alloc] initWithTitle:@"CurrentAlarms"] autorelease];
@@ -76,10 +92,10 @@ You should have received a copy of the GNU General Public License along with Fob
     Alarm *alarm;
 
     // The items for control.
-    item = [[[NSMenuItem alloc] initWithTitle:@"Clear Due"
-                                       action:@selector(clearDue:)
+    item = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"ToolbarClearDueLabel", nil)
+                                       action:@selector(clearDueDock:)
                                 keyEquivalent:@""] autorelease];
-    [item setTarget:currentAlarms];
+    [item setTarget:self];
     [dockMenu addItem:item];
     
     // Set up the preset alarm submenu.

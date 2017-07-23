@@ -34,7 +34,9 @@ You should have received a copy of the GNU General Public License along with Fob
     BOOL posted, toPost;
 }
 + (NSArray *)fileTypesAccepted;
++ (NSArray *)soundFileTypesAccepted;
 + (BOOL)isSoundAtPath:(NSString *)path;
++ (BOOL)isScriptAtPath:(NSString *)path;
 
 - (void)setupAlertPopUp;
 - (IBAction)changeAlert:(id)sender;

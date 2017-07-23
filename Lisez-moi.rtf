@@ -2,7 +2,7 @@
 {\fonttbl\f0\fnil\fcharset77 LucidaGrande-Bold;\f1\fnil\fcharset77 LucidaGrande;\f2\fnil\fcharset77 Monaco;
 }
 {\colortbl;\red255\green255\blue255;}
-\margl1440\margr1440\vieww14400\viewh16200\viewkind0
+\margl1440\margr1440\vieww14400\viewh13400\viewkind0
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
 \f0\b\fs42 \cf0 Fob
@@ -18,35 +18,52 @@ Description\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
-\f1\b0\fs28 \cf0 Fob is a free dock-based kitchen timer for Mac OS X by Leaky Puppy Software.  It allows a user to specify possibly multiple timers to count down for a specified interval.  When an alarm runs out of time, Fob will make itself conspicuous.\
+\f1\b0\fs28 \cf0 Fob est un compte-minutes de cuisine gratuit pour Mac OS X de chez Leaky Puppy Software.  \
+Il permet \'88  l' utilisateur de d\'8efinir plusieurs comptes-minutes, et de les r\'8egler sur des dur\'8ees diff\'8erentes.\
+Quand un compte-minute arrive a terme, Fob vous en avertit.\
 \
-(Fob is not an alarm clock or stopwatch, i.e., it will not count to a particular time, nor count up.) \
+(Fob n' est ni un r\'8eveil, ni un chronom\'8ftre.) \
 \
-The presence of presets is Fob's main gimmick for decreasing the effort required to start an alarm.  To draw an analogy to web browsers, they are a kind of time bookmark for commonly used alarms.  For example, I may define a six minute preset to let tea steep.  Thence, I need only choose "Tea" from my preset list, and I never need deal with a neglected lukewarm cup in my microwave again.  Starting a preset alarm requires only one mouse click rather than many clicks and typing. \
+La pr\'8esence de pr\'8es\'8elections est la grande particularit\'8e de FOB.\
+cela permet de faciliter le d\'8eclenchement des alarmes.\
+Afin d' \'90tre plus explicite, voici une analogie :\
+vous pouvez sauvegarder des alarmes que vous utiliser souvent.\
+Par exemple, je peux d\'8efinir une alarme \'88 6 minutes, pour pr\'8eparer mon th\'8e.\
+ainsi, je n' ai plus qu' a s\'8electionner "Th\'8e" dans ma liste d' alarmes.\
+de cette mani\'8fre, je ne risque plus d' oublier ma tasse de th\'8e dans mon micro-ondes.\
+d\'8emarrer une alarme pr\'8ealablement sauvegard\'8ee ne n\'8ecessite qu' un seul double-clic de souris !\
 \
-Fob thus appeals to the unspeakably lazy and undisciplined.  Needless to say I will make several million dollars. \
+Fob est une application destin\'8ee aux paresseux et d\'8esordonn\'8es. Inutile de dire que je vais devenir millionnaire...\
 \
-I wrote Fob as an exercise in Cocoa and Objective-C programming.  This was my first serious attempt to create a Macintosh software product at least ambiguously suitable for public consumption.  As I wrote it largely as a project to teach myself, I have released it as open source under the terms of the GPL in the hope that others can learn from it.\
 \
-Fob is free in both the code and monetary sense.  As it is about the 100th product to do the exact same thing, it had better be, I suppose.\
+J' ai \'8ecrit Fob de mani\'8fre \'88 m' exercer \'88 la programmation en Cocoa et Objective-C.\
+Il s' agit de ma premi\'8fre tentative d' \'8ecriture d' un programme pour Macintosh utilisable par le grand public.\
+\'8etant donn\'8e que j' ai \'8ecrit ce programme afin d' apprendre, j' ai rendu disponible la source du programme sous la licence GPL, dans le but d' aider d' autres personne a en tirer un enseignement.\
+\
+Fob est doublement gratuit, que ce soit par son code (libre) et sa valeur mon\'8etaire.\
+\
+Etant donn\'8e qu' il existe une centaine de produits qui sont cens\'8e faire exactement la m\'90me chose, il existe s\'9erement mieux...\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
-\f0\b\fs32 \cf0 Requirements
+\f0\b\fs32 \cf0 Configuration requise
 \f1\b0\fs28 \
 \
-Fob requires Mac OS X.  I wrote and built Fob on Mac OS X 10.2.3 through 10.3.3.  According to my tests, it works on Mac OS X 10.1 and higher.  It does not work on 10.0.x.\
+Fob n\'8ecessite Mac OS X.  j' ai \'8ecrit et compil\'8e Fob sous Mac OS X 10.2.3 et 10.3.3. d' apr\'8fs mes tests, l' application fonctionne \'8egalement sous Mac OS X 10.1 et au-del\'88.  en revanche, elle ne fonctionne pas sous 10.0.x.\
 \
 
-\f0\b\fs32 Files & Installation & Deinstallation\
+\f0\b\fs32 Fichiers & Installation & D\'8es-installation\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
 \f1\b0\fs28 \cf0 \
-Fob technically requires only the application "Fob" to run.  Fob will create a 
-\f2 com.LeakyPuppy.Fob.plist
-\f1  file in your user preferences directory, usually 
-\f2 ~/Library/Preferences/
-\f1 .  Fob should not create any other files.  To uninstall Fob, delete the application; if you really want you can delete that preferences file as well.\
+Pour fonctionner, l' application Fob ne n\'8ecessite aucun autre fichier.\
+Fob va cr\'8eer par elle m\'90me un fichier nomm\'8e "
+\f2 fob.LeakyPuppy.Fob.plist" qu' elle placera dans vos pr\'8ef\'8erences d' utilisateur qui doit \'90tre ~/Library/Preferences/
+\f1 .\
+Fob ne cr\'8ee pas d' autre fichier.\
+Pour d\'8esinstaller Fob, effacer simplement l' application.\
+si vous le souhaitez, vous pouvez \'8egalement effacer le fichier pr\'8ef\'8erences.\
+\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
@@ -54,21 +71,22 @@ Fob technically requires only the application "Fob" to run.  Fob will create a
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
-\f1\b0\fs28 \cf0 I have made Fob's executable and source code available under the GNU GPL.  A copy of the warranty and license for Fob are provided under 
-\f2 WARRANTY.txt
-\f1  and 
-\f2 COPYING.txt
-\f1 , respectively.  The source should have come with this distribution.  If the source did not come with the distribution, the source code is available at this URL:\
-\
-	
-\f2 http://homepage.mac.com/tfinley/LeakyPuppy/fob.html
-\f1 \
-\
-For contact information, see later in this document.\
+\f1\b0\fs28 \cf0 J' ai cr\'8e\'8e l' ex\'8ecutable ainsi que son code source sous la licence GNU GPL.\
+Une copie de la garantie et de la licence sont inclues sous forme de deux fichiers : WARRANTY.txt et COPYING.txt .\
+La source est inclue dans la distribution.\
+Si la source n' est pas inclue, elle est disponible a cette adresse :\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
-\f0\b\fs32 \cf0 Contact & Bug Reporting
+\f2 \cf0 http://homepage.mac.com/tfinley/LeakyPuppy/fob.html\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f1 \cf0 \
+Pour obtenir un contact, afin d' obtenir d' autres informations, voir plus bas.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
+
+\f0\b\fs32 \cf0 Contacts & Rapport de Bugs
 \f1\b0 \
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
@@ -89,19 +107,22 @@ For contact information, see later in this document.\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
 \f1\b0 \cf0 \
-When reporting bugs or undesirable behavior, please attempt to duplicate the bug while your "Console" application (in the Utilities folder) is running.  This often captures valuable information that can help me diagnose a problem.  Note that I typically find those Apple bug reports next to useless.\
+Si vos rapportez un bug, merci de bien vouloir lancer l' application "Console" quis se trouve dans le dossier Utilitaires, et de faire une copie de ce qui y est dit.\
+cela m' aidera grandement a r\'8esoudre le probl\'8fme.\
 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
-\f0\b\fs32 \cf0 Contributors & Acknowledgments
+\f0\b\fs32 \cf0 Contribuants & Remerciements
 \f1\b0 \
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
 \fs28 \cf0 \
-When I released the source to Fob I didn't imagine anyone would actually look at the source, let along contribute to Fob.\
-\'a5 Thomas Finley (tfinley@mac.com) is the primary author of Fob.  That's me!\
-\'a5 Jon Zap (glasspiral-jon@yahoo.com) tracked down and fixed a bug that caused Fob to crash under some circumstances when modifying the alarm sound for a deleted alarm, and also contributed code that fixed interface incompatibilities when alarms were deleted.\
-\'a5 Jean Duffas (jduffas@free.fr) contributed a French localization.\
+Quand j' ai rendu la source de Fob disponible, je ne me doutais pas que quiconque serait int\'8eress\'8e y jetterait un oeil.\
+\'a5 Thomas Finley (tfinley@mac.com) est l' auteur principal de Fob.  C' est moi !\
+\'a5 Jon Zap (glasspiral-jon@yahoo.com) a trouv\'8e et corrig\'8e les bugs qui faisaient crasher Fob dans certaines circonstances, dans le cas ou l' on modifiait le son de certaines alarmes qui n' existaient plus.\
+il a \'8egalement contribu\'8e \'88 \'8ecrire le code qui a r\'8egl\'8e certaines incompatibilit\'8es d' interface, lors de suppression des alarmes.\
+\'a5 Jean Duffas (jduffas@free.fr) \'88 effectu\'8e la modeste traduction fran\'8daise de l' application.\
+Merci de me contacter en cas de fautes d' orthographe...\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
 \f0\b \cf0 \

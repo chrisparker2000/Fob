@@ -24,7 +24,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 + (void)initialize {
     if (self = [Alarm class]) {
-        [self setVersion:1];
+        [self setVersion:3];
     }
 }
 
@@ -42,6 +42,7 @@ You should have received a copy of the GNU General Public License along with Fob
         title = [newTitle retain];
         paused = true;
         timeLeft = seconds * 1000;
+        timeAtStart = timeLeft;
         lastCheckedMSeconds = -1;
         lastTimeString = lastDescribe = nil;
         cachedValid = NO;
@@ -70,6 +71,12 @@ You should have received a copy of the GNU General Public License along with Fob
         }
         if (!paused) {
             [self checkTime]; // Start the timer!
+        }
+        if (version >= 3) {
+            [coder decodeValueOfObjCType:@encode(long long) at:&timeAtStart];
+        } else {
+            // Well -- then I don't know when it started, really.
+            timeAtStart = timeLeft;
         }
     }
     return self;
@@ -110,6 +117,12 @@ You should have received a copy of the GNU General Public License along with Fob
         paused = false;
         [self checkTime];
     }
+}
+
+/* Resets the time back to the time when it was originally started. */
+- (void)rewind {
+    timeLeft = timeAtStart;
+    [self checkTime];
 }
 
 - (long long) millisecondsRemaining {
@@ -176,12 +189,6 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (NSComparisonResult)timeCompare:(Alarm *)object {
     long long diff;
-    /*NSAssert([[object class] isSubclassOfClass:[Alarm class]],
-             @"The alarm comparator wasn't passed an alarm instance!");*/
-
-    /*if ([object paused] != [self paused])
-        NSLog(@"Warning: comparing a paused and unpaused alarm.");*/
-    
     if (![object paused] && ![self paused])
         diff = [object matures] - [self matures];
     else
@@ -203,6 +210,7 @@ You should have received a copy of the GNU General Public License along with Fob
     [coder encodeValueOfObjCType:@encode(long long) at:&timeLeft];
     [coder encodeValueOfObjCType:@encode(long long) at:&matures];
     [coder encodeObject:doneAction];
+    [coder encodeValueOfObjCType:@encode(long long) at:&timeAtStart];
 }
 
 /* This will check the time, and start a new timer, if appropriate. */
