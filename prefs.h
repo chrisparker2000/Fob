@@ -23,6 +23,7 @@ extern NSString *FobConfirmDeleteKey;
 extern NSString *FobKeepWindowOpenKey;
 extern NSString *FobFeedbackLevelKey;
 extern NSString *FobBounceLevelKey;
+extern NSString *FobDisplayedAlarmKey;
 
 typedef enum _FeedbackLevel {
     flash = 0, beep, alwaysBeep

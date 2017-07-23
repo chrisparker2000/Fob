@@ -17,8 +17,16 @@ You should have received a copy of the GNU General Public License along with Fob
 
 #import "Alarm.h"
 #import "time.h"
+#import "DoneAction.h"
+#import "BeepDoneAction.h"
 
 @implementation Alarm
+
++ (void)initialize {
+    if (self = [Alarm class]) {
+        [self setVersion:1];
+    }
+}
 
 + (Alarm *)alarmWithTitle:(NSString *)newTitle forSecondDuration:(long long)seconds {
     return [[[Alarm alloc] initWithTitle:newTitle forSecondDuration:seconds] autorelease];
@@ -30,6 +38,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (id)initWithTitle:(NSString *)newTitle forSecondDuration:(long long)seconds {
     if (self = [super init]) {
+        [self setDoneAction:[[[BeepDoneAction alloc] init] autorelease]];
         title = [newTitle retain];
         paused = true;
         timeLeft = seconds * 1000;
@@ -44,16 +53,21 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (id)initWithCoder:(NSCoder *)coder {
     if (self = [super init]) {
-            [self setTitle:[coder decodeObject]];
-            [coder decodeValueOfObjCType:@encode(BOOL) at:&paused];
-            [coder decodeValueOfObjCType:@encode(long long) at:&timeLeft];
-            [coder decodeValueOfObjCType:@encode(long long) at:&matures];
-            lastCheckedMSeconds = -1;
-            lastTimeString = lastDescribe = nil;
-            cachedValid = NO;
-            cachedDescribeValid = NO;
-            timer = nil;
-
+        int version = [coder versionForClassName:@"Alarm"];
+        [self setTitle:[coder decodeObject]];
+        [coder decodeValueOfObjCType:@encode(BOOL) at:&paused];
+        [coder decodeValueOfObjCType:@encode(long long) at:&timeLeft];
+        [coder decodeValueOfObjCType:@encode(long long) at:&matures];
+        lastCheckedMSeconds = -1;
+        lastTimeString = lastDescribe = nil;
+        cachedValid = NO;
+        cachedDescribeValid = NO;
+        timer = nil;
+        if (version >= 1) { // We will have a done action.
+            [self setDoneAction:[coder decodeObject]];
+        } else { // We have to make a done action.
+            [self setDoneAction:[[BeepDoneAction new] autorelease]];
+        }
         if (!paused) {
             [self checkTime]; // Start the timer!
         }
@@ -66,6 +80,7 @@ You should have received a copy of the GNU General Public License along with Fob
     [lastDescribe release];
     [title release];
     [timer release];
+    [doneAction autorelease];
 }
 
 - (BOOL)isEqual:(Alarm *)other {
@@ -122,7 +137,7 @@ You should have received a copy of the GNU General Public License along with Fob
     else if (time)
         lastTimeString = [NSString stringWithFormat:@"%d:%02d", time / 60, time % 60];
     else
-        lastTimeString = @"done";
+        lastTimeString = NSLocalizedString(@"DoneAlarmDescriber", nil);
     cachedValid = YES;
     return [lastTimeString retain];
 }
@@ -148,6 +163,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (id)copyWithZone:(NSZone *)zone {
     Alarm * na = [[Alarm alloc] initWithTitle:title forSecondDuration:[self millisecondsRemaining]/1000];
+    [na setDoneAction:[[[self doneAction] copy] autorelease]];
     if (paused) [na pause];
     else [na start];
     return na;
@@ -185,6 +201,7 @@ You should have received a copy of the GNU General Public License along with Fob
     [coder encodeValueOfObjCType:@encode(BOOL) at:&paused];
     [coder encodeValueOfObjCType:@encode(long long) at:&timeLeft];
     [coder encodeValueOfObjCType:@encode(long long) at:&matures];
+    [coder encodeObject:doneAction];
 }
 
 /* This will check the time, and start a new timer, if appropriate. */
@@ -211,6 +228,16 @@ You should have received a copy of the GNU General Public License along with Fob
     [timer release];
     timer = nil;
     if (!paused) [self checkTime];
+}
+
+- (DoneAction *)doneAction {
+    return doneAction;
+}
+
+- (void)setDoneAction:(DoneAction *)newAction {
+    [doneAction stop];
+    [doneAction release];
+    doneAction = [newAction retain];
 }
 
 @end

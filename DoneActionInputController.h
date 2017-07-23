@@ -8,37 +8,43 @@ Fob is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 
 You should have received a copy of the GNU General Public License along with Fob; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
 
-//  PreferenceController.h
+//  DoneActionInputController.h
 //  Fob
 //
-//  Created by Thomas Finley on Sat Jan 18 2003.
+//  Created by Thomas Finley on Sat Jan 25 2003.
 //  Copyright (c) 2003 Leaky Puppy Software, for Net Monkey Inc. All rights reserved.
 //  This program is distributed under the terms of the GNU General Public License.
 
 #import <Cocoa/Cocoa.h>
-#import "prefs.h"
 
-@interface PreferenceController : NSObject {
-    IBOutlet NSButton *confirmDeleteCheckbox;
-    IBOutlet NSButton *keepWindowOpenCheckbox;
-    IBOutlet NSTextField *feedbackLabel;
-    IBOutlet NSTextField *bounceLabel;
-    IBOutlet NSSlider *feedbackSlider;
-    IBOutlet NSSlider *bounceSlider;
-    IBOutlet NSWindow *preferenceWindow;
+// Notifications:
+// "FobDoneActionChange" when the done action is modified by the user
+
+@class DoneAction;
+
+@interface DoneActionInputController : NSObject {
+    IBOutlet NSPopUpButton *alertPopUp;
+    IBOutlet NSTabView *customizeTypeDisplay;
+    IBOutlet NSImageView *fileIconDisplay;
+    IBOutlet NSTextField *fileNameDisplay;
+    IBOutlet NSMatrix *typeChooseButtons;
     IBOutlet NSWindow *mainWindow;
-    IBOutlet NSWindow *miniWindow;
 
-    // Stored keys, in the event of a cancel on the sheet.
-    BOOL storedConfirmDelete;
-    BOOL storedKeepWindowOpen;
-    FeedbackLevel storedFeedbackLevel;
-    BounceLevel storedBounceLevel;
+    NSString *filePath;
+    BOOL posted;
 }
-- (void)displayPreferences;
-- (IBAction)changeConfirmDeletions:(id)sender;
-- (IBAction)changeKeepOpen:(id)sender;
-- (IBAction)changeFeedback:(id)sender;
-- (IBAction)changeBounce:(id)sender;
-- (IBAction)endSheet:(id)sender;
++ (NSArray *)fileTypesAccepted;
++ (BOOL)isSoundAtPath:(NSString *)path;
+
+- (void)setupAlertPopUp;
+- (IBAction)changeAlert:(id)sender;
+- (IBAction)changeFile:(id)sender;
+- (IBAction)changeType:(id)sender;
+
+- (void)setFile:(NSString *)path;
+- (void)synchronizeView;
+
+- (DoneAction *)displayedDoneAction;
+- (void)setDisplayedDoneAction:(DoneAction *)newAction;
+
 @end

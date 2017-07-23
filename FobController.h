@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 #import <Cocoa/Cocoa.h>
 
-@class TimeInputController, TimeView, PresetAlarms, CurrentAlarms, PreferenceController;
+@class TimeInputController, TimeView, PresetAlarms, CurrentAlarms, PreferenceController, ZoomWindow;
 
 @interface FobController : NSWindowController {
     IBOutlet NSTextField *descriptionField;
@@ -32,8 +32,15 @@ You should have received a copy of the GNU General Public License along with Fob
     IBOutlet PresetAlarms *presetAlarms;
     IBOutlet CurrentAlarms *currentAlarms;
     IBOutlet PreferenceController *preferenceController;
+
+    IBOutlet ZoomWindow *bigWindow, *littleWindow;
+
+    IBOutlet NSSplitView *mainSplit, *alarmSplit;
+
+    ZoomWindow *currentWindow;
 }
 
++ (FobController *)defaultController;
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)customizeToolbar:(id)sender;
 

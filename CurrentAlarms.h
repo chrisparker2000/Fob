@@ -18,13 +18,16 @@ You should have received a copy of the GNU General Public License along with Fob
 #import <Cocoa/Cocoa.h>
 #import "AlarmCollection.h"
 
-@class Alarm, TimeInputController, PresetAlarms;
+@class Alarm, TimeInputController, PresetAlarms, TimeView;
 
 @interface CurrentAlarms : AlarmCollection {
-    IBOutlet NSTableView *currentTable, *presetTable;
+    IBOutlet NSTableView *currentTable, *presetTable, *littleCurrentTable;
     IBOutlet TimeInputController *inputController;
     IBOutlet PresetAlarms *presetAlarms;
     IBOutlet NSWindow *window;
+    IBOutlet TimeView *timeView;
+
+    Alarm *lastSelectedAlarm;
 }
 
 + (CurrentAlarms *)defaultDatabase;

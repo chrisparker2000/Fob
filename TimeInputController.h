@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License along with Fob
 #import <Cocoa/Cocoa.h>
 #import "TimeView.h"
 
-@class Alarm;
+@class Alarm, DoneActionInputController;
 
 @interface TimeInputController : NSObject {
     IBOutlet NSTextField *hourField;
@@ -27,6 +27,7 @@ You should have received a copy of the GNU General Public License along with Fob
     IBOutlet NSTextField *descriptionField;
     IBOutlet TimeView *timeView;
     IBOutlet NSStepper *stepper;
+    IBOutlet DoneActionInputController *doneActionInputController;
     
     int lastStepperValue;
 }

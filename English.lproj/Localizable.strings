@@ -21,9 +21,13 @@
 "PresetExistsTitle" = "Preset Exists";
 "PresetExistsMessage" = "A preset with that name and time exists.";
 
-// The built in alarms for zero time, and for the maximum time.
+// The built in alarms for zero time, and for the maximum time, and the default alarm.
 "MaxTimeLabel" = "Max Time";
 "MinTimeLabel" = "Minimum Time";
+"DefaultAlarmLabel" = "Alarm";
+
+// How an alarm that has finished is described.
+"DoneAlarmDescriber" = "Done";
 
 // The labels for the toolbar.
 "ToolbarStartLabel" = "Start";

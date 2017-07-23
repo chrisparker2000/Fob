@@ -29,6 +29,7 @@ typedef enum _DockIconState {
     NSColor *backgroundText, *foregroundText; // Colors for the text when displaying an alarm.
     DockIconState iconState; // Is our dock icon the original, displaying an alarm, or doing the flash?
     NSTimer *doneTimer; // The timer for flashing the dock icon on/off.
+    Alarm *latestRungAlarm; // The alarm that most recently went off.
     BOOL toFlash; // Should the next done flash be an on flash?
     BOOL quitting; // Are we quitting?
     

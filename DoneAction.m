@@ -8,50 +8,53 @@ Fob is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 
 You should have received a copy of the GNU General Public License along with Fob; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
 
-//  FobController.m
+//  DoneAction.m
 //  Fob
 //
-//  Created by Thomas Finley on Sun Jan 05 2003.
+//  Created by Thomas Finley on Thu Jan 23 2003.
 //  Copyright (c) 2003 Leaky Puppy Software, for Net Monkey Inc. All rights reserved.
 //  This program is distributed under the terms of the GNU General Public License.
 
-#import "FobController.h"
-#import "prefs.h"
-#import "PreferenceController.h"
+#import "DoneAction.h"
 
-#define PADDING 5.0f
-
-FobController *controller;
-
-@implementation FobController
-
-+ (void)initialize {
-    setFactoryDefaults();
-}
-
-+ (FobController *)defaultController {
-    return controller;
-}
+@implementation DoneAction
 
 - (id)init {
     if (self = [super init]) {
-        controller = self;
-        [self setWindowFrameAutosaveName:@"MainFobWindow"];
+        timesPlayed = 0;
     }
     return self;
 }
 
-- (void)awakeFromNib {
-    currentWindow = bigWindow;
-    [self setupToolbar];
+- (id)initWithCoder:(NSCoder *)coder {
+    if (self = [super init]) {
+        [coder decodeValueOfObjCType:@encode(unsigned) at:&timesPlayed];
+    }
+    return self;
 }
 
-- (IBAction)showPreferences:(id)sender {
-    [preferenceController displayPreferences];
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeValueOfObjCType:@encode(unsigned) at:&timesPlayed];
 }
 
-- (IBAction)customizeToolbar:(id)sender {
-    [[[self window] toolbar] runCustomizationPalette:sender];
+- (void)play {
+    timesPlayed++;
+}
+
+- (BOOL)isPlaying {
+    return NO;
+}
+
+- (void)stop {
+    
+}
+
+- (unsigned)timesPlayed {
+    return timesPlayed;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [self retain];
 }
 
 @end

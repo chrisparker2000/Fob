@@ -26,6 +26,7 @@ NSString *FobConfirmDeleteKey = @"Confirm Delete";
 NSString *FobKeepWindowOpenKey = @"Keep Window Open";
 NSString *FobFeedbackLevelKey = @"Feedback Level";
 NSString *FobBounceLevelKey = @"Bounce Level";
+NSString *FobDisplayedAlarmKey = @"Displayed Alarm";
 
 const FeedbackLevel kDefaultFeedbackLevel = beep;
 const BounceLevel kDefaultBounceLevel = dont;
@@ -58,7 +59,6 @@ NSMutableArray * correspondingObjectArray(NSArray * array) {
 
 void setFactoryDefaults() {
     NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-
     long long *alarmT = alarmTimes;
     NSString **alarmN = alarmNames;
     NSMutableArray *presetArray = [NSMutableArray array];
@@ -79,6 +79,10 @@ void setFactoryDefaults() {
                  forKey:FobConfirmDeleteKey];
     [defaults setObject:[NSNumber numberWithBool:kDefaultKeepWindowOpen]
                  forKey:FobKeepWindowOpenKey];
+    [defaults setObject:[NSArchiver archivedDataWithRootObject:
+        [Alarm alarmWithTitle:NSLocalizedString(@"DefaultAlarmLabel", nil)
+            forSecondDuration:SECONDS(0,5,0)]]
+                 forKey:FobDisplayedAlarmKey];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     //NSLog(@"Registered defaults!");

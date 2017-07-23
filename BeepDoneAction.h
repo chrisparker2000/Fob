@@ -8,50 +8,18 @@ Fob is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 
 You should have received a copy of the GNU General Public License along with Fob; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
 
-//  FobController.m
+//  BeepDoneAction.h
 //  Fob
 //
-//  Created by Thomas Finley on Sun Jan 05 2003.
+//  Created by Thomas Finley on Sun Jan 26 2003.
 //  Copyright (c) 2003 Leaky Puppy Software, for Net Monkey Inc. All rights reserved.
 //  This program is distributed under the terms of the GNU General Public License.
 
-#import "FobController.h"
-#import "prefs.h"
-#import "PreferenceController.h"
+#import <Foundation/Foundation.h>
+#import "DoneAction.h"
 
-#define PADDING 5.0f
-
-FobController *controller;
-
-@implementation FobController
-
-+ (void)initialize {
-    setFactoryDefaults();
-}
-
-+ (FobController *)defaultController {
-    return controller;
-}
-
-- (id)init {
-    if (self = [super init]) {
-        controller = self;
-        [self setWindowFrameAutosaveName:@"MainFobWindow"];
-    }
-    return self;
-}
-
-- (void)awakeFromNib {
-    currentWindow = bigWindow;
-    [self setupToolbar];
-}
-
-- (IBAction)showPreferences:(id)sender {
-    [preferenceController displayPreferences];
-}
-
-- (IBAction)customizeToolbar:(id)sender {
-    [[[self window] toolbar] runCustomizationPalette:sender];
+@interface BeepDoneAction : DoneAction {
+    long long doneBeepTime;
 }
 
 @end

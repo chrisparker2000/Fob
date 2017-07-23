@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License along with Fob
 #import "CurrentAlarms.h"
 #import "prefs.h"
 #import "AttentionGrabber.h"
+#import "DoneAction.h"
 
 #define PADDING 5.0f
 
@@ -34,6 +35,22 @@ You should have received a copy of the GNU General Public License along with Fob
                    forKey:NSFontAttributeName];
     [attributes setObject:foregroundText
                    forKey:NSForegroundColorAttributeName];
+}
+
+/* This will set and return the alarm that last rang, or nil if there are no alarms that have come due.  For the sake of safety, this should probably run every time the status of the alarm list, or alarm doneness is changed. */
+- (Alarm *)updateLatestRungAlarm {
+    int i=0, max=[[currentAlarms alarms] count];
+    Alarm * last = latestRungAlarm;
+    while (i<max && ![[[currentAlarms alarms] objectAtIndex:i] millisecondsRemaining]) i++;
+    i--;
+    latestRungAlarm = i == -1 ? nil : [[currentAlarms alarms] objectAtIndex:i];
+    if (last != latestRungAlarm)
+        [[last doneAction] stop]; // We're no longer the best.  Wah!
+    return latestRungAlarm;
+}
+
+- (Alarm *)latestRungAlarm {
+    return latestRungAlarm;
 }
 
 - (void)awakeFromNib {
@@ -66,7 +83,8 @@ You should have received a copy of the GNU General Public License along with Fob
            selector:@selector(handleQuitting:)
                name:@"NSApplicationWillTerminateNotification"
              object:nil];
-    
+
+    [self updateLatestRungAlarm];
     [self updateIcon];
 }
 
@@ -82,13 +100,16 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (void)handleAlarmDone:(NSNotification *)note {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults integerForKey:FobFeedbackLevelKey] == beep) NSBeep();
+    if ([defaults integerForKey:FobFeedbackLevelKey] >= beep)
+        [[[self latestRungAlarm] doneAction] play]; // Will play if not playing already.
     [AttentionGrabber grabAttention];
     //[defaults integerForKey:FobBounceLevelKey]
+    [self updateLatestRungAlarm];
     [self handleAlarmNote:note];
 }
 
 - (void)handleAlarmCollectionNote:(NSNotification *)note {
+    [self updateLatestRungAlarm];
     [self updateIcon];
 }
 
@@ -116,7 +137,8 @@ You should have received a copy of the GNU General Public License along with Fob
                           fraction:0.5f];
         [newImage unlockFocus];
         [NSApp setApplicationIconImage:newImage];
-        if ([defaults integerForKey:FobFeedbackLevelKey] == alwaysBeep) NSBeep();
+        if ([defaults integerForKey:FobFeedbackLevelKey] == alwaysBeep)
+            [[[self latestRungAlarm] doneAction] play]; // Will play if not already.
     } else {
         // The not bright flash is just the original image.
         [NSApp setApplicationIconImage:originalImage];

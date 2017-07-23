@@ -8,50 +8,46 @@ Fob is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 
 You should have received a copy of the GNU General Public License along with Fob; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
 
-//  FobController.m
+//  BeepDoneAction.m
 //  Fob
 //
-//  Created by Thomas Finley on Sun Jan 05 2003.
+//  Created by Thomas Finley on Sun Jan 26 2003.
 //  Copyright (c) 2003 Leaky Puppy Software, for Net Monkey Inc. All rights reserved.
 //  This program is distributed under the terms of the GNU General Public License.
 
-#import "FobController.h"
-#import "prefs.h"
-#import "PreferenceController.h"
+#import "BeepDoneAction.h"
+#import "time.h"
 
-#define PADDING 5.0f
-
-FobController *controller;
-
-@implementation FobController
-
-+ (void)initialize {
-    setFactoryDefaults();
-}
-
-+ (FobController *)defaultController {
-    return controller;
-}
+@implementation BeepDoneAction
 
 - (id)init {
     if (self = [super init]) {
-        controller = self;
-        [self setWindowFrameAutosaveName:@"MainFobWindow"];
+        doneBeepTime = 0;
     }
     return self;
 }
 
-- (void)awakeFromNib {
-    currentWindow = bigWindow;
-    [self setupToolbar];
+- (id)initWithCoder:(NSCoder *)coder {
+    if (self = [super initWithCoder:coder]) {
+        doneBeepTime = 0;
+    }
+    return self;
 }
 
-- (IBAction)showPreferences:(id)sender {
-    [preferenceController displayPreferences];
+- (void)play {
+    // I am a bad person.
+    if ([self isPlaying]) return; // Should not play before it is done.
+    doneBeepTime = milliseconds() + 500;
+    [super play];
+    NSBeep();
 }
 
-- (IBAction)customizeToolbar:(id)sender {
-    [[[self window] toolbar] runCustomizationPalette:sender];
+- (BOOL)isPlaying {
+    return milliseconds() < doneBeepTime;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [BeepDoneAction new];
 }
 
 @end

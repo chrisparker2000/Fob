@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License along with Fob
 //  This program is distributed under the terms of the GNU General Public License.
 
 #import "PreferenceController.h"
+#import "FobController.h"
 #import "prefs.h"
 
 @implementation PreferenceController
@@ -84,7 +85,7 @@ You should have received a copy of the GNU General Public License along with Fob
     
     // Show the sheet.
     [NSApp beginSheet:preferenceWindow
-       modalForWindow:mainWindow
+       modalForWindow:[[FobController defaultController] currentWindow]
         modalDelegate:self
        didEndSelector:@selector(preferenceEnded:returnCode:contextInfo:)
           contextInfo:nil];

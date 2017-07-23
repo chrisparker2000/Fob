@@ -17,18 +17,32 @@ You should have received a copy of the GNU General Public License along with Fob
 
 #import "TimeInputController.h"
 #import "Alarm.h"
+#import "DoneActionInputController.h"
+#import "prefs.h"
 
 @implementation TimeInputController
 
 - (void)awakeFromNib {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    Alarm * a =[NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:FobDisplayedAlarmKey]];
     [self timeChanged:hourField];
     lastStepperValue = [stepper intValue];
-
+    [self setDisplayedAlarm:a];
     [nc addObserver:self
            selector:@selector(handleTimeChanged:)
                name:@"FobTimeChanged"
              object:timeView];
+    [nc addObserver:self
+           selector:@selector(handleQuitting:)
+               name:@"NSApplicationWillTerminateNotification"
+             object:nil];
+}
+
+- (void)handleQuitting:(NSNotification *)note {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSArchiver archivedDataWithRootObject:[self displayedAlarm]]
+                 forKey:FobDisplayedAlarmKey];
 }
 
 - (IBAction)timeChanged:(id)sender {
@@ -60,14 +74,15 @@ You should have received a copy of the GNU General Public License along with Fob
 - (void)setDisplayedAlarm:(Alarm *)alarm {
     [timeView setMilliseconds:[alarm millisecondsRemaining]];
     [self setFieldsAccordingToTimeView];
+    [doneActionInputController setDisplayedDoneAction:[alarm doneAction]];
     [descriptionField setStringValue:[alarm title]];
 }
 
 - (Alarm *)displayedAlarm {
     Alarm * alarm = [[Alarm alloc] initWithTitle:[descriptionField stringValue]
                                forSecondDuration:[timeView milliseconds]/1000];
-    [alarm autorelease];
-    return alarm;
+    [alarm setDoneAction:[doneActionInputController displayedDoneAction]];
+    return [alarm autorelease];
 }
 
 - (long long)milliseconds {

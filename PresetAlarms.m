@@ -50,12 +50,6 @@ PresetAlarms * defaultDatabase = nil;
                name:@"FobTableDelete"
              object:presetTable];
 
-    // We want to change the view as the table selection changes.
-    [nc addObserver:self
-           selector:@selector(handleTableSelection:)
-               name:@"NSTableViewSelectionIsChangingNotification"
-             object:presetTable];
-
     [presetTable reloadData];
 }
 
@@ -139,22 +133,6 @@ PresetAlarms * defaultDatabase = nil;
 
 - (void)handleTableDelete:(NSNotification *)note {
     [self removeFromPresets:note];
-}
-
-- (void)handleTableSelection:(NSNotification *)note {
-    static Alarm * oldAlarm;
-    int selected = [presetTable numberOfSelectedRows];
-    if (selected > 1) return;
-    if (selected == 1) {
-        int row = [presetTable selectedRow];
-        if (!oldAlarm)
-            oldAlarm = [[inputController displayedAlarm] retain];
-        [inputController setDisplayedAlarm:[alarms objectAtIndex:row]];
-    } else {
-        [inputController setDisplayedAlarm:oldAlarm];
-        [oldAlarm release];
-        oldAlarm = nil;
-    }
 }
 
 - (NSArray *)selectedAlarms {

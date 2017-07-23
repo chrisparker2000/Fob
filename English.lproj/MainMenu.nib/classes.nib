@@ -20,8 +20,10 @@
             OUTLETS = {
                 currentTable = NSTableView; 
                 inputController = TimeInputController; 
+                littleCurrentTable = NSTableView; 
                 presetAlarms = PresetAlarms; 
                 presetTable = NSTableView; 
+                timeView = TimeView; 
                 window = NSWindow; 
             }; 
             SUPERCLASS = AlarmCollection; 
@@ -38,17 +40,41 @@
             OUTLETS = {currentAlarms = CurrentAlarms; }; 
             SUPERCLASS = NSObject; 
         }, 
+        {
+            ACTIONS = {changeAlert = id; changeFile = id; changeType = id; }; 
+            CLASS = DoneActionInputController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                alertPopUp = NSPopUpButton; 
+                customizeTypeDisplay = NSTabView; 
+                fileIconDisplay = NSImageView; 
+                fileNameDisplay = NSTextField; 
+                mainWindow = NSWindow; 
+                typeChooseButtons = NSMatrix; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = FileAcceptorView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {doneActionInputController = DoneActionInputController; }; 
+            SUPERCLASS = NSView; 
+        }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {customizeToolbar = id; showPreferences = id; }; 
             CLASS = FobController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                alarmSplit = NSSplitView; 
+                bigWindow = ZoomWindow; 
                 currentAlarms = CurrentAlarms; 
                 customizeToolbarItem = NSMenuItem; 
                 descriptionField = NSTextField; 
                 hourField = NSTextField; 
                 inputController = TimeInputController; 
+                littleWindow = ZoomWindow; 
+                mainSplit = NSSplitView; 
                 minuteField = NSTextField; 
                 preferenceController = PreferenceController; 
                 presetAlarms = PresetAlarms; 
@@ -75,6 +101,7 @@
                 feedbackSlider = NSSlider; 
                 keepWindowOpenCheckbox = NSButton; 
                 mainWindow = NSWindow; 
+                miniWindow = NSWindow; 
                 preferenceWindow = NSWindow; 
             }; 
             SUPERCLASS = NSObject; 
@@ -96,6 +123,7 @@
             LANGUAGE = ObjC; 
             OUTLETS = {
                 descriptionField = NSTextField; 
+                doneActionInputController = DoneActionInputController; 
                 hourField = NSTextField; 
                 minuteField = NSTextField; 
                 secondField = NSTextField; 
@@ -109,6 +137,12 @@
             LANGUAGE = ObjC; 
             OUTLETS = {inputController = TimeInputController; }; 
             SUPERCLASS = NSView; 
+        }, 
+        {
+            CLASS = ZoomWindow; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {fobController = FobController; }; 
+            SUPERCLASS = NSWindow; 
         }
     ); 
     IBVersion = 1; 

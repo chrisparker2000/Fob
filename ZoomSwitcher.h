@@ -8,50 +8,22 @@ Fob is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 
 You should have received a copy of the GNU General Public License along with Fob; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
 
-//  FobController.m
+//  ZoomSwitcher.h
 //  Fob
 //
-//  Created by Thomas Finley on Sun Jan 05 2003.
+//  Created by Thomas Finley on Thu Jan 23 2003.
 //  Copyright (c) 2003 Leaky Puppy Software, for Net Monkey Inc. All rights reserved.
 //  This program is distributed under the terms of the GNU General Public License.
 
+#import <Foundation/Foundation.h>
 #import "FobController.h"
-#import "prefs.h"
-#import "PreferenceController.h"
 
-#define PADDING 5.0f
+@class ZoomWindow;
 
-FobController *controller;
+@interface FobController (ZoomSwitcher)
 
-@implementation FobController
-
-+ (void)initialize {
-    setFactoryDefaults();
-}
-
-+ (FobController *)defaultController {
-    return controller;
-}
-
-- (id)init {
-    if (self = [super init]) {
-        controller = self;
-        [self setWindowFrameAutosaveName:@"MainFobWindow"];
-    }
-    return self;
-}
-
-- (void)awakeFromNib {
-    currentWindow = bigWindow;
-    [self setupToolbar];
-}
-
-- (IBAction)showPreferences:(id)sender {
-    [preferenceController displayPreferences];
-}
-
-- (IBAction)customizeToolbar:(id)sender {
-    [[[self window] toolbar] runCustomizationPalette:sender];
-}
+- (void)switchOut:(ZoomWindow *)window;
+- (void)switchIn:(ZoomWindow *)window;
+- (ZoomWindow *)currentWindow;
 
 @end

@@ -8,50 +8,22 @@ Fob is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 
 You should have received a copy of the GNU General Public License along with Fob; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
 
-//  FobController.m
+//  FileAcceptorView.h
 //  Fob
 //
-//  Created by Thomas Finley on Sun Jan 05 2003.
+//  Created by Thomas Finley on Sun Jan 26 2003.
 //  Copyright (c) 2003 Leaky Puppy Software, for Net Monkey Inc. All rights reserved.
 //  This program is distributed under the terms of the GNU General Public License.
 
-#import "FobController.h"
-#import "prefs.h"
-#import "PreferenceController.h"
+#import <AppKit/AppKit.h>
 
-#define PADDING 5.0f
+@class DoneActionInputController;
 
-FobController *controller;
-
-@implementation FobController
-
-+ (void)initialize {
-    setFactoryDefaults();
+@interface FileAcceptorView : NSView {
+    IBOutlet DoneActionInputController *doneActionInputController;
+    BOOL highlighted;
 }
 
-+ (FobController *)defaultController {
-    return controller;
-}
-
-- (id)init {
-    if (self = [super init]) {
-        controller = self;
-        [self setWindowFrameAutosaveName:@"MainFobWindow"];
-    }
-    return self;
-}
-
-- (void)awakeFromNib {
-    currentWindow = bigWindow;
-    [self setupToolbar];
-}
-
-- (IBAction)showPreferences:(id)sender {
-    [preferenceController displayPreferences];
-}
-
-- (IBAction)customizeToolbar:(id)sender {
-    [[[self window] toolbar] runCustomizationPalette:sender];
-}
+- (void)setHighlighted:(BOOL) newHighlight;
 
 @end

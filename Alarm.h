@@ -19,13 +19,16 @@ You should have received a copy of the GNU General Public License along with Fob
 
 // Notifications:
 // "FobAlarmDone" when the alarm is detected as finished.
-// "FobAlarmTick" when the alarm changes on the boundary between 
+// "FobAlarmTick" when the alarm changes on the boundary between
+
+@class DoneAction;
 
 @interface Alarm : NSObject <NSCopying, NSCoding> {
     NSString *title, *lastTimeString, *lastDescribe;
     long long timeLeft, matures, lastCheckedMSeconds;
     NSTimer *timer;
     BOOL paused, cachedValid, cachedDescribeValid;
+    DoneAction *doneAction;
 }
 
 + (Alarm *)alarmWithTitle:(NSString *)title forSecondDuration:(long long)seconds;
@@ -44,6 +47,9 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (id)initWithCoder:(NSCoder *)coder;
 - (void)encodeWithCoder:(NSCoder *)coder;
+
+- (DoneAction *)doneAction;
+- (void)setDoneAction:(DoneAction *)newAction;
 
 - (BOOL)checkTime;
 

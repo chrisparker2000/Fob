@@ -21,6 +21,7 @@ You should have received a copy of the GNU General Public License along with Fob
 #import "prefs.h"
 #import "PresetAlarms.h"
 #import "AttentionGrabber.h"
+#import "DoneAction.h"
 
 CurrentAlarms * defaultCurrentDatabase = nil;
 
@@ -30,6 +31,7 @@ CurrentAlarms * defaultCurrentDatabase = nil;
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     NSAssert(!defaultCurrentDatabase, @"More than one CurrentAlarms instance awoken from a nib file!");
     defaultCurrentDatabase = self;
+    lastSelectedAlarm = nil;
 
     [presetTable setDoubleAction:@selector(doubleClickPresets:)];
     [presetTable setTarget:self];
@@ -42,21 +44,40 @@ CurrentAlarms * defaultCurrentDatabase = nil;
            selector:@selector(handleAlarmsChanged:)
                name:@"FobAlarmRemoved"
              object:self];
+    // Table listening.
     [nc addObserver:self
            selector:@selector(handleTableDelete:)
                name:@"FobTableDelete"
              object:currentTable];
-
+    [nc addObserver:self
+           selector:@selector(handleTableDelete:)
+               name:@"FobTableDelete"
+             object:littleCurrentTable];
+    
+    // Listening to alarms.
     [nc addObserver:self
            selector:@selector(handleAlarmTick:)
                name:@"FobAlarmTick"
              object:nil];
     [nc addObserver:self
-           selector:@selector(handleAlarmTick:)
+           selector:@selector(handleAlarmDone:)
                name:@"FobAlarmDone"
              object:nil];
 
+    // We want to change the view when the table selections change.
+    [nc addObserver:self
+           selector:@selector(handleTableSelection:)
+               name:@"NSTableViewSelectionDidChangeNotification"
+             object:nil];
+
+    // We want to change the view when the done action changes.
+    [nc addObserver:self
+           selector:@selector(handleDoneActionChange:)
+               name:@"FobDoneActionChange"
+             object:nil];
+    
     [currentTable reloadData];
+    [littleCurrentTable reloadData];
 }
 
 - (id)init {
@@ -102,6 +123,56 @@ CurrentAlarms * defaultCurrentDatabase = nil;
     return [alarm valueForKey:identifier];
 }
 
+- (void)handleTableSelection:(NSNotification *)note {
+    /*static Alarm * oldAlarm; // The old code from presets.
+    int selected = [presetTable numberOfSelectedRows];
+    if (selected > 1) return;
+    if (selected == 1) {
+        int row = [presetTable selectedRow];
+        if (!oldAlarm)
+            oldAlarm = [[inputController displayedAlarm] retain];
+        [inputController setDisplayedAlarm:[[presetAlarms alarms] objectAtIndex:row]];
+    } else {
+        if (!oldAlarm) return;
+        [inputController setDisplayedAlarm:oldAlarm];
+        [oldAlarm release];
+        oldAlarm = nil;
+    }*/
+
+    static Alarm * oldAlarm;
+    NSTableView *table = [note object];
+    AlarmCollection *collection;
+    int selected = [table numberOfSelectedRows];
+    if (selected == 0) { // Switch to the other one.
+        table = table == presetTable ? currentTable : presetTable;
+        selected = [table numberOfSelectedRows]; // Try again.
+    }
+    collection = table == presetTable ? presetAlarms : self;
+    if (selected > 1) return;
+    if (selected == 1) {
+        int row = [table selectedRow];
+        if (!oldAlarm) oldAlarm = [[inputController displayedAlarm] retain];
+        lastSelectedAlarm = [[collection alarms] objectAtIndex:row];
+        [inputController setDisplayedAlarm:lastSelectedAlarm];
+        if (table == currentTable)
+            [timeView setMilliseconds:[lastSelectedAlarm millisecondsRemaining]+999];
+    } else {
+        if (!oldAlarm) return;
+        [inputController setDisplayedAlarm:oldAlarm];
+        [oldAlarm release];
+        oldAlarm = nil;
+        lastSelectedAlarm = nil;
+    }
+}
+
+- (void)handleDoneActionChange:(NSNotification *)note {
+    // Is anything being shown?
+    if (!lastSelectedAlarm) return;
+    // Check if this is a current alarm.
+    if ([lastSelectedAlarm millisecondsRemaining] && [lastSelectedAlarm paused]) return;
+    [lastSelectedAlarm setDoneAction:[[note object] displayedDoneAction]];
+}
+
 // Action methods.
 
 - (void)reformCurrentDefaults {
@@ -123,9 +194,11 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 }
 
 - (IBAction)removeFromCurrent:(id)source {
-    int toRemove = [currentTable numberOfSelectedRows], i;
-    for (i=[currentTable numberOfRows]-1; toRemove; i--) {
-        if ([currentTable isRowSelected:i]) {
+    NSTableView *table = [[currentTable window] isVisible] ? currentTable : littleCurrentTable;
+    int toRemove = [table numberOfSelectedRows], i;
+    for (i=[table numberOfRows]-1; toRemove; i--) {
+        if ([table isRowSelected:i]) {
+            [[[alarms objectAtIndex:i] doneAction] stop]; // Easiest way.
             [self removeAlarmAtIndex:i];
             toRemove--;
         }
@@ -140,15 +213,24 @@ CurrentAlarms * defaultCurrentDatabase = nil;
 }
 
 - (void)handleAlarmsChanged:(NSNotification *)note {
+    [littleCurrentTable reloadData];
     [currentTable reloadData];
 }
 
 - (void)handleTableDelete:(NSNotification *)note {
-    [self removeFromCurrent:note];
+    [self removeFromCurrent:[note object]];
 }
 
 - (void)handleAlarmTick:(NSNotification *)note {
+    [littleCurrentTable reloadData];
     [currentTable reloadData];
+    if ([note object] == lastSelectedAlarm) {
+        [timeView setMilliseconds:[lastSelectedAlarm millisecondsRemaining]+999];
+    }
+}
+
+- (void)handleAlarmDone:(NSNotification *)note {
+    [self handleAlarmTick:note];
 }
 
 - (IBAction)clearDue:(id)sender {
@@ -156,6 +238,8 @@ CurrentAlarms * defaultCurrentDatabase = nil;
         [self removeAlarmAtIndex:0];
     [AttentionGrabber giveUpAttention];
     [self reformCurrentDefaults];
+    //[window setLevel:NSScreenSaverWindowLevel];
+    //[window setLevel:NSNormalWindowLevel];
 }
 
 - (IBAction)doubleClickPresets:(id)sender {
