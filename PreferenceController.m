@@ -1,4 +1,4 @@
-/* Copyright © 2003, Leaky Puppy Software, Net Monkey Inc.
+/* Copyright ï¿½ 2003, Leaky Puppy Software, Net Monkey Inc.
 
 This file is part of Fob.
 
@@ -88,16 +88,16 @@ You should have received a copy of the GNU General Public License along with Fob
     savedValues = [[defaults dictionaryRepresentation] retain];
     
     // Change the view to reflect current preferences.
-    [confirmDeleteCheckbox setState:[defaults boolForKey:FobConfirmDeleteKey] ? NSOnState : NSOffState];
-    [keepWindowOpenCheckbox setState:[defaults boolForKey:FobKeepWindowOpenKey] ? NSOnState : NSOffState];
-    [statusItemVisibleCheckbox setState:[defaults boolForKey:FobStatusItemVisibleKey] ? NSOnState : NSOffState];
+    [confirmDeleteCheckbox setState:[defaults boolForKey:FobConfirmDeleteKey] ? NSControlStateValueOn : NSControlStateValueOff];
+    [keepWindowOpenCheckbox setState:[defaults boolForKey:FobKeepWindowOpenKey] ? NSControlStateValueOn : NSControlStateValueOff];
+    [statusItemVisibleCheckbox setState:[defaults boolForKey:FobStatusItemVisibleKey] ? NSControlStateValueOn : NSControlStateValueOff];
     [statusItemTitleVisibleCheckbox setState:
-        [defaults boolForKey:FobStatusItemTitleVisibleKey] ? NSOnState : NSOffState];
+        [defaults boolForKey:FobStatusItemTitleVisibleKey] ? NSControlStateValueOn : NSControlStateValueOff];
     [statusItemTitleVisibleCheckbox setEnabled:[defaults boolForKey:FobStatusItemVisibleKey]];
-    [scaleDockTimeCheckbox setState:[defaults boolForKey:FobScaleDockTimeKey] ? NSOnState : NSOffState];
-    [disableCommandQCheckbox setState:[defaults boolForKey:FobDisableCommandQKey] ? NSOnState : NSOffState];
-    [dockMenuSubmenusCheckbox setState:[defaults boolForKey:FobDockMenuSubmenusKey] ? NSOnState : NSOffState];
-    [clearDueOnQuitCheckbox setState:[defaults boolForKey:FobClearDueOnQuitKey] ? NSOnState : NSOffState];
+    [scaleDockTimeCheckbox setState:[defaults boolForKey:FobScaleDockTimeKey] ? NSControlStateValueOn : NSControlStateValueOff];
+    [disableCommandQCheckbox setState:[defaults boolForKey:FobDisableCommandQKey] ? NSControlStateValueOn : NSControlStateValueOff];
+    [dockMenuSubmenusCheckbox setState:[defaults boolForKey:FobDockMenuSubmenusKey] ? NSControlStateValueOn : NSControlStateValueOff];
+    [clearDueOnQuitCheckbox setState:[defaults boolForKey:FobClearDueOnQuitKey] ? NSControlStateValueOn : NSControlStateValueOff];
     [feedbackSlider setIntValue:[defaults integerForKey:FobFeedbackLevelKey]];
     [bounceSlider setIntValue:[defaults integerForKey:FobBounceLevelKey]];
     [self changeFeedbackLabel];
@@ -113,13 +113,13 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (IBAction)changeConfirmDeletions:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:[confirmDeleteCheckbox state] == NSOnState
+    [defaults setBool:[confirmDeleteCheckbox state] == NSControlStateValueOn
                forKey:FobConfirmDeleteKey];
 }
 
 - (IBAction)changeKeepOpen:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL keepWindowOpen = [keepWindowOpenCheckbox state] == NSOnState;
+    BOOL keepWindowOpen = [keepWindowOpenCheckbox state] == NSControlStateValueOn;
     [defaults setBool:keepWindowOpen
                forKey:FobKeepWindowOpenKey];
     [mainWindow setHidesOnDeactivate:!keepWindowOpen];
@@ -141,7 +141,7 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (IBAction)changeStatusVisible:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL statusVisible = [statusItemVisibleCheckbox state] == NSOnState;
+    BOOL statusVisible = [statusItemVisibleCheckbox state] == NSControlStateValueOn;
     [defaults setBool:statusVisible
                forKey:FobStatusItemVisibleKey];
     [statusItemTitleVisibleCheckbox setEnabled:statusVisible];
@@ -151,21 +151,21 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (IBAction)changeStatusTitleVisible:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL statusTitleVisible = [statusItemTitleVisibleCheckbox state] == NSOnState;
+    BOOL statusTitleVisible = [statusItemTitleVisibleCheckbox state] == NSControlStateValueOn;
     [defaults setBool:statusTitleVisible
                forKey:FobStatusItemTitleVisibleKey];
 }
 
 - (IBAction)changeScaleDockTime:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL scaleDockTime = [scaleDockTimeCheckbox state] == NSOnState;
+    BOOL scaleDockTime = [scaleDockTimeCheckbox state] == NSControlStateValueOn;
     [defaults setBool:scaleDockTime
                forKey:FobScaleDockTimeKey];
 }
 
 - (IBAction)changeCommandQ:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL disableQ = [disableCommandQCheckbox state] == NSOnState;
+    BOOL disableQ = [disableCommandQCheckbox state] == NSControlStateValueOn;
     [defaults setBool:disableQ
                forKey:FobDisableCommandQKey];
     [quitItem setKeyEquivalent:(disableQ ? @"" : @"q")];
@@ -173,14 +173,14 @@ You should have received a copy of the GNU General Public License along with Fob
 
 - (IBAction)changeDockMenuSubmenus:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL dms = [dockMenuSubmenusCheckbox state] == NSOnState;
+    BOOL dms = [dockMenuSubmenusCheckbox state] == NSControlStateValueOn;
     [defaults setBool:dms
                forKey:FobDockMenuSubmenusKey];
 }
 
 - (IBAction)changeClearDueOnQuit:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL cdoq = [clearDueOnQuitCheckbox state] == NSOnState;
+    BOOL cdoq = [clearDueOnQuitCheckbox state] == NSControlStateValueOn;
     [defaults setBool:cdoq
                forKey:FobClearDueOnQuitKey];
 }

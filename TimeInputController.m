@@ -1,4 +1,4 @@
-/* Copyright © 2003, Leaky Puppy Software, Net Monkey Inc.
+/* Copyright ï¿½ 2003, Leaky Puppy Software, Net Monkey Inc.
 
 This file is part of Fob.
 
@@ -80,7 +80,7 @@ You should have received a copy of the GNU General Public License along with Fob
     [self setFieldsAccordingToTimeView];
     [doneActionInputController setDisplayedDoneAction:[alarm doneAction]];
     [descriptionField setStringValue:[alarm title]];
-    [repeatsCheckbox setState:[alarm repeats] ? NSOnState : NSOffState];
+    [repeatsCheckbox setState:[alarm repeats] ? NSControlStateValueOn : NSControlStateValueOff];
 }
 
 - (Alarm *)displayedAlarm {
@@ -94,7 +94,7 @@ You should have received a copy of the GNU General Public License along with Fob
     Alarm * alarm = [[Alarm alloc] initWithTitle:[descriptionField stringValue]
                                forSecondDuration:[timeView milliseconds]/1000];
     [alarm setDoneAction:[doneActionInputController displayedDoneAction]];
-    [alarm setRepeats:[repeatsCheckbox state]==NSOnState];
+    [alarm setRepeats:[repeatsCheckbox state]==NSControlStateValueOn];
     return [alarm autorelease];
 }
 
